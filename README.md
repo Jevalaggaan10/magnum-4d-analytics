@@ -20,6 +20,30 @@ What this tool is good for:
 5. Watching a Monte Carlo simulation lose your money — slowly,
    stochastically, and inevitably.
 
+## 🎯 Live prediction tracker
+
+Since no method beats random on i.i.d. draws, the repo does the only honest
+next-best thing: **it logs its predictions publicly and verifies them against
+the real results.**
+
+A scheduled GitHub Action runs on every draw evening (Wed / Sat / Sun, after
+results publish):
+
+1. syncs the latest published Da Ma Cai result,
+2. verifies any pending prediction against the real 23 prize numbers,
+3. logs a fresh 10-number consensus prediction for the next draw — commit-timestamped **before** the draw happens,
+4. pairs every prediction with a seeded **random control** of 10 numbers, so you can watch model vs. luck converge to the ~2.27% baseline pure chance prescribes (`1 − C(9990,10)/C(10000,10)` → ~1 hit per 44 draws).
+
+➡️ **[Read the full log → PREDICTION_LOG.md](PREDICTION_LOG.md)** — upcoming
+prediction, verified draws with actual prizes, and the running
+model-vs-random tally.
+
+Reproduce locally (`--dry-run` writes nothing; `--no-sync` skips the network):
+
+```powershell
+python scripts/track_predictions.py --dry-run
+```
+
 ## Install
 
 ```powershell
@@ -67,6 +91,8 @@ python ev_simulator.py           # quick EV demo
 | `backtest.py` | Walk-forward validation vs random baseline (with Bonferroni) |
 | `ev_simulator.py` | Monte Carlo bankroll simulator (Big bet payouts) |
 | `app.py` | Streamlit UI tying it all together |
+| `scripts/track_predictions.py` | Live next-draw prediction tracker: logs consensus picks per upcoming draw, verifies them against the published result, maintains the model-vs-random tally (scheduled GitHub Action, see README) |
+| `.github/workflows/prediction-tracker.yml` | The Action that runs the tracker on draw evenings |
 
 ## What the methods are doing
 
