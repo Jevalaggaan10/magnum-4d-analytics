@@ -1,0 +1,23 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# --- Streamlit runtime ---
+.streamlit/secrets.toml
+data_cache/
+
+# --- Logs ---
+*.log
+
+# --- Editors / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Local secrets ---
+.env

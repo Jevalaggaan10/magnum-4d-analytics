@@ -1,0 +1,45 @@
+# 4dyes3.com adapter configuration.
+#
+# The site https://4dyes3.com/en/api-widget blocks unauthenticated automated
+# fetches with HTTP 403, so this file lets you wire it up by hand once you
+# know the real endpoint and auth pattern (paste a working curl below into
+# the matching fields).
+#
+# Once you confirm a working request, run:
+#   python -m data_sources.manager sync fouryes3 --recent 30
+#
+# All three sections are tried in order. If `list_endpoint` 404s, the
+# adapter will mark the source as "unavailable" without crashing.
+
+base_url: "https://4dyes3.com"
+
+headers:
+  User-Agent: "Mozilla/5.0 (compatible; lottery-analytics/1.0)"
+  Accept: "application/json"
+  # If 4dyes3 issues an API key, put it here OR in env var FOURYES3_API_KEY.
+  # Authorization: "Bearer <token>"
+  # X-API-Key: "<token>"
+
+list_endpoint:
+  # Best-effort guesses. Replace with the real path once known.
+  path: "/api/v1/results"
+  method: GET
+  # JSONPath-ish: where to find the list of date strings in response.
+  dates_field: "data"
+  # Where each date item exposes the YYYYMMDD string.
+  date_key: "date"
+
+draw_endpoint:
+  # Replace `{date}` token at request time.
+  path: "/api/v1/results/{date}"
+  method: GET
+  # Mapping from canonical names to response keys.
+  fields:
+    first: "first_prize"
+    second: "second_prize"
+    third: "third_prize"
+    special: "special"          # array of 10 numbers
+    consolation: "consolation"  # array of 10 numbers
+  # Which operator's draw to return; e.g. "magnum", "damacai", "toto"
+  operator_field: "operator"
+  preferred_operator: "magnum"
