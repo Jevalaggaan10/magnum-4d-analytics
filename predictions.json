@@ -1,0 +1,43 @@
+{
+  "pending": {
+    "for_date": "20261028",
+    "picks": [
+      "3845",
+      "1830",
+      "3830",
+      "1840",
+      "3840",
+      "1833",
+      "1834",
+      "3833",
+      "1831",
+      "1835"
+    ],
+    "random_control": [
+      "9150",
+      "9562",
+      "0744",
+      "9473",
+      "3475",
+      "0615",
+      "8179",
+      "8858",
+      "2325",
+      "4306"
+    ],
+    "generated_at": "2026-10-25T13:09:23.417945+00:00",
+    "corpus_cutoff": "2026-10-25",
+    "methods_count": 8,
+    "methods_names": [
+      "frequency",
+      "recent_hot_90d",
+      "overdue",
+      "digit_probability",
+      "permutation_family",
+      "markov",
+      "arima",
+      "bayesian"
+    ]
+  },
+  "history": []
+}
