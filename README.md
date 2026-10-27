@@ -32,7 +32,9 @@ results publish):
 1. syncs the latest published Da Ma Cai result,
 2. verifies any pending prediction against the real 23 prize numbers,
 3. logs a fresh 10-number consensus prediction for the next draw — commit-timestamped **before** the draw happens,
-4. pairs every prediction with a seeded **random control** of 10 numbers, so you can watch model vs. luck converge to the ~2.27% baseline pure chance prescribes (`1 − C(9990,10)/C(10000,10)` → ~1 hit per 44 draws).
+4. pairs every prediction with a seeded **random control** of 10 numbers, so you can watch model vs. luck converge to the ~2.27% baseline pure chance prescribes (`1 − C(9990,23)/C(10000,23)` → ~1 hit per 44 draws).
+
+An offline `--replay N` mode backtests this exact pipeline against the N most recent published draws — a 40-draw walk-forward retrospective is in the log.
 
 ➡️ **[Read the full log → PREDICTION_LOG.md](PREDICTION_LOG.md)** — upcoming
 prediction, verified draws with actual prizes, and the running
