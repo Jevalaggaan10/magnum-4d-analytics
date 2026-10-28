@@ -3,11 +3,7 @@ Prediction Module for 4D Lottery
 Generates predictions for the next draw using all trained models
 """
 
-import pandas as pd
-import numpy as np
-from datetime import datetime
 from collections import Counter
-import sys
 
 
 def ensemble_predictions(all_predictions: dict, top_n: int = 20) -> list:
@@ -15,6 +11,8 @@ def ensemble_predictions(all_predictions: dict, top_n: int = 20) -> list:
     vote_counter = Counter()
     
     for model_name, preds in all_predictions.items():
+        if not preds:
+            continue
         if isinstance(preds[0], tuple):
             # XGBoost returns (number, probability)
             for num, prob in preds:
@@ -31,7 +29,7 @@ def ensemble_predictions(all_predictions: dict, top_n: int = 20) -> list:
     return [(num, score) for num, score in sorted_nums[:top_n]]
 
 
-def generate_predictions(data_dir: str = ".", target_date: str = None):
+def generate_predictions(data_dir: str = None, target_date: str = None):
     """Main prediction function."""
     from data_loader import load_combined_data, extract_top3_prizes
     from train_model import train_all_models
@@ -146,8 +144,8 @@ def generate_predictions(data_dir: str = ".", target_date: str = None):
 
 
 if __name__ == "__main__":
-    data_dir = "c:/codex/lottery"
-    target_date = "2026-01-03"  # Today
+    data_dir = None
+    target_date = None
     
     if len(sys.argv) > 1:
         target_date = sys.argv[1]

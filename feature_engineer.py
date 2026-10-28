@@ -6,8 +6,9 @@ Creates features for ML models based on historical patterns
 import pandas as pd
 import numpy as np
 from collections import Counter
-from itertools import permutations
 from datetime import timedelta
+
+from data_loader import normalize_prize_number
 
 
 def get_digit_features(number: str) -> dict:
@@ -99,8 +100,12 @@ def build_last_seen_index(df: pd.DataFrame, columns: list = None) -> dict:
             continue
         series = sorted_df[col].astype(str).str.zfill(4)
         dates = sorted_df['DrawDate'].values
-        for num, date in zip(series.values, dates):
-            last_seen[num] = date  # later iterations overwrite, leaving latest
+        for raw, date in zip(series.values, dates):
+            num = normalize_prize_number(raw)
+            if num is not None and pd.notna(date):
+                previous = last_seen.get(num)
+                if previous is None or date > previous:
+                    last_seen[num] = date
 
     return last_seen
 
@@ -227,7 +232,7 @@ if __name__ == "__main__":
     from data_loader import load_combined_data, extract_top3_prizes
     
     # Load data
-    df = load_combined_data("c:/codex/lottery")
+    df = load_combined_data()
     top3 = extract_top3_prizes(df)
     
     # Test features

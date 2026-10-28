@@ -76,9 +76,13 @@ class Damacai(LotterySource):
         if not isinstance(data, dict):
             return None
 
-        first = str(self._flexget(data, "p1", "first", "prize1", "FirstPrize") or "")
-        second = str(self._flexget(data, "p2", "second", "prize2", "SecondPrize") or "")
-        third = str(self._flexget(data, "p3", "third", "prize3", "ThirdPrize") or "")
+        def prize_text(*keys):
+            value = self._flexget(data, *keys)
+            return '' if value is None else str(value)
+
+        first = prize_text("p1", "first", "prize1", "FirstPrize")
+        second = prize_text("p2", "second", "prize2", "SecondPrize")
+        third = prize_text("p3", "third", "prize3", "ThirdPrize")
 
         special_raw = (
             self._flexget(

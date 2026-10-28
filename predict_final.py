@@ -6,7 +6,7 @@ Uses refined models and better ensemble strategy
 import pandas as pd
 import numpy as np
 from collections import Counter
-from datetime import datetime, timedelta
+from datetime import timedelta
 import random
 
 # Set seed for reproducibility
@@ -14,7 +14,7 @@ np.random.seed(42)
 random.seed(42)
 
 
-def load_data(data_dir: str = "."):
+def load_data(data_dir: str = None):
     """Load and preprocess data."""
     from data_loader import load_combined_data, extract_top3_prizes
     df = load_combined_data(data_dir)
@@ -48,7 +48,7 @@ def get_overdue_numbers(df: pd.DataFrame, min_freq: int = 3, n: int = 20) -> lis
     last_seen = {}
     freq = Counter()
     
-    for _, row in df.iterrows():
+    for _, row in df.sort_values('DrawDate').iterrows():
         date = row['DrawDate']
         for col in ['1stPrizeNo', '2ndPrizeNo', '3rdPrizeNo']:
             num = str(row[col]).zfill(4)
@@ -83,8 +83,13 @@ def get_digit_probability_numbers(df: pd.DataFrame, n: int = 20) -> list:
     # Normalize to probabilities
     for i in range(4):
         total = sum(position_probs[i].values())
+        if not total:
+            raise ValueError('digit sampling requires valid historical numbers')
         for digit in position_probs[i]:
             position_probs[i][digit] /= total
+    support = int(np.prod([len(probabilities) for probabilities in position_probs]))
+    if not 0 <= n <= support:
+        raise ValueError(f'cannot sample {n} distinct numbers from support of {support}')
     
     # Generate numbers
     generated = set()
@@ -129,19 +134,7 @@ def get_pattern_based_numbers(df: pd.DataFrame, n: int = 20) -> list:
     """Generate numbers based on observed patterns."""
     results = []
     
-    # Pattern 1: Consecutive digit patterns
-    numbers = list(df['1stPrizeNo'].astype(str).str.zfill(4))
-    
-    # Find patterns like XXYY, XYXY, XYYX
-    patterns = Counter()
-    for num in numbers:
-        d = [int(c) for c in num]
-        if d[0] == d[1] or d[1] == d[2] or d[2] == d[3]:
-            patterns['repeat'] += 1
-        if d[0] == d[2] and d[1] == d[3]:
-            patterns['xyxy'] += 1
-    
-    # Generate similar patterns
+    # Random pattern demonstration; no learned pattern weights are used.
     for _ in range(n // 4):
         # XXYY pattern
         x, y = random.randint(0, 9), random.randint(0, 9)
@@ -183,12 +176,12 @@ def main():
     """Main prediction function."""
     print("=" * 60)
     print("MAGNUM 4D PREDICTION - IMPROVED ENSEMBLE MODEL")
-    print("Target Date: 2026-01-03 (Today)")
+    print("Target: next draw (descriptive rankings only)")
     print("=" * 60)
     
     # Load data
     print("\n📊 Loading historical data...")
-    df = load_data("c:/codex/lottery")
+    df = load_data()
     print(f"   Loaded {len(df)} draws")
     print(f"   Date range: {df['DrawDate'].min().date()} to {df['DrawDate'].max().date()}")
     

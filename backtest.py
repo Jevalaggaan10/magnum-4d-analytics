@@ -5,8 +5,8 @@ For each test year, train on data strictly before that year and predict the
 top-N numbers. Score = fraction of draws in the test year where the top-N
 contained any of the 1st/2nd/3rd prize numbers.
 
-Compare each method against a uniform-random baseline using a two-proportion
-z-test. With Bonferroni correction for multiple comparisons.
+Compare each method against a uniform independent-slot baseline with an
+exact binomial test and Bonferroni correction for multiple comparisons.
 
 Honest expectation: no method significantly beats random.
 """
@@ -19,6 +19,7 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 from scipy import stats
+from data_loader import normalize_prize_number
 
 import predictor_suite as ps
 
@@ -47,18 +48,21 @@ def _hit_rate(top_set: set[str], test_df: pd.DataFrame) -> float:
         return 0.0
     hits = 0
     for _, row in test_df.iterrows():
-        prizes = {str(row[c]).zfill(4) for c in PRIZE_COLS if c in test_df.columns}
+        prizes = {normalize_prize_number(row[c]) for c in PRIZE_COLS if c in test_df.columns}
         if prizes & top_set:
             hits += 1
     return hits / len(test_df)
 
 
 def _random_baseline_rate(n_pick: int, n_draws: int, seed: int = 0) -> float:
-    """Closed-form: P(any of 3 prizes in random n_pick) = 1 - C(10000-n_pick,3)/C(10000,3)."""
-    from math import comb
-    total = comb(10000, 3)
-    miss = comb(10000 - n_pick, 3)
-    return 1 - miss / total
+    """P(any hit), assuming three independent uniform four-digit slots.
+
+    n_draws and seed are retained for callers of the older helper API.
+    This is a suffix-draw approximation, not a 23-unique-slot assumption.
+    """
+    if not 0 <= n_pick <= 10000:
+        raise ValueError('number of picks must be between 0 and 10000')
+    return 1 - (1 - n_pick / 10000) ** 3
 
 
 def run_year(
@@ -69,6 +73,8 @@ def run_year(
     lstm_epochs: int = 2,
 ) -> list[BacktestRow]:
     """Train methods on data < test_year, evaluate on draws in test_year."""
+    if not 1 <= top_n <= 10000:
+        raise ValueError('top_n must be between 1 and 10000')
     train_df = df[df['DrawDate'].dt.year < test_year]
     test_df = _draws_in_year(df, test_year)
     if train_df.empty or test_df.empty:
@@ -88,19 +94,18 @@ def run_year(
         family='control',
     )
 
-    baseline_rate = _random_baseline_rate(top_n, len(test_df))
     n_test = len(test_df)
 
     rows = []
     for method, res in results.items():
-        top_set = set(res.numbers(top_n))
+        top_set = {n for n in res.numbers(top_n) if normalize_prize_number(n) == n}
+        baseline_rate = _random_baseline_rate(len(top_set), n_test)
         if not top_set:
             rows.append(BacktestRow(method, test_year, n_test, 0.0, baseline_rate, float('nan'), False))
             continue
 
         rate = _hit_rate(top_set, test_df)
         hits = int(round(rate * n_test))
-        expected_hits = baseline_rate * n_test
         # Two-sided binomial test vs baseline
         if n_test > 0:
             p_val = float(stats.binomtest(hits, n_test, baseline_rate).pvalue)
@@ -128,7 +133,9 @@ def run(
     # Bonferroni across methods x years for multiple testing
     n_tests = (out['method'] != '_random_control').sum()
     alpha_corrected = 0.05 / max(n_tests, 1)
-    out['significant'] = (out['p_value'] < alpha_corrected) & (out['hit_rate'] > out['random_baseline'])
+    out['significant'] = ((out['method'] != '_random_control')
+                          & (out['p_value'] < alpha_corrected)
+                          & (out['hit_rate'] > out['random_baseline']))
     out['alpha_bonferroni'] = alpha_corrected
     return out
 
@@ -160,7 +167,7 @@ if __name__ == "__main__":
     years = list(range(start, end + 1))
 
     from data_loader import load_combined_data, extract_top3_prizes
-    df = load_combined_data("c:/codex/lottery")
+    df = load_combined_data()
     top3 = extract_top3_prizes(df)
 
     bt = run(top3, years, top_n=args.top_n, include_ml=args.ml)

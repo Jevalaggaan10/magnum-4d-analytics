@@ -16,9 +16,9 @@ Design notes
   location, so it behaves the same on a laptop and in a fresh CI clone.
 - Tracked state lives in `predictions.json` (committed), not in the
   gitignored sync cache, because Actions start from a clean checkout.
-- Prediction corpus = bundled Magnum `4D.txt` history + recent Da Ma Cai
-  syncs. The bundled Excel is a separate draw series that conflicts with
-  `4D.txt` on shared dates, so it is excluded here pending provenance fix.
+- Prediction corpus = the tracked Da Ma Cai snapshot plus observed Da Ma
+  Cai results in the ledger. Other operators and the unverified Excel
+  series are excluded. New results are retained for subsequent training.
 - Random-control picks use `seed = int(YYYYMMDD)` so the luck-only
   comparison is reproducible by anyone.
 
@@ -33,6 +33,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import random
 import re
@@ -48,7 +49,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from data_loader import load_4d_txt, load_data_cache, extract_top3_prizes  # noqa: E402
+from data_loader import load_data_cache, extract_top3_prizes, normalize_prize_number  # noqa: E402
 from predictor_suite import run_all  # noqa: E402
 from consensus import build_consensus  # noqa: E402
 
@@ -70,6 +71,7 @@ SLOT_LABELS = {
 DRAW_WEEKDAYS = {2, 5, 6}
 NUM_PICKS = 10
 PENDING_TTL_DAYS = 60
+PIPELINE_VERSION = 'damacai-v2'
 
 
 # ---------------------------------------------------------------------------
@@ -77,7 +79,7 @@ PENDING_TTL_DAYS = 60
 # ---------------------------------------------------------------------------
 
 def _is_valid_4d(v) -> bool:
-    return isinstance(v, str) and re.fullmatch(r"\d{4}", v) is not None
+    return isinstance(v, str) and re.fullmatch(r"[0-9]{4}", v) is not None
 
 
 def _slot_label(col: str) -> str:
@@ -88,37 +90,79 @@ def _slot_label(col: str) -> str:
     return f"consolation #{int(col[len('ConsolationNo'):])}"
 
 
-def load_corpus() -> pd.DataFrame:
-    """Single-series corpus: bundled Magnum 4D.txt (+ local Da Ma Cai cache
-    when present). The conflicting MDT Excel series is excluded on purpose."""
+def observed_draws(state: dict) -> dict[str, dict]:
+    """Retain published outcomes without altering any earlier prediction."""
+    draws = {}
+    for record in state.get('replay', {}).get('rows', []) + state.get('history', []):
+        actual = record.get('actual')
+        if record.get('source') == 'damacai' and actual and complete_draw(actual):
+            draws[record['for_date']] = _draw_to_slots(actual)
+    for date, actual in state.get('observed_draws', {}).items():
+        if complete_draw(actual):
+            draws[date] = _draw_to_slots(actual)
+    return draws
+
+
+def load_corpus(state: dict | None = None) -> pd.DataFrame:
+    """Same-operator, reproducible corpus; do not read a machine-local cache."""
     frames = []
-    txt = REPO_ROOT / "4D.txt"
-    if txt.exists():
-        df_txt = load_4d_txt(str(txt))
-        df_txt["Source"] = "4D.txt"
-        frames.append(df_txt)
-    cache = load_data_cache("damacai", cache_dir=str(REPO_ROOT / "data_cache"))
-    if cache is not None and not cache.empty:
-        # repair the known cache round-trip corruption: prize cells may have
-        # lost leading zeros when they were type-inferred as ints
-        for col in SLOT_COLS:
-            if col in cache.columns:
-                s = cache[col].astype(str).str.strip()
-                s = s.where(s.str.fullmatch(r"\d{1,4}"), other=None)
-                cache[col] = s.str.zfill(4)
-        frames.append(cache)
+    snapshot = load_data_cache('damacai', cache_dir=REPO_ROOT / 'data')
+    if snapshot is not None and not snapshot.empty:
+        frames.append(snapshot)
+    rows = [dict(actual, DrawDate=pd.to_datetime(date, format='%Y%m%d'))
+            for date, actual in observed_draws(state or {}).items()]
+    if rows:
+        frames.append(pd.DataFrame(rows))
     if not frames:
-        raise FileNotFoundError("No corpus found: need 4D.txt in repo root")
-    return pd.concat(frames, ignore_index=True)
+        raise FileNotFoundError('No Da Ma Cai history: need data/damacai.csv or observed ledger results')
+    corpus = pd.concat(frames, ignore_index=True)
+    corpus['Source'] = 'damacai'
+    corpus['Operator'] = 'damacai'
+    return corpus.dropna(subset=['DrawDate']).drop_duplicates('DrawDate', keep='last').sort_values('DrawDate').reset_index(drop=True)
 
 
 def _draw_to_slots(row: dict) -> dict:
     out = {}
     for col in SLOT_COLS:
-        v = str(row.get(col, "")).strip()
-        v = v if re.fullmatch(r"\d{1,4}", v) else ""
-        out[col] = v.zfill(4)
+        out[col] = normalize_prize_number(row.get(col)) or ''
     return out
+
+
+def complete_draw(actual: dict) -> bool:
+    """Only published, complete results can resolve the 23-slot experiment."""
+    return all(_is_valid_4d(actual.get(col)) for col in SLOT_COLS)
+
+
+def generate_picks(train: pd.DataFrame) -> tuple[list[str], list[str]]:
+    """One prediction path shared by live runs and chronological replays."""
+    if train.empty:
+        raise ValueError('cannot generate a trained prediction without prior draws')
+    results = run_all(train, include_ml=False, top_n=50)
+    cons = build_consensus(results, top_n=50)
+    picks = cons.head(NUM_PICKS)['number'].tolist()
+    methods = [key for key, result in results.items() if result.top]
+    if not methods:
+        raise ValueError('no prediction method produced a valid result')
+    if len(picks) < NUM_PICKS:
+        freq = Counter()
+        for col in TOP3_COLS:
+            freq.update(n for n in train[col].map(normalize_prize_number) if n is not None)
+        for number, _ in freq.most_common():
+            if number not in picks:
+                picks.append(number)
+            if len(picks) == NUM_PICKS:
+                break
+    if len(picks) != NUM_PICKS or len(set(picks)) != NUM_PICKS:
+        raise ValueError('could not produce ten distinct valid picks')
+    return picks, methods
+
+
+def training_metadata(train: pd.DataFrame) -> dict:
+    canonical = train.sort_values('DrawDate')[['DrawDate'] + TOP3_COLS].to_csv(
+        index=False, lineterminator='\n', date_format='%Y-%m-%d')
+    return {'pipeline_version': PIPELINE_VERSION, 'training_operator': 'damacai',
+            'training_rows': len(train), 'corpus_cutoff': train['DrawDate'].max().strftime('%Y-%m-%d'),
+            'corpus_sha256': hashlib.sha256(canonical.encode('utf-8')).hexdigest()}
 
 
 def fetch_recent_draws(max_dates: int = 2) -> dict[str, dict]:
@@ -132,7 +176,11 @@ def fetch_recent_draws(max_dates: int = 2) -> dict[str, dict]:
         draw = src.fetch_draw(str(d))
         if draw is None:
             continue
-        out[str(d).zfill(8)] = _draw_to_slots(draw.to_row())
+        actual = _draw_to_slots(draw.to_row())
+        if complete_draw(actual):
+            out[str(d).zfill(8)] = actual
+        else:
+            raise ValueError(f'{d}: incomplete result; refusing to score missing prize slots')
     return out
 
 
@@ -144,17 +192,20 @@ def fetch_single_draw(draw_date: str) -> dict | None:
     draw = src.fetch_draw(draw_date)
     if draw is None:
         return None
-    return _draw_to_slots(draw.to_row())
+    actual = _draw_to_slots(draw.to_row())
+    return actual if complete_draw(actual) else None
 
 
 def draw_from_local_cache(cache: pd.DataFrame | None, draw_date: str) -> dict | None:
     """Look up one draw date in the locally cached Da Ma Cai frame."""
     if cache is None or cache.empty:
         return None
-    sub = cache[cache["DrawDate"].astype(str) == draw_date]
+    dates = pd.to_datetime(cache['DrawDate']).dt.strftime('%Y%m%d')
+    sub = cache[dates == draw_date]
     if sub.empty:
         return None
-    return _draw_to_slots(sub.iloc[0].to_dict())
+    actual = _draw_to_slots(sub.iloc[0].to_dict())
+    return actual if complete_draw(actual) else None
 
 
 # ---------------------------------------------------------------------------
@@ -172,28 +223,31 @@ def collect_recent_draws(n: int) -> list[dict]:
     for d in dates:
         draw = src.fetch_draw(d)
         if draw is None:
-            print(f"  ! {d}: no draw data returned, skipped")
-            continue
-        out.append({"for_date": d, "slots": _draw_to_slots(draw.to_row())})
+            raise ValueError(f'{d}: requested replay result unavailable')
+        actual = _draw_to_slots(draw.to_row())
+        if not complete_draw(actual):
+            raise ValueError(f'{d}: requested replay result incomplete')
+        out.append({"for_date": d, "slots": actual})
     return out
 
 
-def walk_forward_replay(draws: list[dict]) -> tuple[list[dict], list[dict]]:
+def walk_forward_replay(draws: list[dict], state: dict | None = None) -> tuple[list[dict], list[dict]]:
     """For each published draw D, train only on draws strictly before D —
-    the identical corpus the scheduled Action trains on (bundled 4D.txt,
-    no live rows) — then score the consensus picks and the date-seeded
+    the Da Ma Cai corpus, including earlier observed replay draws, then
+    score the consensus picks and the date-seeded
     random control against the real 23 prize slots of D.
 
     Returns (rows, skipped): skipped draws keep their error for the log
     instead of aborting the whole backtest."""
-    txt = REPO_ROOT / "4D.txt"
-    if not txt.exists():
-        raise FileNotFoundError("replay needs 4D.txt in repo root")
-    base_top3 = extract_top3_prizes(load_4d_txt(str(txt)))
+    base = load_corpus(state)
+    observations = pd.DataFrame([dict(spec['slots'], DrawDate=pd.to_datetime(spec['for_date'], format='%Y%m%d'),
+                                      Source='damacai', Operator='damacai') for spec in draws])
+    base_top3 = extract_top3_prizes(pd.concat([base, observations], ignore_index=True)
+                                  .drop_duplicates('DrawDate', keep='last').sort_values('DrawDate'))
 
     rows: list[dict] = []
     skipped: list[dict] = []
-    for spec in draws:
+    for spec in sorted(draws, key=lambda item: item['for_date']):
         d = spec["for_date"]
         actual = spec["slots"]
         try:
@@ -204,21 +258,9 @@ def walk_forward_replay(draws: list[dict]) -> tuple[list[dict], list[dict]]:
                 skipped.append({"for_date": d, "error": "empty training set"})
                 continue
 
-            results = run_all(train, include_ml=False, top_n=50)
-            cons = build_consensus(results, top_n=50)
-            if len(cons):
-                cons = cons[cons["number"].astype(str).str.fullmatch(r"\d{4}", na=False)]
-            picks: list[str] = cons.head(NUM_PICKS)["number"].tolist() if len(cons) else []
-            if len(picks) < NUM_PICKS:  # same top-up as the live pending path
-                freq = Counter()
-                for col in TOP3_COLS:
-                    freq.update(x for x in train[col].astype(str).str.zfill(4)
-                                if _is_valid_4d(x))
-                for num, _ in freq.most_common(200):
-                    if num not in picks:
-                        picks.append(num)
-                    if len(picks) >= NUM_PICKS:
-                        break
+            if not complete_draw(actual):
+                raise ValueError('incomplete published draw')
+            picks, methods = generate_picks(train)
 
             rnd = random_control(d)
             row = {
@@ -228,10 +270,11 @@ def walk_forward_replay(draws: list[dict]) -> tuple[list[dict], list[dict]]:
                 "actual": {c: actual.get(c, "") for c in SLOT_COLS},
                 "hits": score_hits(picks, actual),
                 "random_hits": score_hits(rnd, actual),
-                "methods_count": len([k for k, r in results.items() if r.top]),
+                "methods_count": len(methods),
                 "training_cutoff": train["DrawDate"].max().strftime("%Y-%m-%d"),
                 "status": "replay",
                 "source": "damacai",
+                **training_metadata(train),
             }
             rows.append(row)
             print(f"  {d}: model {len(row['hits'])} hit(s), random "
@@ -245,13 +288,18 @@ def walk_forward_replay(draws: list[dict]) -> tuple[list[dict], list[dict]]:
     return rows, skipped
 
 
-def run_replay_mode(n: int, state: dict, dry_run: bool = False) -> int:
+def run_replay_mode(n: int, state: dict, dry_run: bool = False, no_sync: bool = False) -> int:
     """--replay N: fetch the N latest published draws, backtest this
     tracker's exact pipeline on them, and write state + log. The live
     pending prediction and verified history are left untouched."""
-    print(f"replay: fetching the {n} most recent published Da Ma Cai draws...")
+    print(f"replay: loading the {n} most recent published Da Ma Cai draws...")
     try:
-        draws = collect_recent_draws(n)
+        if no_sync:
+            corpus = load_corpus(state).tail(n)
+            draws = [{'for_date': row['DrawDate'].strftime('%Y%m%d'), 'slots': _draw_to_slots(row)}
+                     for _, row in corpus.iterrows()]
+        else:
+            draws = collect_recent_draws(n)
     except Exception as e:
         print(f"ERROR: replay fetch failed ({type(e).__name__}: {e}); "
               "nothing written")
@@ -262,16 +310,21 @@ def run_replay_mode(n: int, state: dict, dry_run: bool = False) -> int:
 
     print(f"replay: walk-forward over {len(draws)} draws "
           f"({draws[0]['for_date']} .. {draws[-1]['for_date']})")
-    rows, skipped = walk_forward_replay(draws)
-    if dry_run:
-        print("replay: dry-run, state and log not written")
-        return 0
+    rows, skipped = walk_forward_replay(draws, state)
     if not rows:
         print(f"ERROR: every replay draw failed "
               f"({len(skipped)} skipped); nothing written")
         return 1
+    if dry_run:
+        print("replay: dry-run, state and log not written")
+        return 0
 
+    previous_replay = state.get('replay')
+    if previous_replay:
+        state.setdefault('replay_archive', []).append(previous_replay)
+    state['observed_draws'] = {**observed_draws(state), **{spec['for_date']: spec['slots'] for spec in draws}}
     state["replay"] = {
+        'pipeline_version': PIPELINE_VERSION,
         "run_at": datetime.now(timezone.utc).isoformat(),
         "window": [rows[0]["for_date"], rows[-1]["for_date"]] if rows else [],
         "rows": rows,
@@ -279,14 +332,7 @@ def run_replay_mode(n: int, state: dict, dry_run: bool = False) -> int:
     }
 
     log = render_log(state, network_ok=True)
-    existing_log = LOG_FILE.read_text(encoding="utf-8") if LOG_FILE.exists() else None
-    if existing_log != log:
-        LOG_FILE.write_text(log, encoding="utf-8")
-        STATE_FILE.write_text(json.dumps(state, indent=2, ensure_ascii=False),
-                              encoding="utf-8")
-        print("updated PREDICTION_LOG.md + predictions.json")
-    else:
-        print("no changes")
+    save_state_and_log(state, log)
     return 0
 
 
@@ -319,11 +365,24 @@ def score_hits(picks: list[str], actual: dict) -> list[dict]:
 
 def load_state() -> dict:
     if STATE_FILE.exists():
-        try:
-            return json.loads(STATE_FILE.read_text(encoding="utf-8"))
-        except Exception:
-            pass
+        state = json.loads(STATE_FILE.read_text(encoding="utf-8"))
+        if not isinstance(state, dict) or not isinstance(state.get('history'), list):
+            raise ValueError('invalid prediction ledger; refusing to discard existing records')
+        return state
     return {"pending": None, "history": []}
+
+
+def save_state_and_log(state: dict, log: str) -> None:
+    """Persist state even when a metadata-only change leaves the log identical."""
+    changed = False
+    for path, content in [(STATE_FILE, json.dumps(state, indent=2, ensure_ascii=False) + '\n'),
+                          (LOG_FILE, log)]:
+        if not path.exists() or path.read_text(encoding='utf-8') != content:
+            temporary = path.with_suffix(path.suffix + '.tmp')
+            temporary.write_text(content, encoding='utf-8')
+            temporary.replace(path)
+            changed = True
+    print('updated prediction state/log' if changed else 'no changes')
 
 
 # ---------------------------------------------------------------------------
@@ -340,48 +399,54 @@ def main(argv: list | None = None) -> int:
                     help="offline: use local cache only, no network")
     ap.add_argument("--dry-run", action="store_true",
                     help="render the log to stdout, write nothing")
+    ap.add_argument('--for-date', help='explicit future YYYYMMDD target, e.g. an announced Tuesday special draw')
     ap.add_argument("--replay", type=int, default=0, metavar="N",
                     help="walk-forward replay over the N most recent published "
                          "draws (backtests this tracker's own pipeline; writes "
                          "state + log, leaves the live pending untouched)")
     args = ap.parse_args(argv)
+    if args.replay < 0:
+        ap.error('--replay must be nonnegative')
 
     state = load_state()
 
     # replay mode is a standalone backtest: it shares the prediction logic
     # but skips the sync/verify/generate pipeline entirely
     if args.replay > 0:
-        return run_replay_mode(args.replay, state, dry_run=args.dry_run)
+        return run_replay_mode(args.replay, state, dry_run=args.dry_run, no_sync=args.no_sync)
 
-    corpus = load_corpus()
-    damacai_cache = load_data_cache("damacai",
-                                    cache_dir=str(REPO_ROOT / "data_cache"))
+    corpus = load_corpus(state)
+    damacai_cache = corpus
 
     # ---- 1) sync: latest published draws ---------------------------------
     network_ok = True
     recent: dict[str, dict] = {}
     if not args.no_sync:
         try:
-            recent = fetch_recent_draws(max_dates=2)
+            recent = fetch_recent_draws(max_dates=5)
             print(f"synced: {sorted(recent.keys())}")
         except Exception as e:
             network_ok = False
-            print(f"WARNING: sync failed ({type(e).__name__}: {e}); state unchanged")
+            print(f"WARNING: sync failed ({type(e).__name__}: {e})")
 
     # ---- 2) resolve the pending prediction (if any) ----------------------
     pending = state.get("pending")
+    if args.for_date and pending and args.for_date != pending['for_date']:
+        raise ValueError('a published prediction is already pending; refusing to replace it')
     if pending:
         target = str(pending["for_date"]).zfill(8)
         actual = recent.get(target)
         if actual is None:
             actual = draw_from_local_cache(damacai_cache, target)
-        if actual is None and network_ok:
-            today = datetime.now(timezone.utc).date()
+        if actual is None and network_ok and not args.no_sync:
+            today = datetime.now(timezone(timedelta(hours=8))).date()
             try:
                 pub = datetime.strptime(target, "%Y%m%d").date()
             except ValueError:
                 pub = None
-            if pub and (today - pub).days > PENDING_TTL_DAYS:
+            if pub and pub > today:
+                pass  # Never ask a result endpoint to resolve a future draw.
+            elif pub and (today - pub).days > PENDING_TTL_DAYS:
                 print(f"pending for {target} exceeded {PENDING_TTL_DAYS}d TTL; expiring unverified")
                 state["history"].append({
                     "for_date": target,
@@ -401,7 +466,8 @@ def main(argv: list | None = None) -> int:
                     actual = fetch_single_draw(target)
                 except Exception as e:
                     print(f"targeted fetch for {target} failed: {e}")
-        if actual and any(_is_valid_4d(actual.get(c, "")) for c in TOP3_COLS):
+        if actual and complete_draw(actual):
+            recent[target] = actual
             state["history"].append({
                 "for_date": target,
                 "predicted": pending["picks"],
@@ -412,47 +478,36 @@ def main(argv: list | None = None) -> int:
                 "status": "verified",
                 "checked_at": datetime.now(timezone.utc).isoformat(),
                 "source": "damacai",
+                'prediction_metadata': {k: v for k, v in pending.items()
+                                        if k not in {'picks', 'random_control', 'for_date'}},
             })
             state["history"].sort(key=lambda h: h["for_date"])
             state["pending"] = None
             print(f"resolved pending prediction for {target}: "
                   f"{len(state['history'][-1]['hits'])} hit(s)")
 
+    state['observed_draws'] = {**observed_draws(state), **recent}
+    corpus = load_corpus(state)
+
     # ---- 3) generate a new prediction if none pending --------------------
     if state.get("pending") is None:
-        newest = corpus["DrawDate"].max() if corpus["DrawDate"].max() is not pd.NaT else pd.NaT
-        if recent:
-            recent_ts = pd.to_datetime(max(recent.keys()), format="%Y%m%d",
-                                       errors="coerce")
-            newest = max(newest, recent_ts) if pd.notna(newest) else recent_ts
-        if newest is None or pd.isna(newest):
+        if not network_ok:
+            print('sync failed; declining to create a new prediction')
             return 1
-        target = next_draw_date(newest.strftime("%Y%m%d"))
-
-        # identical to the app's own prediction path (includes DrawDate+Source)
-        top3 = extract_top3_prizes(corpus)
-        results = run_all(top3, include_ml=False, top_n=50)
-        cons = build_consensus(results, top_n=50)
-        if len(cons):
-            cons = cons[cons["number"].astype(str).str.fullmatch(r"\d{4}", na=False)]
-        picks: list[str] = cons.head(NUM_PICKS)["number"].tolist() if len(cons) else []
-        if len(picks) < NUM_PICKS:  # top up with all-time frequency
-            freq = Counter()
-            for col in TOP3_COLS:
-                freq.update(n for n in corpus[col].astype(str).str.zfill(4)
-                            if re.fullmatch(r"\d{4}", n))
-            for num, _ in freq.most_common(200):
-                if num not in picks:
-                    picks.append(num)
-                if len(picks) >= NUM_PICKS:
-                    break
-        methods_ok = [k for k, r in results.items() if r.top]
+        newest = corpus['DrawDate'].max()
+        today_myt = datetime.now(timezone(timedelta(hours=8))).strftime('%Y%m%d')
+        target = args.for_date or next_draw_date(max(newest.strftime('%Y%m%d'), today_myt))
+        target_date = datetime.strptime(target, '%Y%m%d')
+        if target <= today_myt:
+            raise ValueError('target must be a future Malaysian calendar date; cannot backdate predictions')
+        top3 = extract_top3_prizes(corpus[corpus['DrawDate'] < target_date])
+        picks, methods_ok = generate_picks(top3)
         state["pending"] = {
             "for_date": target,
             "picks": picks,
             "random_control": random_control(target),
             "generated_at": datetime.now(timezone.utc).isoformat(),
-            "corpus_cutoff": newest.strftime("%Y-%m-%d"),
+            **training_metadata(top3),
             "methods_count": len(methods_ok),
             "methods_names": methods_ok,
         }
@@ -465,14 +520,7 @@ def main(argv: list | None = None) -> int:
         print(log)
         return 0
 
-    existing_log = LOG_FILE.read_text(encoding="utf-8") if LOG_FILE.exists() else None
-    if existing_log != log:
-        LOG_FILE.write_text(log, encoding="utf-8")
-        STATE_FILE.write_text(json.dumps(state, indent=2, ensure_ascii=False),
-                              encoding="utf-8")
-        print("updated PREDICTION_LOG.md + predictions.json")
-    else:
-        print("no changes")
+    save_state_and_log(state, log)
     return 0
 
 
@@ -494,14 +542,15 @@ def render_log(state: dict, network_ok: bool = True) -> str:
 
     a("# \U0001F3AF Live Prediction Tracker")
     a("")
-    a("> Updated automatically by a scheduled GitHub Action on draw evenings"
-      " (Wed / Sat / Sun), after results publish. Predictions are generated"
+    a("> Checked daily by a scheduled GitHub Action after normal draw hours."
+      " Regular targets are Wed / Sat / Sun; announced special draws require"
+      " an explicit target date. Predictions are generated"
       " and logged **before** the next draw, then verified against the real"
       " result from Da Ma Cai's public endpoint.")
     a("")
     a("## How to read this")
     a("")
-    a("Every draw gets two 10-number sets, published in advance:")
+    a("Every tracked target gets two 10-number sets, published in advance:")
     a("")
     a("- **Model picks** — consensus of the suite's statistical methods.")
     a("- **Random control** — 10 purely random numbers, seeded by the draw date"
@@ -513,10 +562,16 @@ def render_log(state: dict, network_ok: bool = True) -> str:
       " probability for *any* 10-number set:")
     a("")
     a("```text")
-    a("P(hit) = 1 - C(9990, 23) / C(10000, 23) ≈ 2.27%  →  ~1 hit per 44 draws")
+    a("P(hit) ≈ 1 - (1 - 10/10000)^23 ≈ 2.27%  →  ~1 hit per 44 draws")
     a("```")
     a("")
-    a("Over time both columns should hover at that baseline. If the model"
+    a("This uses independent uniform four-digit slots as an approximation."
+      " Da Ma Cai derives four-digit results from six-digit draws; four-digit"
+      " suffixes need not be distinct. The earlier combination formula assumed"
+      " 23 distinct four-digit winners. Duplicate prize slots remain separate"
+      " when counting slot hits.")
+    a("")
+    a("Under that null, both columns should approach the baseline. If the model"
       " column ever drifts meaningfully above the random column on this"
       " i.i.d. stream, that would be extraordinary — the log makes that self-checkable.")
     a("")
@@ -538,6 +593,17 @@ def render_log(state: dict, network_ok: bool = True) -> str:
         a("")
         a(f"**Random control:** "
           f"{', '.join('`' + n + '`' for n in pending['random_control'])}")
+        a("")
+        if pending.get('pipeline_version') == PIPELINE_VERSION:
+            a(f"Training: **Da Ma Cai**, {pending['training_rows']:,} draws;"
+              f" pipeline `{PIPELINE_VERSION}`. Cutoff above is the actual latest training draw.")
+        else:
+            a("> **Audit correction:** this prediction belongs to the original pipeline"
+              " and is preserved as published. Its displayed corpus cutoff advanced"
+              " with fetched results even though those results were not added to"
+              " training. In a fresh Actions checkout, training actually ended on"
+              " **2025-12-28** in the bundled Magnum history. New predictions will use"
+              " the separately versioned Da Ma Cai corpus.")
         a("")
 
     a("## ✅ Verified draws")
@@ -571,6 +637,16 @@ def render_log(state: dict, network_ok: bool = True) -> str:
     a(f"| Model picks | {resolved} | {model_draw_hits} | {model_slot_hits} | {m_lbl} | ~2.27% |")
     a(f"| Random control | {resolved} | {random_draw_hits} | {random_slot_hits} | {r_lbl} | ~2.27% |")
     a("")
+    if hist:
+        a('### Results by pipeline version')
+        a('')
+        a('| Pipeline | Draws | Model hit draws | Random hit draws |')
+        a('|---|---:|---:|---:|')
+        versions = sorted({h.get('prediction_metadata', {}).get('pipeline_version', 'legacy-v1') for h in hist})
+        for version in versions:
+            group = [h for h in hist if h.get('prediction_metadata', {}).get('pipeline_version', 'legacy-v1') == version]
+            a(f"| `{version}` | {len(group)} | {sum(bool(h['hits']) for h in group)} | {sum(bool(h['random_hits']) for h in group)} |")
+        a('')
 
     replay = state.get("replay") or {}
     replay_rows = replay.get("rows", [])
@@ -580,7 +656,9 @@ def render_log(state: dict, network_ok: bool = True) -> str:
         rp_rd = sum(1 for r in replay_rows if r["random_hits"])
         rp_ms = sum(len(r["hits"]) for r in replay_rows)
         rp_rs = sum(len(r["random_hits"]) for r in replay_rows)
-        a(f"## 🔁 Walk-forward replay over the last {n_r} draws (retrospective)")
+        legacy_replay = replay.get('pipeline_version') != PIPELINE_VERSION
+        replay_title = 'Legacy fixed-corpus comparison' if legacy_replay else 'Walk-forward replay'
+        a(f"## 🔁 {replay_title} over {n_r} draws (retrospective)")
         a("")
         if replay.get("window"):
             a(f"_Replay window: {replay['window'][0]} → {replay['window'][1]} •"
@@ -592,13 +670,18 @@ def render_log(state: dict, network_ok: bool = True) -> str:
               f" are absent from the table below: "
               f"{', '.join(s['for_date'] for s in sk)}._")
             a("")
-        a("> An offline backtest of **this same pipeline**: for each draw, the"
-          " model was re-trained only on data published strictly *before* that"
-          " draw (bundled Magnum `4D.txt` — exactly what the scheduled Action"
-          " trains on), then its 10 consensus picks and the date-seeded random"
-          " control were scored against the real 23 published Da Ma Cai slots."
-          " These rows were reconstructed after the fact, not logged in"
-          " advance — the live ledger above remains the primary evidence.")
+        if legacy_replay:
+            a("> **Audit correction:** all these replay dates trained on the same"
+              " 5,568 Magnum draws ending **2025-12-28**, then scored against Da Ma Cai."
+              " There was no new 2026 training data between folds, explaining the"
+              " repeated picks. This is a cross-operator, fixed-corpus comparison;"
+              " it is not evidence of an updating same-operator forecast. Original"
+              " picks and scores are retained for transparency.")
+        else:
+            a("> Retrospective evaluation of the Da Ma Cai pipeline: each fold"
+              " trains strictly before its target date and includes earlier"
+              " observed replay draws. These rows were reconstructed after the"
+              " fact; the separately timestamped live ledger remains primary evidence.")
         a("")
         a("| Draw | Model picks | Actual 1st/2nd/3rd | Model hits | Random hits |")
         a("|------|-------------|--------------------|------------|-------------|")
@@ -618,11 +701,15 @@ def render_log(state: dict, network_ok: bool = True) -> str:
         a("")
     a("## Corpus & method notes")
     a("")
-    a("- **Corpus** — bundled Magnum `4D.txt` history (up to "
-      f"{(pending or {}).get('corpus_cutoff', 'n/a')}) + recent Da Ma Cai"
-      " live syncs. The bundled `MDTdec28.xlsx` is a separate draw series"
-      " that conflicts with `4D.txt` on shared dates, so it is excluded here"
-      " until its provenance is sorted.")
+    a("- **Current training corpus** — tracked `data/damacai.csv` plus Da Ma Cai"
+      " results retained in `predictions.json`. See `data/provenance.json` for"
+      " snapshot coverage and validation limits. Magnum and the unverified"
+      " Excel series are excluded. Local sync caches cannot silently change"
+      " the scheduled experiment.")
+    a("- **Versioning** — original predictions and legacy replay are preserved."
+      f" Future predictions record `{PIPELINE_VERSION}`, row count, actual"
+      " training cutoff and corpus SHA-256. Scores across versions are not"
+      " evidence that the new pipeline has improved; it needs its own future results.")
     a("- **Prediction method** — `predictor_suite.run_all(include_ml=False)`"
       " (8 statistical lenses: frequency, 90-day hot, overdue-gap, digit"
       " probabilities, permutation families, Markov, ARIMA digit-sum,"
@@ -630,7 +717,7 @@ def render_log(state: dict, network_ok: bool = True) -> str:
     a("- **Verification** — Da Ma Cai public endpoint, polite 1 req/sec"
       " fetches, no scraping of protected pages.")
     a("")
-    a("_Reminder: Malaysian 4D draws are i.i.d. uniform. Nothing here is a")
+    a("_Reminder: independent uniform outcomes are the null model. Nothing here is a")
     a("betting strategy — this log is an open experiment whose expected outcome")
     a("is that both columns match the ~2.27% baseline._")
     a("")

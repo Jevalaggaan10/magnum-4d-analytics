@@ -1,7 +1,7 @@
 """Magnum 4D source — thin wrapper over the bundled `4D.txt` historical file.
 
 Magnum doesn't expose a public JSON endpoint we can hit reliably, so this
-source serves the static dataset already in the repo (1985-04-25 onward).
+source serves the static dataset already in the repo (1992-05-06 onward).
 """
 
 from __future__ import annotations
@@ -10,10 +10,12 @@ from pathlib import Path
 
 import pandas as pd
 
+from data_loader import REPO_ROOT, load_4d_txt, normalize_prize_number
+
 from .base import LotterySource, NormalizedDraw
 
 
-DEFAULT_PATH = Path("c:/codex/lottery/4D.txt")
+DEFAULT_PATH = REPO_ROOT / '4D.txt'
 
 
 class Magnum(LotterySource):
@@ -25,8 +27,8 @@ class Magnum(LotterySource):
 
     def _load(self) -> pd.DataFrame:
         if self._df is None:
-            df = pd.read_csv(self.csv_path)
-            df['DrawDate'] = df['DrawDate'].astype(str)
+            df = load_4d_txt(self.csv_path)
+            df['DrawDate'] = df['DrawDate'].dt.strftime('%Y%m%d')
             self._df = df
         return self._df
 
@@ -42,7 +44,7 @@ class Magnum(LotterySource):
         r = row.iloc[0]
 
         def cell(col):
-            return str(r[col]).zfill(4) if col in r and pd.notna(r[col]) else ''
+            return normalize_prize_number(r[col]) or '' if col in r else ''
 
         special = [cell(f'SpecialNo{i}') for i in range(1, 11)]
         consolation = [cell(f'ConsolationNo{i}') for i in range(1, 11)]
@@ -52,8 +54,8 @@ class Magnum(LotterySource):
             first=cell('1stPrizeNo'),
             second=cell('2ndPrizeNo'),
             third=cell('3rdPrizeNo'),
-            special=[x for x in special if x],
-            consolation=[x for x in consolation if x],
+            special=special,
+            consolation=consolation,
             source=self.name,
         )
 

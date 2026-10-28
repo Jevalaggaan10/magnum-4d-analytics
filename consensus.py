@@ -6,15 +6,14 @@ their top-N and produce a weighted score where higher-ranked entries count
 for more.
 
 IMPORTANT: agreement across methods does NOT translate to a predictive edge.
-The backtester proves this. See `backtest.py`.
+Use the backtester to measure performance. See `backtest.py`.
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 from collections import Counter
+import re
 
-import numpy as np
 import pandas as pd
 
 from predictor_suite import MethodResult
@@ -34,21 +33,13 @@ DEFAULT_WEIGHTS = {
 }
 
 
-@dataclass
-class ConsensusRow:
-    number: str
-    agreement_count: int
-    weighted_score: float
-    methods: list[str]
-
-
 def build_consensus(
     results: dict[str, MethodResult],
     top_n: int = 50,
     weights: dict[str, float] = None,
 ) -> pd.DataFrame:
     """Return DataFrame: number, agreement_count, weighted_score, methods."""
-    weights = weights or DEFAULT_WEIGHTS
+    weights = DEFAULT_WEIGHTS if weights is None else weights
 
     agreement: dict[str, int] = Counter()
     weighted: dict[str, float] = Counter()
@@ -58,7 +49,11 @@ def build_consensus(
         if not res.top:
             continue
         w = weights.get(method, 1.0)
+        seen = set()
         for rank, (num, _) in enumerate(res.top[:top_n]):
+            if not isinstance(num, str) or re.fullmatch(r'[0-9]{4}', num) is None or num in seen:
+                continue
+            seen.add(num)
             agreement[num] += 1
             weighted[num] += w / (rank + 1)
             methods_for.setdefault(num, []).append(method)
@@ -76,8 +71,8 @@ def build_consensus(
         })
     df = pd.DataFrame(rows)
     df = df.sort_values(
-        ['agreement_count', 'weighted_score'],
-        ascending=[False, False],
+        ['agreement_count', 'weighted_score', 'number'],
+        ascending=[False, False, True],
     ).reset_index(drop=True)
     return df
 
@@ -92,7 +87,7 @@ if __name__ == "__main__":
     from data_loader import load_combined_data, extract_top3_prizes
     from predictor_suite import run_all
 
-    df = load_combined_data("c:/codex/lottery")
+    df = load_combined_data()
     top3 = extract_top3_prizes(df)
     results = run_all(top3, include_ml=False, top_n=50)
     cons = build_consensus(results, top_n=50)

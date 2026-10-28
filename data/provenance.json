@@ -1,0 +1,21 @@
+{
+  "operator": "damacai",
+  "rows": 3633,
+  "date_min": "20050101",
+  "date_max": "20261028",
+  "sha256": "a5c89d1ee1beaa3dfda99bb735ac2de86323edd945b5c93bbba70aeebb323dd4",
+  "inputs": {
+    "existing_local_cache_rows": 3592,
+    "ledger_observed_dates": 41
+  },
+  "sample_validation": {
+    "official_adapter": "data_sources.damacai.Damacai",
+    "dates": [
+      "20050101",
+      "20240501",
+      "20260523"
+    ],
+    "all_23_slots_match": true
+  },
+  "coverage_note": "Snapshot is not a complete archive: existing cache ends 20260523, supplemented by 20260801-20261028 observations. Missing dates are not fabricated. Three spot checks do not validate every historical row."
+}

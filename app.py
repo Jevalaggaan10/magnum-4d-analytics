@@ -6,14 +6,12 @@ Run with:  streamlit run app.py
 
 from __future__ import annotations
 
-import json
-from datetime import datetime
-
 import numpy as np
 import pandas as pd
-import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
+
+from data_loader import REPO_ROOT
 
 
 # ---------------------------------------------------------------------------
@@ -44,13 +42,13 @@ st.markdown(
 # Cached loaders
 # ---------------------------------------------------------------------------
 
-DATA_DIR = "c:/codex/lottery"
+DATA_DIR = REPO_ROOT
 
 
 @st.cache_data(show_spinner=True)
-def load_data(cache_bust: int = 0):
+def load_data(cache_bust: int = 0, operator: str = 'magnum'):
     from data_loader import load_combined_data, extract_top3_prizes
-    df_full = load_combined_data(DATA_DIR, include_cache=True)
+    df_full = load_combined_data(DATA_DIR, include_cache=True, operator=operator)
     top3 = extract_top3_prizes(df_full)
     return df_full, top3
 
@@ -62,21 +60,21 @@ def get_last_sync_info():
 
 
 @st.cache_data(show_spinner=True)
-def run_predictors(df_hash: int, _df: pd.DataFrame, include_ml: bool, top_n: int):
+def run_predictors(df: pd.DataFrame, include_ml: bool, top_n: int):
     from predictor_suite import run_all
-    return run_all(_df, include_ml=include_ml, top_n=top_n, lstm_epochs=2)
+    return run_all(df, include_ml=include_ml, top_n=top_n, lstm_epochs=2)
 
 
 @st.cache_data(show_spinner=False)
-def build_consensus_table(_results, top_n: int):
+def build_consensus_table(results, top_n: int):
     from consensus import build_consensus
-    return build_consensus(_results, top_n=top_n)
+    return build_consensus(results, top_n=top_n)
 
 
 @st.cache_data(show_spinner=True)
-def run_randomness(df_hash: int, _df: pd.DataFrame):
+def run_randomness(df: pd.DataFrame):
     from randomness_tests import run_all, summary_table
-    res = run_all(_df)
+    res = run_all(df)
     return res, summary_table(res)
 
 
@@ -99,6 +97,16 @@ sync_choice = st.sidebar.selectbox("Sync from operator",
                                    index=0)
 sync_recent = st.sidebar.slider("How many recent draws", 5, 200, 30, 5)
 
+analysis_operator = st.sidebar.selectbox(
+    'Analyze draw series', ['magnum', 'damacai', 'unverified_excel', 'fouryes3'],
+    format_func=lambda value: {
+        'magnum': 'Magnum', 'damacai': 'Da Ma Cai',
+        'unverified_excel': 'Excel history (provenance unverified)',
+        'fouryes3': 'Configured fouryes3 feed (provenance unverified)',
+    }[value],
+    help='Each analysis uses one draw series. Unverified histories stay separate.',
+)
+
 if st.sidebar.button("⬇ Sync latest results", use_container_width=True):
     from data_sources.manager import sync, sync_all
     with st.spinner(f"Syncing {sync_choice}..."):
@@ -108,7 +116,11 @@ if st.sidebar.button("⬇ Sync latest results", use_container_width=True):
             reports = [sync(sync_choice, recent=sync_recent, verbose=False)]
     for r in reports:
         if r.available:
-            st.sidebar.success(f"{r.operator}: +{r.fetched} new, {r.skipped_existing} already cached")
+            message = f"{r.operator}: +{r.fetched} new, {r.skipped_existing} already cached"
+            if r.failed:
+                st.sidebar.warning(f'{message}, {r.failed} failed')
+            else:
+                st.sidebar.success(message)
         else:
             st.sidebar.error(f"{r.operator}: {r.error or 'unavailable'}")
     st.session_state['cache_bust'] += 1
@@ -126,8 +138,16 @@ if fouryes3_key:
 
 # Load data
 with st.spinner("Loading historical draws..."):
-    df_full, top3 = load_data(st.session_state['cache_bust'])
-df_hash = len(top3)
+    try:
+        df_full, top3 = load_data(st.session_state['cache_bust'], analysis_operator)
+    except FileNotFoundError:
+        st.info('No history is available for this series. Sync its results from the sidebar.')
+        st.stop()
+if top3.empty:
+    st.warning('This series has no valid top-three draw results to analyze.')
+    st.stop()
+if analysis_operator in {'unverified_excel', 'fouryes3'}:
+    st.warning('The operator provenance of this history is unverified. It is analyzed separately.')
 
 
 # ---------------------------------------------------------------------------
@@ -154,7 +174,7 @@ with tab_home:
     st.caption("These are the 10 numbers that the most different methods rank highly. **This is not a prediction** — it's just where the methods agree. The Backtest in Advanced shows that agreement doesn't translate to wins.")
 
     with st.spinner("Crunching numbers..."):
-        results = run_predictors(df_hash, top3, include_ml, 100)
+        results = run_predictors(top3, include_ml, 100)
         cons = build_consensus_table(results, 50)
 
     if cons.empty:
@@ -165,7 +185,6 @@ with tab_home:
         cols = st.columns(5)
         for i, row in top10.iterrows():
             col = cols[i % 5]
-            shade = int(255 - (180 * row['agreement_count'] / max(max_agree, 1)))
             color = f"rgb(46, 134, 171, {0.3 + 0.7 * row['agreement_count'] / max(max_agree, 1)})"
             col.markdown(
                 f"""
@@ -199,7 +218,7 @@ with tab_check:
             if len(guess_clean) != 4 or not guess_clean.isdigit():
                 st.error("Please enter exactly 4 digits (0000–9999).")
             else:
-                results = run_predictors(df_hash, top3, include_ml, 100)
+                results = run_predictors(top3, include_ml, 100)
                 cons = build_consensus_table(results, 100)
 
                 from user_guess_analyzer import analyze
@@ -214,7 +233,7 @@ with tab_check:
                     c3.metric("Last seen", f"{report.days_since_last} days ago",
                               help=str(report.last_seen.date()))
                 else:
-                    c3.metric("Last seen", "Never (top 3)")
+                    c3.metric("Last seen", "Never (available slots)")
 
                 st.markdown("### What history says")
                 if report.total_appearances == 0:
@@ -222,7 +241,7 @@ with tab_check:
                 else:
                     last_str = f"on {report.last_seen.date()}" if report.last_seen is not None else "(not in top 3 ever)"
                     st.write(
-                        f"**{guess_clean} has appeared {report.total_appearances} times** across all 23 prize positions since 1985. "
+                        f"**{guess_clean} has appeared {report.total_appearances} times** across the available prize positions since {df_full['DrawDate'].min().date()}. "
                         f"It was last seen {last_str}. "
                         f"Any arrangement of these digits has come up **{report.permutation_appearances} times** in total."
                     )
@@ -231,16 +250,16 @@ with tab_check:
                 empirical = report.empirical_next_draw_hit_prob
                 baseline = report.random_baseline
                 st.write(
-                    f"After each historical occurrence of {guess_clean}, the chance of it appearing in the very next draw "
-                    f"has been **{empirical * 100:.2f}%**. The pure-random baseline is **{baseline * 100:.2f}%** "
-                    f"({int(round(baseline * 10000))} prize slots out of 10,000)."
+                    f"After a historical top-three occurrence of {guess_clean}, its observed next-draw top-three hit rate "
+                    f"was **{empirical * 100:.2f}%**. The independent-uniform approximation for the "
+                    f"{report.evaluated_slots} analyzed slots is **{baseline * 100:.2f}%**."
                 )
                 if abs(empirical - baseline) < baseline * 0.5:
-                    st.success("That's right around what you'd expect from random chance — no detectable advantage.")
+                    st.info("The sample rate is near the baseline. This descriptive comparison does not establish a predictive advantage.")
                 elif empirical > baseline:
-                    st.info(f"It's a touch above baseline, but with only {report.total_appearances} samples this is noise, not a pattern.")
+                    st.info("The sample rate is above the baseline. An independent test with quantified uncertainty is needed before claiming a predictive effect.")
                 else:
-                    st.info(f"It's a touch below baseline — also noise. Lottery numbers don't 'use up their luck'.")
+                    st.info("The sample rate is below the baseline. This alone does not establish serial dependence or a predictive effect.")
 
                 st.markdown("### Where it ranks across all methods")
                 rank_rows = [
@@ -300,7 +319,7 @@ with tab_bet:
 
     c1, c2 = st.columns(2)
     strategy = c1.selectbox("How do you pick numbers?", [
-        "Random numbers each draw",
+        "Randomly chosen 10 numbers",
         "Always the same 10 hot numbers",
         "Always the same 10 'overdue' numbers",
         "Today's top 10 consensus numbers",
@@ -321,12 +340,15 @@ with tab_bet:
             from predictor_suite import method_overdue
             numbers = method_overdue(top3, top_n=10).numbers(10)
         else:
-            results = run_predictors(df_hash, top3, include_ml, 100)
+            results = run_predictors(top3, include_ml, 100)
             cons = build_consensus_table(results, 50)
             numbers = cons.head(10)['number'].tolist()
 
+        if not numbers:
+            st.warning('This method produced no numbers for the selected history.')
+            st.stop()
         per_number_bet = bet_amount / len(numbers)
-        st.write(f"Betting RM{per_number_bet:.2f} on each of these 10 numbers: `{numbers}`")
+        st.write(f"Betting RM{per_number_bet:.2f} on each of these {len(numbers)} numbers: `{numbers}`")
 
         nets, curves = [], []
         with st.spinner(f"Running {n_runs} simulations of {num_draws} draws each..."):
@@ -390,7 +412,7 @@ The data is interesting even if it isn't predictive. You can ask things like:
 This app answers all of those — honestly.
 
 **3. The methods.**
-We run 10 different statistical and machine-learning methods over 40+ years of draws.
+We provide eight statistical methods and two optional machine-learning methods.
 They each rank the 10,000 possible 4-digit numbers using their own logic
 (frequency, gap, neural network, etc.). Some methods agree on "good" numbers.
 That's just what the **methods think look good in the past** — it has nothing
@@ -398,9 +420,9 @@ to do with what the next draw will be.
 
 **4. The backtest.**
 The most important number in this app is in **Advanced → Backtest**: when we
-test all these methods on past data they hadn't seen, **none of them beat
-random chance**. That's not because we built it badly. That's because the
-data is genuinely random.
+test methods on past data they hadn't seen, we compare them with a uniform
+baseline and correct for multiple tests. Read the measured results rather
+than assuming an edge. Failure to reject a null does not prove randomness.
 
 **5. The math of losing.**
 A Magnum 4D "Big" bet pays out:
@@ -426,7 +448,7 @@ with tab_adv:
     st.subheader("Power-user view")
 
     with st.expander("Per-method top numbers"):
-        results = run_predictors(df_hash, top3, include_ml, 100)
+        results = run_predictors(top3, include_ml, 100)
         for name, res in results.items():
             with st.container():
                 st.markdown(f"**{name}** _({res.family})_ — {res.explanation}")
@@ -437,14 +459,14 @@ with tab_adv:
                     st.write(f"_no results: {res.explanation}_")
 
     with st.expander("Full consensus table (all numbers)"):
-        results = run_predictors(df_hash, top3, include_ml, 100)
+        results = run_predictors(top3, include_ml, 100)
         cons = build_consensus_table(results, 100)
         st.dataframe(cons, use_container_width=True, hide_index=True, height=420)
 
     with st.expander("Randomness tests"):
-        raw, table = run_randomness(df_hash, top3)
+        raw, table = run_randomness(top3)
         st.dataframe(table, use_container_width=True, hide_index=True)
-        st.caption("With ~30 years of data, even a 0.5% bias is detectable. The data passes; it's genuinely random.")
+        st.caption('A non-significant result is consistent with the tested null; it does not prove randomness. Interpret p-values with sample size and multiple tests in mind.')
 
     with st.expander("Walk-forward backtest"):
         c1, c2 = st.columns(2)

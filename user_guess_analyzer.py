@@ -9,13 +9,13 @@ under every available method. Closes with an honest verdict line that puts
 
 from __future__ import annotations
 
-from collections import Counter
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
 
 from feature_engineer import get_digit_features
+from data_loader import normalize_prize_number
 
 
 ALL_SLOT_COLS = (
@@ -25,8 +25,8 @@ ALL_SLOT_COLS = (
 )
 TOP3_COLS = ['1stPrizeNo', '2ndPrizeNo', '3rdPrizeNo']
 
-# Random baseline: 23 prize slots out of 10,000 numbers per draw
-RANDOM_BASELINE_PER_DRAW = 23 / 10000  # 0.0023
+# Compatibility constant for the full 23-slot independent-uniform approximation.
+RANDOM_BASELINE_PER_DRAW = 1 - (1 - 1 / 10000) ** 23
 
 
 @dataclass
@@ -45,13 +45,14 @@ class GuessReport:
     agreement_count: int
     weighted_score: float
     verdict: str
+    evaluated_slots: int = 3
 
 
 def _normalize(number: str) -> str:
-    number = str(number).zfill(4)
-    if len(number) != 4 or not number.isdigit():
+    normalized = normalize_prize_number(number)
+    if normalized is None:
         raise ValueError(f"Number must be 4 digits, got {number!r}")
-    return number
+    return normalized
 
 
 def _count_in_columns(df: pd.DataFrame, number: str, columns: list[str]) -> dict[str, int]:
@@ -59,7 +60,7 @@ def _count_in_columns(df: pd.DataFrame, number: str, columns: list[str]) -> dict
     for col in columns:
         if col not in df.columns:
             continue
-        out[col] = int((df[col].astype(str).str.zfill(4) == number).sum())
+        out[col] = int((df[col].map(normalize_prize_number) == number).sum())
     return out
 
 
@@ -68,7 +69,7 @@ def _last_seen(df: pd.DataFrame, number: str, columns: list[str]) -> pd.Timestam
     for col in columns:
         if col not in df.columns:
             continue
-        mask = df[col].astype(str).str.zfill(4) == number
+        mask = df[col].map(normalize_prize_number) == number
         if mask.any():
             dates.append(df.loc[mask, 'DrawDate'].max())
     return max(dates) if dates else None
@@ -77,8 +78,8 @@ def _last_seen(df: pd.DataFrame, number: str, columns: list[str]) -> pd.Timestam
 def _empirical_next_hit_prob(df: pd.DataFrame, number: str, columns: list[str]) -> float:
     """For every historical draw where the number appeared, check the NEXT draw.
 
-    Returns hits / occurrences. With i.i.d. data this converges to
-    RANDOM_BASELINE_PER_DRAW.
+    Returns hits / eligible transitions. Under independent uniform slots,
+    the matching baseline depends on the columns actually evaluated.
     """
     sorted_df = df.sort_values('DrawDate').reset_index(drop=True)
     if len(sorted_df) < 2:
@@ -87,7 +88,7 @@ def _empirical_next_hit_prob(df: pd.DataFrame, number: str, columns: list[str]) 
     appeared_mask = pd.Series(False, index=sorted_df.index)
     for col in columns:
         if col in sorted_df.columns:
-            appeared_mask |= sorted_df[col].astype(str).str.zfill(4) == number
+            appeared_mask |= sorted_df[col].map(normalize_prize_number) == number
 
     occurrence_idx = np.flatnonzero(appeared_mask.values)
     if len(occurrence_idx) == 0:
@@ -99,7 +100,7 @@ def _empirical_next_hit_prob(df: pd.DataFrame, number: str, columns: list[str]) 
     next_appeared = pd.Series(False, index=sorted_df.index)
     for col in columns:
         if col in sorted_df.columns:
-            next_appeared |= sorted_df[col].astype(str).str.zfill(4) == number
+            next_appeared |= sorted_df[col].map(normalize_prize_number) == number
     hits = int(next_appeared.iloc[next_idx].sum())
     return hits / len(next_idx)
 
@@ -110,7 +111,7 @@ def _permutation_count(df: pd.DataFrame, number: str, columns: list[str]) -> tup
     for col in columns:
         if col not in df.columns:
             continue
-        col_canon = df[col].astype(str).str.zfill(4).apply(lambda n: ''.join(sorted(n)))
+        col_canon = df[col].map(normalize_prize_number).dropna().apply(lambda n: ''.join(sorted(n)))
         count += int((col_canon == canonical).sum())
     return canonical, count
 
@@ -136,11 +137,11 @@ def _agreement_from_consensus(consensus_df: pd.DataFrame, number: str) -> tuple[
 def _verdict(empirical: float, baseline: float, agreement: int) -> str:
     delta = empirical - baseline
     if abs(delta) < baseline * 0.5:
-        edge = "no detectable edge over random"
+        edge = "sample rate near the uniform baseline; no predictive edge established"
     elif delta > 0:
-        edge = f"empirical rate {delta:.4f} above baseline - likely noise, would need many more samples to be significant"
+        edge = f"empirical rate {delta:.4f} above baseline; uncertainty and predictive significance are not established"
     else:
-        edge = f"empirical rate {-delta:.4f} below baseline - likely noise"
+        edge = f"empirical rate {-delta:.4f} below baseline; this descriptive difference is not proof of a predictive effect"
     return (
         f"Historical resonance: agreement={agreement}/methods. "
         f"Next-draw edge: {edge}. "
@@ -157,6 +158,8 @@ def analyze(
 ) -> GuessReport:
     """Run the full analysis pipeline for a user-supplied 4-digit number."""
     number = _normalize(number)
+    columns = [column for column in dict.fromkeys(columns) if column in df.columns]
+    baseline = 1 - (1 - 1 / 10000) ** len(columns)
 
     appearances_by_col = _count_in_columns(df, number, ALL_SLOT_COLS)
     total = sum(appearances_by_col.values())
@@ -189,11 +192,12 @@ def analyze(
         permutation_family=perm_str,
         permutation_appearances=perm_count,
         empirical_next_draw_hit_prob=empirical,
-        random_baseline=RANDOM_BASELINE_PER_DRAW,
+        random_baseline=baseline,
         method_ranks=ranks,
         agreement_count=agreement,
         weighted_score=weighted,
-        verdict=_verdict(empirical, RANDOM_BASELINE_PER_DRAW, agreement),
+        verdict=_verdict(empirical, baseline, agreement),
+        evaluated_slots=len(columns),
     )
 
 
@@ -209,14 +213,14 @@ def format_report(report: GuessReport) -> str:
     if report.last_seen is not None:
         lines.append(f"Last seen: {report.last_seen.date()} ({report.days_since_last} days ago)")
     else:
-        lines.append("Last seen: NEVER (in top-3 prize columns)")
+        lines.append("Last seen: NEVER (in the available prize columns)")
     lines.append("")
     lines.append("Digit features:")
     for k, v in report.digit_features.items():
         lines.append(f"  {k}: {v}")
     lines.append("")
     lines.append(f"Empirical next-draw hit prob: {report.empirical_next_draw_hit_prob:.4f}")
-    lines.append(f"Random baseline (23/10000):  {report.random_baseline:.4f}")
+    lines.append(f"Independent-uniform baseline ({report.evaluated_slots} analyzed slots): {report.random_baseline:.4f}")
     lines.append("")
     if report.method_ranks:
         lines.append("Method ranks (None = not in top-N):")
@@ -237,7 +241,7 @@ if __name__ == "__main__":
 
     guess = sys.argv[1] if len(sys.argv) > 1 else "1234"
 
-    df = load_combined_data("c:/codex/lottery")
+    df = load_combined_data()
     top3 = extract_top3_prizes(df)
     method_results = run_all(top3, include_ml=False, top_n=100)
     cons = build_consensus(method_results, top_n=100)

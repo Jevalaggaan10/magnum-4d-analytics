@@ -9,29 +9,15 @@ from collections import Counter
 import pickle
 import os
 import random
-import warnings
-warnings.filterwarnings('ignore')
+from importlib.util import find_spec
 
 SEED = 42
 np.random.seed(SEED)
 random.seed(SEED)
 
-try:
-    import xgboost as xgb
-    HAS_XGBOOST = True
-except ImportError:
-    HAS_XGBOOST = False
-    print("XGBoost not installed. Install with: pip install xgboost")
-
-try:
-    import tensorflow as tf
-    from tensorflow.keras.models import Sequential
-    from tensorflow.keras.layers import LSTM, Dense, Dropout
-    tf.random.set_seed(SEED)
-    HAS_TENSORFLOW = True
-except ImportError:
-    HAS_TENSORFLOW = False
-    print("TensorFlow not installed. Install with: pip install tensorflow")
+# Statistical and Markov methods must not import optional ML runtimes.
+HAS_XGBOOST = find_spec('xgboost') is not None
+HAS_TENSORFLOW = find_spec('tensorflow') is not None
 
 
 class StatisticalModel:
@@ -66,6 +52,8 @@ class StatisticalModel:
         """Predict top N numbers based on historical frequency."""
         # Method 1: Most frequent numbers
         freq_based = [num for num, _ in self.number_freq.most_common(n)]
+        if len(freq_based) >= n:
+            return freq_based
         
         # Method 2: Generate from digit frequencies
         digit_based = []
@@ -230,7 +218,11 @@ class MarkovChainModel:
 
 
 class XGBoostModel:
-    """XGBoost classifier for predicting likely numbers."""
+    """Historical appeared-vs-never diagnostic, not a next-draw classifier.
+
+    The frequency feature determines this historical label. Scores must not
+    be interpreted as future winning probabilities.
+    """
     
     def __init__(self):
         self.model = None
@@ -266,6 +258,7 @@ class XGBoostModel:
         if not HAS_XGBOOST:
             print("XGBoost not available!")
             return
+        import xgboost as xgb
         
         # Create training data
         # Positive samples: numbers that actually appeared
@@ -333,6 +326,7 @@ class XGBoostModel:
     
     def load(self, filepath: str):
         if HAS_XGBOOST:
+            import xgboost as xgb
             self.model = xgb.XGBClassifier()
             self.model.load_model(filepath)
 
@@ -347,6 +341,7 @@ class LSTMModel:
         self.name = "LSTM"
 
     def _digit_stream(self, df: pd.DataFrame, prize_col: str = '1stPrizeNo') -> np.ndarray:
+        df = df.sort_values('DrawDate', kind='stable') if 'DrawDate' in df.columns else df
         numbers = df[prize_col].astype(str).str.zfill(4).values
         digits = np.fromiter(
             (int(c) for num in numbers for c in num),
@@ -358,13 +353,13 @@ class LSTMModel:
     def _prepare_sequences(self, df: pd.DataFrame, prize_col: str = '1stPrizeNo'):
         stream = self._digit_stream(df, prize_col)
         L = self.sequence_length
-        if len(stream) <= L + 1:
+        if len(stream) <= L:
             return np.empty((0, L, 10)), np.empty((0,), dtype=np.int64)
 
         # one-hot encode whole stream once
         onehot = np.eye(10, dtype=np.float32)[stream]
 
-        n = len(stream) - L - 1
+        n = len(stream) - L
         X = np.lib.stride_tricks.sliding_window_view(onehot, (L, 10))[:n].reshape(n, L, 10)
         y = stream[L:L + n].astype(np.int64)
         return X, y
@@ -373,6 +368,9 @@ class LSTMModel:
         if not HAS_TENSORFLOW:
             print("TensorFlow not available!")
             return
+        import tensorflow as tf
+        from tensorflow.keras.models import Sequential
+        from tensorflow.keras.layers import LSTM, Dense, Dropout
 
         X, y = self._prepare_sequences(df)
         if len(X) == 0:
@@ -456,6 +454,7 @@ class LSTMModel:
 
     def load(self, filepath: str):
         if HAS_TENSORFLOW and os.path.exists(filepath):
+            import tensorflow as tf
             self.model = tf.keras.models.load_model(filepath)
 
 
@@ -496,7 +495,7 @@ if __name__ == "__main__":
     from data_loader import load_combined_data, extract_top3_prizes
     
     # Load data
-    df = load_combined_data("c:/codex/lottery")
+    df = load_combined_data()
     top3 = extract_top3_prizes(df)
     
     # Train models

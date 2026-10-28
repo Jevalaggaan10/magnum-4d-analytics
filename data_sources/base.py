@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import abc
 from dataclasses import dataclass, field
-from typing import Iterable
+from datetime import datetime
+
+from data_loader import normalize_prize_number
 
 
 SCHEMA_COLUMNS = (
@@ -27,16 +29,29 @@ class NormalizedDraw:
     source: str = ""
 
     def to_row(self) -> dict:
+        date = str(self.draw_date)
+        if len(date) != 8 or not date.isascii() or not date.isdigit():
+            raise ValueError(f'Invalid draw date: {date!r}')
+        datetime.strptime(date, '%Y%m%d')
+
+        def cell(value, required=False):
+            number = normalize_prize_number(value)
+            if number is not None:
+                return number
+            if required or str(value).strip() not in {'', 'None', 'nan', '<NA>'}:
+                raise ValueError(f'Invalid prize number: {value!r}')
+            return ''
+
         row = {
-            'DrawDate': self.draw_date,
-            '1stPrizeNo': self.first.zfill(4),
-            '2ndPrizeNo': self.second.zfill(4),
-            '3rdPrizeNo': self.third.zfill(4),
+            'DrawDate': date,
+            '1stPrizeNo': cell(self.first, required=True),
+            '2ndPrizeNo': cell(self.second, required=True),
+            '3rdPrizeNo': cell(self.third, required=True),
             'Source': self.source,
         }
         for i in range(10):
-            row[f'SpecialNo{i + 1}'] = self.special[i].zfill(4) if i < len(self.special) else ''
-            row[f'ConsolationNo{i + 1}'] = self.consolation[i].zfill(4) if i < len(self.consolation) else ''
+            row[f'SpecialNo{i + 1}'] = cell(self.special[i]) if i < len(self.special) else ''
+            row[f'ConsolationNo{i + 1}'] = cell(self.consolation[i]) if i < len(self.consolation) else ''
         return row
 
 

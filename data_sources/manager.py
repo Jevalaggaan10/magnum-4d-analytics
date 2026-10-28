@@ -15,13 +15,15 @@ from pathlib import Path
 
 import pandas as pd
 
-from .base import LotterySource, SCHEMA_COLUMNS, NormalizedDraw
+from data_loader import REPO_ROOT, SLOT_COLS, load_data_cache, normalize_prize_number
+
+from .base import LotterySource, SCHEMA_COLUMNS
 from .damacai import Damacai
 from .fouryes3 import FourYes3
 from .magnum import Magnum
 
 
-CACHE_DIR = Path("c:/codex/lottery/data_cache")
+CACHE_DIR = REPO_ROOT / 'data_cache'
 LAST_SYNC_FILE = CACHE_DIR / "last_sync.json"
 
 
@@ -56,13 +58,19 @@ def _ensure_cache_dir() -> None:
 def _load_cache(operator: str) -> pd.DataFrame:
     p = _cache_path(operator)
     if p.exists():
-        return pd.read_csv(p, dtype={'DrawDate': str})
+        df = load_data_cache(operator, CACHE_DIR)
+        df = df.dropna(subset=['DrawDate']).copy()
+        df['DrawDate'] = df['DrawDate'].dt.strftime('%Y%m%d')
+        return df
     return pd.DataFrame(columns=SCHEMA_COLUMNS)
 
 
 def _write_cache(operator: str, df: pd.DataFrame) -> None:
     _ensure_cache_dir()
     df = df[[c for c in SCHEMA_COLUMNS if c in df.columns]].copy()
+    for col in SLOT_COLS:
+        if col in df:
+            df[col] = df[col].map(normalize_prize_number)
     df.to_csv(_cache_path(operator), index=False)
 
 
@@ -113,15 +121,16 @@ def sync(operator: str, recent: int = 30, verbose: bool = True) -> SyncReport:
     for d in missing:
         try:
             draw = source.fetch_draw(d)
+            row = draw.to_row() if draw is not None else None
         except Exception as e:
             failed += 1
             if verbose:
                 print(f"  ! {d} fetch error: {e}", file=sys.stderr)
             continue
-        if draw is None:
+        if row is None:
             failed += 1
             continue
-        rows.append(draw.to_row())
+        rows.append(row)
         if verbose:
             print(f"  + {d} fetched")
 

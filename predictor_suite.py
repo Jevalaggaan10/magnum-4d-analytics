@@ -10,15 +10,14 @@ They are scored for ranking only, not for predictive edge.
 
 from __future__ import annotations
 
-import warnings
 from collections import Counter
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Callable
 
 import numpy as np
 import pandas as pd
 
-warnings.filterwarnings('ignore')
+from data_loader import normalize_prize_number
 
 
 # ---------------------------------------------------------------------------
@@ -46,8 +45,10 @@ class MethodResult:
 def _all_numbers_iter(df: pd.DataFrame, cols=('1stPrizeNo', '2ndPrizeNo', '3rdPrizeNo')):
     for col in cols:
         if col in df.columns:
-            for n in df[col].astype(str).str.zfill(4):
-                yield n
+            for value in df[col]:
+                number = normalize_prize_number(value)
+                if number is not None:
+                    yield number
 
 
 # ---------------------------------------------------------------------------
@@ -101,7 +102,6 @@ def method_overdue(df: pd.DataFrame, top_n: int = 100, min_freq: int = 2) -> Met
 
 
 def method_digit_probability(df: pd.DataFrame, top_n: int = 100, seed: int = 42) -> MethodResult:
-    rng = np.random.default_rng(seed)
     pos_counts = [Counter() for _ in range(4)]
     for num in _all_numbers_iter(df):
         for i, c in enumerate(num):
@@ -109,6 +109,8 @@ def method_digit_probability(df: pd.DataFrame, top_n: int = 100, seed: int = 42)
     pos_probs = []
     for c in pos_counts:
         total = sum(c.values())
+        if not total:
+            raise ValueError('digit probabilities require valid prize numbers')
         pos_probs.append({d: c[d] / total for d in '0123456789'})
 
     # Score every number = product of per-position probabilities, top-N by score
@@ -129,7 +131,6 @@ def method_digit_probability(df: pd.DataFrame, top_n: int = 100, seed: int = 42)
 
 
 def method_permutation_family(df: pd.DataFrame, top_n: int = 100, seed: int = 42) -> MethodResult:
-    rng = np.random.default_rng(seed)
     perm_freq = Counter()
     perm_to_nums = {}
     for num in _all_numbers_iter(df):
@@ -193,7 +194,7 @@ def method_xgboost(df: pd.DataFrame, top_n: int = 100) -> MethodResult:
         name="xgboost",
         family="ml",
         top=[(num, float(p)) for num, p in preds],
-        explanation="Binary classifier (appeared vs never-appeared) scoring all 10,000 numbers.",
+        explanation="Historical appeared-vs-never classifier; its frequency feature encodes the label. This diagnostic is not a next-draw probability model.",
     )
 
 
@@ -232,8 +233,12 @@ def method_arima_digit_sum(df: pd.DataFrame, top_n: int = 100) -> MethodResult:
     except ImportError:
         return MethodResult("arima_digit_sum", [], "statsmodels missing.", family="ts")
     if '1stPrizeNo' not in df.columns:
-        return MethodResult("arima_digit_sum", "ts", [], "no 1stPrizeNo")
-    s = df['1stPrizeNo'].astype(str).str.zfill(4).apply(lambda n: sum(int(c) for c in n)).values
+        return MethodResult("arima_digit_sum", [], "no 1stPrizeNo", family="error")
+    ordered = df.sort_values('DrawDate') if 'DrawDate' in df.columns else df
+    numbers = ordered['1stPrizeNo'].map(normalize_prize_number).dropna()
+    if numbers.empty:
+        return MethodResult("arima_digit_sum", [], "no valid first-prize numbers", family="error")
+    s = numbers.apply(lambda n: sum(int(c) for c in n)).values
     try:
         fit = ARIMA(s, order=(2, 0, 2)).fit()
         forecast = float(fit.forecast(1)[0])
@@ -309,6 +314,10 @@ ML_METHODS: dict[str, Callable[[pd.DataFrame], MethodResult]] = {
 
 def run_all(df: pd.DataFrame, include_ml: bool = True, top_n: int = 100, lstm_epochs: int = 3) -> dict[str, MethodResult]:
     """Run every method. ML methods optional (slow)."""
+    if not 1 <= top_n <= 10000:
+        raise ValueError('top_n must be between 1 and 10000')
+    if 'DrawDate' in df.columns:
+        df = df.sort_values('DrawDate', kind='stable').reset_index(drop=True)
     out: dict[str, MethodResult] = {}
     for key, fn in ALL_METHODS.items():
         try:
@@ -334,7 +343,7 @@ def run_all(df: pd.DataFrame, include_ml: bool = True, top_n: int = 100, lstm_ep
 
 if __name__ == "__main__":
     from data_loader import load_combined_data, extract_top3_prizes
-    df = load_combined_data("c:/codex/lottery")
+    df = load_combined_data()
     top3 = extract_top3_prizes(df)
     results = run_all(top3, include_ml=False, top_n=20)
     for name, r in results.items():
