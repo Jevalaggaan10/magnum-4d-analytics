@@ -1,6 +1,6 @@
 {
   "pending": {
-    "for_date": "20261028",
+    "for_date": "20261031",
     "picks": [
       "3845",
       "1830",
@@ -14,19 +14,19 @@
       "1835"
     ],
     "random_control": [
-      "9150",
-      "9562",
-      "0744",
-      "9473",
-      "3475",
-      "0615",
-      "8179",
-      "8858",
-      "2325",
-      "4306"
+      "5009",
+      "3963",
+      "6154",
+      "1192",
+      "8397",
+      "0669",
+      "3419",
+      "4048",
+      "7796",
+      "3623"
     ],
-    "generated_at": "2026-10-25T13:09:23.417945+00:00",
-    "corpus_cutoff": "2026-10-25",
+    "generated_at": "2026-10-28T18:51:59.277948+00:00",
+    "corpus_cutoff": "2026-10-28",
     "methods_count": 8,
     "methods_names": [
       "frequency",
@@ -39,7 +39,65 @@
       "bayesian"
     ]
   },
-  "history": [],
+  "history": [
+    {
+      "for_date": "20261028",
+      "predicted": [
+        "3845",
+        "1830",
+        "3830",
+        "1840",
+        "3840",
+        "1833",
+        "1834",
+        "3833",
+        "1831",
+        "1835"
+      ],
+      "random_control": [
+        "9150",
+        "9562",
+        "0744",
+        "9473",
+        "3475",
+        "0615",
+        "8179",
+        "8858",
+        "2325",
+        "4306"
+      ],
+      "actual": {
+        "1stPrizeNo": "2694",
+        "2ndPrizeNo": "6382",
+        "3rdPrizeNo": "3450",
+        "SpecialNo1": "9734",
+        "SpecialNo2": "7257",
+        "SpecialNo3": "5042",
+        "SpecialNo4": "1252",
+        "SpecialNo5": "9108",
+        "SpecialNo6": "8339",
+        "SpecialNo7": "8614",
+        "SpecialNo8": "9088",
+        "SpecialNo9": "9886",
+        "SpecialNo10": "6365",
+        "ConsolationNo1": "1488",
+        "ConsolationNo2": "9732",
+        "ConsolationNo3": "1544",
+        "ConsolationNo4": "0862",
+        "ConsolationNo5": "6598",
+        "ConsolationNo6": "4289",
+        "ConsolationNo7": "8227",
+        "ConsolationNo8": "5147",
+        "ConsolationNo9": "3811",
+        "ConsolationNo10": "8100"
+      },
+      "hits": [],
+      "random_hits": [],
+      "status": "verified",
+      "checked_at": "2026-10-28T18:51:56.148825+00:00",
+      "source": "damacai"
+    }
+  ],
   "replay": {
     "run_at": "2026-10-27T19:44:53.922684+00:00",
     "window": [

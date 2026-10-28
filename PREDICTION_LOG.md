@@ -17,7 +17,7 @@ P(hit) = 1 - C(9990, 23) / C(10000, 23) ≈ 2.27%  →  ~1 hit per 44 draws
 
 Over time both columns should hover at that baseline. If the model column ever drifts meaningfully above the random column on this i.i.d. stream, that would be extraordinary — the log makes that self-checkable.
 
-## 🔮 Upcoming draw — 20261028 _(generated 2026-10-25, corpus cutoff 2026-10-25, 8 methods: frequency, recent_hot_90d, overdue, digit_probability, permutation_family, markov, arima, bayesian)_
+## 🔮 Upcoming draw — 20261031 _(generated 2026-10-28, corpus cutoff 2026-10-28, 8 methods: frequency, recent_hot_90d, overdue, digit_probability, permutation_family, markov, arima, bayesian)_
 
 | # | Consensus pick |
 |---|----------------|
@@ -32,18 +32,20 @@ Over time both columns should hover at that baseline. If the model column ever d
 | 9 | `1831` |
 | 10 | `1835` |
 
-**Random control:** `9150`, `9562`, `0744`, `9473`, `3475`, `0615`, `8179`, `8858`, `2325`, `4306`
+**Random control:** `5009`, `3963`, `6154`, `1192`, `8397`, `0669`, `3419`, `4048`, `7796`, `3623`
 
 ## ✅ Verified draws
 
-_No draws verified yet — the first scheduled prediction is pending._
+| Draw | 10 picks | Actual 1st/2nd/3rd | Model hits | Random-control hits |
+|------|----------|--------------------|------------|---------------------|
+| 20261028 | `3845`, `1830`, `3830`, `1840`, `3840`, `1833`, `1834`, `3833`, `1831`, `1835` | `2694/6382/3450` | — | — |
 
 ## 📊 Lifetime tally
 
 | Set | Draws tracked | Draws with a hit | Slot hits | Hit frequency | Expected |
 |-----|--------------:|-----------------:|----------:|--------------:|---------:|
-| Model picks | 0 | 0 | 0 | — | ~2.27% |
-| Random control | 0 | 0 | 0 | — | ~2.27% |
+| Model picks | 1 | 0 | 0 | 0.00% (draws) · 0 slots | ~2.27% |
+| Random control | 1 | 0 | 0 | 0.00% (draws) · 0 slots | ~2.27% |
 
 ## 🔁 Walk-forward replay over the last 40 draws (retrospective)
 
@@ -98,7 +100,7 @@ _Replay window: 20260801 → 20261027 • run 2026-10-27._
 
 ## Corpus & method notes
 
-- **Corpus** — bundled Magnum `4D.txt` history (up to 2026-10-25) + recent Da Ma Cai live syncs. The bundled `MDTdec28.xlsx` is a separate draw series that conflicts with `4D.txt` on shared dates, so it is excluded here until its provenance is sorted.
+- **Corpus** — bundled Magnum `4D.txt` history (up to 2026-10-28) + recent Da Ma Cai live syncs. The bundled `MDTdec28.xlsx` is a separate draw series that conflicts with `4D.txt` on shared dates, so it is excluded here until its provenance is sorted.
 - **Prediction method** — `predictor_suite.run_all(include_ml=False)` (8 statistical lenses: frequency, 90-day hot, overdue-gap, digit probabilities, permutation families, Markov, ARIMA digit-sum, Bayesian Dirichlet) aggregated by cross-method consensus.
 - **Verification** — Da Ma Cai public endpoint, polite 1 req/sec fetches, no scraping of protected pages.
 
