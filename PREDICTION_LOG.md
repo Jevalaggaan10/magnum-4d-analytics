@@ -19,43 +19,44 @@ This uses independent uniform four-digit slots as an approximation. Da Ma Cai de
 
 Under that null, both columns should approach the baseline. If the model column ever drifts meaningfully above the random column on this i.i.d. stream, that would be extraordinary — the log makes that self-checkable.
 
-## 🔮 Upcoming draw — 20261031 _(generated 2026-10-28, corpus cutoff 2026-10-28, 8 methods: frequency, recent_hot_90d, overdue, digit_probability, permutation_family, markov, arima, bayesian)_
+## 🔮 Upcoming draw — 20261104 _(generated 2026-10-31, corpus cutoff 2026-10-31, 8 methods: frequency, recent_hot_90d, overdue, digit_probability, permutation_family, markov, arima, bayesian)_
 
 | # | Consensus pick |
 |---|----------------|
-| 1 | `3845` |
-| 2 | `1830` |
-| 3 | `3830` |
-| 4 | `1840` |
-| 5 | `3840` |
-| 6 | `1833` |
-| 7 | `1834` |
-| 8 | `3833` |
-| 9 | `1831` |
-| 10 | `1835` |
+| 1 | `2857` |
+| 2 | `2557` |
+| 3 | `5557` |
+| 4 | `2050` |
+| 5 | `5728` |
+| 6 | `2555` |
+| 7 | `2751` |
+| 8 | `6552` |
+| 9 | `2552` |
+| 10 | `2551` |
 
-**Random control:** `5009`, `3963`, `6154`, `1192`, `8397`, `0669`, `3419`, `4048`, `7796`, `3623`
+**Random control:** `3425`, `5291`, `6075`, `8171`, `9688`, `0331`, `3736`, `6346`, `0106`, `8872`
 
-> **Audit correction:** this prediction belongs to the original pipeline and is preserved as published. Its displayed corpus cutoff advanced with fetched results even though those results were not added to training. In a fresh Actions checkout, training actually ended on **2025-12-28** in the bundled Magnum history. New predictions will use the separately versioned Da Ma Cai corpus.
+Training: **Da Ma Cai**, 3,634 draws; pipeline `damacai-v2`. Cutoff above is the actual latest training draw.
 
 ## ✅ Verified draws
 
 | Draw | 10 picks | Actual 1st/2nd/3rd | Model hits | Random-control hits |
 |------|----------|--------------------|------------|---------------------|
 | 20261028 | `3845`, `1830`, `3830`, `1840`, `3840`, `1833`, `1834`, `3833`, `1831`, `1835` | `2694/6382/3450` | — | — |
+| 20261031 | `3845`, `1830`, `3830`, `1840`, `3840`, `1833`, `1834`, `3833`, `1831`, `1835` | `5378/9967/5184` | — | — |
 
 ## 📊 Lifetime tally
 
 | Set | Draws tracked | Draws with a hit | Slot hits | Hit frequency | Expected |
 |-----|--------------:|-----------------:|----------:|--------------:|---------:|
-| Model picks | 1 | 0 | 0 | 0.00% (draws) · 0 slots | ~2.27% |
-| Random control | 1 | 0 | 0 | 0.00% (draws) · 0 slots | ~2.27% |
+| Model picks | 2 | 0 | 0 | 0.00% (draws) · 0 slots | ~2.27% |
+| Random control | 2 | 0 | 0 | 0.00% (draws) · 0 slots | ~2.27% |
 
 ### Results by pipeline version
 
 | Pipeline | Draws | Model hit draws | Random hit draws |
 |---|---:|---:|---:|
-| `legacy-v1` | 1 | 0 | 0 |
+| `legacy-v1` | 2 | 0 | 0 |
 
 ## 🔁 Legacy fixed-corpus comparison over 40 draws (retrospective)
 
