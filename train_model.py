@@ -458,7 +458,7 @@ class LSTMModel:
             self.model = tf.keras.models.load_model(filepath)
 
 
-def train_all_models(df: pd.DataFrame) -> dict:
+def train_all_models(df: pd.DataFrame, include_ml: bool = True) -> dict:
     """Train all available models."""
     models = {}
     
@@ -475,14 +475,14 @@ def train_all_models(df: pd.DataFrame) -> dict:
     models['markov'] = markov_model
     
     # XGBoost model
-    if HAS_XGBOOST:
+    if include_ml and HAS_XGBOOST:
         print("\n=== Training XGBoost Model ===")
         xgb_model = XGBoostModel()
         xgb_model.train(df)
         models['xgboost'] = xgb_model
     
     # LSTM model
-    if HAS_TENSORFLOW:
+    if include_ml and HAS_TENSORFLOW:
         print("\n=== Training LSTM Model ===")
         lstm_model = LSTMModel(sequence_length=40)
         lstm_model.train(df, epochs=5)

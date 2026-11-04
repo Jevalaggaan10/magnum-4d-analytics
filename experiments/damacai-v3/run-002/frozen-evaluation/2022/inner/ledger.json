@@ -1,0 +1,542 @@
+[
+  {
+    "label": "r1-00",
+    "config": {
+      "model": "uniform"
+    },
+    "config_sha256": "3d102bae3dcf0604151eb02b117eb365f5fe49cbb4f8c25e4da3f9704c772380",
+    "start": "2020-01-01",
+    "end": "2021-12-31",
+    "started_at": "2026-11-03T13:42:28.697106+00:00",
+    "allocated_seconds": 539.173299495,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 238,
+      "scored_draws": 238,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.210340371976175,
+      "mean_brier": 0.9999,
+      "hit_draws": 6,
+      "slot_hits": 6,
+      "top3_hit_draws": 0,
+      "first_hit_draws": 0,
+      "forecast_seconds": 0.12632105199963917
+    },
+    "seconds": 2.9265845420000005,
+    "peak_process_rss_bytes": 558153728
+  },
+  {
+    "label": "r1-01",
+    "config": {
+      "model": "full_code",
+      "prior_mass": 10000
+    },
+    "config_sha256": "c2bd4cc9513b2aade22803d55b17a34660e22376b819440ad594e394d0b6a9f9",
+    "start": "2020-01-01",
+    "end": "2021-12-31",
+    "started_at": "2026-11-03T13:42:31.624136+00:00",
+    "allocated_seconds": 536.246234078,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 238,
+      "scored_draws": 238,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.276768661453053,
+      "mean_brier": 0.9999116863607825,
+      "hit_draws": 4,
+      "slot_hits": 4,
+      "top3_hit_draws": 0,
+      "first_hit_draws": 0,
+      "forecast_seconds": 0.22297937200005435
+    },
+    "seconds": 3.4474804999999833,
+    "peak_process_rss_bytes": 558153728
+  },
+  {
+    "label": "r1-02",
+    "config": {
+      "model": "full_code",
+      "prior_mass": 100000
+    },
+    "config_sha256": "7dc56396033a613ff5a7c41d2239468e2d97e582c5173c6c567e5693f782c8b5",
+    "start": "2020-01-01",
+    "end": "2021-12-31",
+    "started_at": "2026-11-03T13:42:35.071984+00:00",
+    "allocated_seconds": 532.79833412,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 238,
+      "scored_draws": 238,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.22217396207033,
+      "mean_brier": 0.9999023090972043,
+      "hit_draws": 4,
+      "slot_hits": 4,
+      "top3_hit_draws": 0,
+      "first_hit_draws": 0,
+      "forecast_seconds": 0.2210091229991349
+    },
+    "seconds": 3.4732198750000407,
+    "peak_process_rss_bytes": 558153728
+  },
+  {
+    "label": "r1-03",
+    "config": {
+      "model": "digit",
+      "alpha": 10
+    },
+    "config_sha256": "6162cba73b2912204f09088000d515018ed863faaee7de81e4beabbde455df3e",
+    "start": "2020-01-01",
+    "end": "2021-12-31",
+    "started_at": "2026-11-03T13:42:38.545592+00:00",
+    "allocated_seconds": 529.324671245,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 238,
+      "scored_draws": 238,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.210635373051193,
+      "mean_brier": 0.9999000580260281,
+      "hit_draws": 7,
+      "slot_hits": 7,
+      "top3_hit_draws": 3,
+      "first_hit_draws": 2,
+      "forecast_seconds": 0.5592176300007168
+    },
+    "seconds": 4.060555124999951,
+    "peak_process_rss_bytes": 558153728
+  },
+  {
+    "label": "r1-04",
+    "config": {
+      "model": "digit",
+      "alpha": 100
+    },
+    "config_sha256": "893e7205e21ac7a1ba4cfef67152f7f9692259ba6b5613bcfd1972d8f3821b92",
+    "start": "2020-01-01",
+    "end": "2021-12-31",
+    "started_at": "2026-11-03T13:42:42.606568+00:00",
+    "allocated_seconds": 525.26363487,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 238,
+      "scored_draws": 238,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.210627355692239,
+      "mean_brier": 0.9999000564488253,
+      "hit_draws": 7,
+      "slot_hits": 7,
+      "top3_hit_draws": 3,
+      "first_hit_draws": 2,
+      "forecast_seconds": 0.6020157000002655
+    },
+    "seconds": 4.116927624999903,
+    "peak_process_rss_bytes": 558153728
+  },
+  {
+    "label": "r2-00",
+    "config": {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.5
+    },
+    "config_sha256": "faa3c75d7e790af5cf5c68c0aa127d0ffe1e439425db679cef0f456db53309c7",
+    "start": "2020-01-01",
+    "end": "2021-12-31",
+    "started_at": "2026-11-03T13:42:46.724783+00:00",
+    "allocated_seconds": 521.145358745,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 238,
+      "scored_draws": 238,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.210415338995585,
+      "mean_brier": 0.9999000147496655,
+      "hit_draws": 7,
+      "slot_hits": 7,
+      "top3_hit_draws": 3,
+      "first_hit_draws": 2,
+      "forecast_seconds": 0.5811242160000347
+    },
+    "seconds": 4.2158839160000525,
+    "peak_process_rss_bytes": 558153728
+  },
+  {
+    "label": "r2-01",
+    "config": {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.9
+    },
+    "config_sha256": "357e9a7cf9f4e9641f5803299213fcb8956ab799248fbb480ff79dc26aa754ee",
+    "start": "2020-01-01",
+    "end": "2021-12-31",
+    "started_at": "2026-11-03T13:42:50.941239+00:00",
+    "allocated_seconds": 516.928856411,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 238,
+      "scored_draws": 238,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.210344392450022,
+      "mean_brier": 0.9999000007939736,
+      "hit_draws": 7,
+      "slot_hits": 7,
+      "top3_hit_draws": 3,
+      "first_hit_draws": 2,
+      "forecast_seconds": 0.6298411709993843
+    },
+    "seconds": 4.677249791000008,
+    "peak_process_rss_bytes": 558153728
+  },
+  {
+    "label": "r2-02",
+    "config": {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.99
+    },
+    "config_sha256": "de7657752db26c36bbed21f6a24a416dc8738d36afc505c9181e00915f9181af",
+    "start": "2020-01-01",
+    "end": "2021-12-31",
+    "started_at": "2026-11-03T13:42:55.619009+00:00",
+    "allocated_seconds": 512.251005703,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 238,
+      "scored_draws": 238,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.210340526928713,
+      "mean_brier": 0.9999000000308883,
+      "hit_draws": 7,
+      "slot_hits": 7,
+      "top3_hit_draws": 3,
+      "first_hit_draws": 2,
+      "forecast_seconds": 0.5734840530000156
+    },
+    "seconds": 4.377416292000021,
+    "peak_process_rss_bytes": 558153728
+  },
+  {
+    "label": "r2-03",
+    "config": {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.9,
+      "half_life_days": 365
+    },
+    "config_sha256": "80661b2484ffe24a5731d658ba364659fd28ff7c7cdb63d6b47fdbeabfde2463",
+    "start": "2020-01-01",
+    "end": "2021-12-31",
+    "started_at": "2026-11-03T13:42:59.996955+00:00",
+    "allocated_seconds": 507.872986203,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 238,
+      "scored_draws": 238,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.210404821002948,
+      "mean_brier": 0.9999000128634744,
+      "hit_draws": 3,
+      "slot_hits": 3,
+      "top3_hit_draws": 0,
+      "first_hit_draws": 0,
+      "forecast_seconds": 0.6111433679997162
+    },
+    "seconds": 4.3676638330000515,
+    "peak_process_rss_bytes": 558153728
+  },
+  {
+    "label": "r2-04",
+    "config": {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.9,
+      "half_life_days": 1095
+    },
+    "config_sha256": "56a753b0c9a991e78845248565441c07fe3c573658b5d9eafefd994d3fef8f35",
+    "start": "2020-01-01",
+    "end": "2021-12-31",
+    "started_at": "2026-11-03T13:43:04.365138+00:00",
+    "allocated_seconds": 503.50473874500005,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 238,
+      "scored_draws": 238,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.210377342755967,
+      "mean_brier": 0.9999000073952002,
+      "hit_draws": 2,
+      "slot_hits": 2,
+      "top3_hit_draws": 0,
+      "first_hit_draws": 0,
+      "forecast_seconds": 0.6489602949986875
+    },
+    "seconds": 4.521049542000014,
+    "peak_process_rss_bytes": 558153728
+  },
+  {
+    "label": "r2-05",
+    "config": {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.9,
+      "pooling": "tier",
+      "tier_strength": 1000
+    },
+    "config_sha256": "f4bfcf6022ef84c9e8ce37ccfd0a5b02bfb62c7aa358249da55de68e63cea34a",
+    "start": "2020-01-01",
+    "end": "2021-12-31",
+    "started_at": "2026-11-03T13:43:08.886794+00:00",
+    "allocated_seconds": 498.98302266100006,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 238,
+      "scored_draws": 238,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.210329283434655,
+      "mean_brier": 0.9998999978640145,
+      "hit_draws": 6,
+      "slot_hits": 6,
+      "top3_hit_draws": 2,
+      "first_hit_draws": 2,
+      "forecast_seconds": 0.9791533020002134
+    },
+    "seconds": 8.996444833000055,
+    "peak_process_rss_bytes": 558153728
+  },
+  {
+    "label": "r2-06",
+    "config": {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.9,
+      "pooling": "tier",
+      "tier_strength": 10000
+    },
+    "config_sha256": "08f9bfc861e23cb5d49bbbe3bbec714cd6cd9c23aa0a006c118a13067fdbd946",
+    "start": "2020-01-01",
+    "end": "2021-12-31",
+    "started_at": "2026-11-03T13:43:17.883830+00:00",
+    "allocated_seconds": 489.985848453,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 238,
+      "scored_draws": 238,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.21034301694083,
+      "mean_brier": 0.9999000005244009,
+      "hit_draws": 6,
+      "slot_hits": 6,
+      "top3_hit_draws": 2,
+      "first_hit_draws": 2,
+      "forecast_seconds": 1.0429027609982313
+    },
+    "seconds": 9.816532291000044,
+    "peak_process_rss_bytes": 558153728
+  },
+  {
+    "label": "r3-00",
+    "config": {
+      "model": "logistic",
+      "C": 0.01,
+      "calendar": false
+    },
+    "config_sha256": "59fd2fdf15f64019ba6c6c9698863a0d75c202e9ecfeab56bd1851983a651310",
+    "start": "2020-01-01",
+    "end": "2021-12-31",
+    "started_at": "2026-11-03T13:43:27.701218+00:00",
+    "allocated_seconds": 480.16830516100003,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 238,
+      "scored_draws": 238,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.547991694970337,
+      "mean_brier": 1.000071326819494,
+      "hit_draws": 7,
+      "slot_hits": 7,
+      "top3_hit_draws": 0,
+      "first_hit_draws": 0,
+      "forecast_seconds": 22.510244370000237
+    },
+    "seconds": 28.576309874999993,
+    "peak_process_rss_bytes": 558153728
+  },
+  {
+    "label": "r3-01",
+    "config": {
+      "model": "logistic",
+      "C": 0.01,
+      "calendar": true
+    },
+    "config_sha256": "4ecff6092d8ee122709ee85aceee4780271256efa2558c23b05eb6fd78460bb9",
+    "start": "2020-01-01",
+    "end": "2021-12-31",
+    "started_at": "2026-11-03T13:43:56.277852+00:00",
+    "allocated_seconds": 451.59123295300003,
+    "status": "unhealthy",
+    "summary": {
+      "scheduled_or_eligible_draws": 238,
+      "scored_draws": 238,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 238,
+      "mean_log_loss": 9.562011018531898,
+      "mean_brier": 1.00006009440218,
+      "hit_draws": 5,
+      "slot_hits": 5,
+      "top3_hit_draws": 0,
+      "first_hit_draws": 0,
+      "forecast_seconds": 20.286683988999698
+    },
+    "seconds": 25.848576125000022,
+    "peak_process_rss_bytes": 558153728
+  },
+  {
+    "label": "r3-02",
+    "config": {
+      "model": "logistic",
+      "C": 0.1,
+      "calendar": false
+    },
+    "config_sha256": "ce1878b155e34aa780138edf4a121ad1a3e270600c32bf35842d3e96b240a1e9",
+    "start": "2020-01-01",
+    "end": "2021-12-31",
+    "started_at": "2026-11-03T13:44:22.127400+00:00",
+    "allocated_seconds": 425.74128078600006,
+    "status": "unhealthy",
+    "summary": {
+      "scheduled_or_eligible_draws": 238,
+      "scored_draws": 238,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 9,
+      "mean_log_loss": 10.069201210738353,
+      "mean_brier": 1.0004520157567947,
+      "hit_draws": 6,
+      "slot_hits": 6,
+      "top3_hit_draws": 1,
+      "first_hit_draws": 0,
+      "forecast_seconds": 34.17528959299989
+    },
+    "seconds": 39.86030875000006,
+    "peak_process_rss_bytes": 558153728
+  },
+  {
+    "label": "r3-03",
+    "config": {
+      "model": "logistic",
+      "C": 0.1,
+      "calendar": true
+    },
+    "config_sha256": "38ee42262a890eb0a4d299ffdce782265f66166395a30e6d23afa1b3ad563d92",
+    "start": "2020-01-01",
+    "end": "2021-12-31",
+    "started_at": "2026-11-03T13:45:01.988610+00:00",
+    "allocated_seconds": 385.87946311999997,
+    "status": "unhealthy",
+    "summary": {
+      "scheduled_or_eligible_draws": 238,
+      "scored_draws": 238,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 238,
+      "mean_log_loss": 10.143919886012123,
+      "mean_brier": 1.0004760694767438,
+      "hit_draws": 5,
+      "slot_hits": 5,
+      "top3_hit_draws": 1,
+      "first_hit_draws": 0,
+      "forecast_seconds": 36.25413637399993
+    },
+    "seconds": 42.03559158300004,
+    "peak_process_rss_bytes": 558153728
+  },
+  {
+    "label": "r3-04",
+    "config": {
+      "model": "logistic",
+      "C": 1.0,
+      "calendar": false
+    },
+    "config_sha256": "cb900730c632067774e43a24695382d24e0b5f4f6dce1b27327188545fbc6b78",
+    "start": "2020-01-01",
+    "end": "2021-12-31",
+    "started_at": "2026-11-03T13:45:44.025055+00:00",
+    "allocated_seconds": 343.84237586999996,
+    "status": "unhealthy",
+    "summary": {
+      "scheduled_or_eligible_draws": 238,
+      "scored_draws": 238,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 9,
+      "mean_log_loss": 10.450437166062482,
+      "mean_brier": 1.00113701535579,
+      "hit_draws": 5,
+      "slot_hits": 5,
+      "top3_hit_draws": 1,
+      "first_hit_draws": 0,
+      "forecast_seconds": 33.084101828999906
+    },
+    "seconds": 38.80646712500004,
+    "peak_process_rss_bytes": 558153728
+  },
+  {
+    "label": "r3-05",
+    "config": {
+      "model": "logistic",
+      "C": 1.0,
+      "calendar": true
+    },
+    "config_sha256": "e7a4e5dafde3a6a9ecd657410227e067db28d1fbf1181c73224452931de51488",
+    "start": "2020-01-01",
+    "end": "2021-12-31",
+    "started_at": "2026-11-03T13:46:22.832360+00:00",
+    "allocated_seconds": 305.03447928599996,
+    "status": "unhealthy",
+    "summary": {
+      "scheduled_or_eligible_draws": 238,
+      "scored_draws": 238,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 238,
+      "mean_log_loss": 10.573145941780755,
+      "mean_brier": 1.0011586430393475,
+      "hit_draws": 3,
+      "slot_hits": 3,
+      "top3_hit_draws": 0,
+      "first_hit_draws": 0,
+      "forecast_seconds": 35.29523712600076
+    },
+    "seconds": 41.03255054099998,
+    "peak_process_rss_bytes": 558153728
+  }
+]

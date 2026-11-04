@@ -1,0 +1,129 @@
+..............2026-11-03 14:51:33.059 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-11-03 14:51:33.059 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-11-03 14:51:33.060 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+.2026-11-03 14:51:33.063 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-11-03 14:51:33.065 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-03 14:51:33.066 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+.
+=== Backtest year 2025: train=1 test=1 ===
+magnum: 1 unique draws
+Date range: 2026-01-01 00:00:00 to 2026-01-01 00:00:00
+tiny: timeout, 0.00s
+..........2026-11-03 14:51:35.129 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-03 14:51:35.620 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-11-03 14:51:35.623 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: EstimationWarning: Non-stationary starting autoregressive parameters found. Using zeros as starting parameters.
+  out[key] = fn(df, top_n=top_n)
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: EstimationWarning: Non-invertible starting MA parameters found. Using zeros as starting parameters.
+  out[key] = fn(df, top_n=top_n)
+2026-11-03 14:51:37.094 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-11-03 14:51:37.096 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-11-03 14:51:37.097 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-11-03 14:51:37.097 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-11-03 14:51:37.098 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-11-03 14:51:37.098 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-11-03 14:51:37.099 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-11-03 14:51:37.099 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-11-03 14:51:37.114 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-11-03 14:51:37.287 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+......................................magnum: 5568 unique draws
+Date range: 1992-05-06 00:00:00 to 2025-12-28 00:00:00
+Markov Chain model trained on 5568 draws
+.----- rendered log -----
+dry-run
+## Probability forecasts — damacai-v3
+
+Ten picks maximize expected matched slots. Single-slot probabilities are categorical; any-hit independence approximation is not a verified joint model.
+
+| Target | Publication/result status | Picks | Training cutoff |
+|---|---|---|---|
+| 20261107 | awaiting-publication | 0000, 0001, 0002, 0003, 0004, 0005, 0006, 0007, 0008, 0009 | 2026-10-28 |
+
+Confirmation: **pending**, 1/1000 scheduled targets. Aggregate comparisons withheld before fixed checkpoint.
+Published legacy records above retain their original experiment identities.
+
+.synced: []
+----- rendered log -----
+dry-run
+## Probability forecasts — damacai-v3
+
+Ten picks maximize expected matched slots. Single-slot probabilities are categorical; any-hit independence approximation is not a verified joint model.
+
+| Target | Publication/result status | Picks | Training cutoff |
+|---|---|---|---|
+| 20261107 | awaiting-publication | 0000, 0001, 0002, 0003, 0004, 0005, 0006, 0007, 0008, 0009 | 2026-10-28 |
+
+Confirmation: **pending**, 1/1000 scheduled targets. Aggregate comparisons withheld before fixed checkpoint.
+Published legacy records above retain their original experiment identities.
+
+...
+----------------------------------------------------------------------
+Ran 69 tests in 6.127s
+
+OK
+synced: ['20261028']
+----- rendered log -----
+dry-run
+## Probability forecasts — damacai-v3
+
+Ten picks maximize expected matched slots. Single-slot probabilities are categorical; any-hit independence approximation is not a verified joint model.
+
+| Target | Publication/result status | Picks | Training cutoff |
+|---|---|---|---|
+| 20261107 | awaiting-publication | 0000, 0001, 0002, 0003, 0004, 0005, 0006, 0007, 0008, 0009 | 2026-10-27 |
+
+Confirmation: **pending**, 1/1000 scheduled targets. Aggregate comparisons withheld before fixed checkpoint.
+Published legacy records above retain their original experiment identities.
+
+  20261001: model 0 hit(s), random 0 hit(s) (1 methods, trained until 2026-09-30)
+  20261002: model 0 hit(s), random 0 hit(s) (1 methods, trained until 2026-10-01)
+  20261003: model 0 hit(s), random 0 hit(s) (1 methods, trained until 2026-10-02)
+updated prediction state/log

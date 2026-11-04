@@ -1,0 +1,37 @@
+{
+  "hypothesis": "Lagged digit frequencies predict the next complete draw beyond marginal counts.",
+  "falsification": "Reject temporal signal if properly aligned digit heads do not improve loss.",
+  "configs": [
+    {
+      "model": "logistic",
+      "C": 0.01,
+      "calendar": false
+    },
+    {
+      "model": "logistic",
+      "C": 0.01,
+      "calendar": true
+    },
+    {
+      "model": "logistic",
+      "C": 0.1,
+      "calendar": false
+    },
+    {
+      "model": "logistic",
+      "C": 0.1,
+      "calendar": true
+    },
+    {
+      "model": "logistic",
+      "C": 1.0,
+      "calendar": false
+    },
+    {
+      "model": "logistic",
+      "C": 1.0,
+      "calendar": true
+    }
+  ],
+  "allocated_seconds": 1500
+}

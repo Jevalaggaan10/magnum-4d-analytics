@@ -1,0 +1,17 @@
+{
+  "future_targets": 1000,
+  "development_draws": 345,
+  "loss_mde_approx_80pct_power": 0.0002057745559107231,
+  "limitation": "iid variance approximation; block intervals separately quantify dependence; small hit-rate lifts remain underpowered",
+  "expected_uniform_hit_draws_1000": 22.748762178548265,
+  "development_interval": {
+    "mean": -8.543529290806854e-05,
+    "lower": -0.00034214075370883265,
+    "upper": 0.00016185543200125633,
+    "draws": 345,
+    "block_length": 13,
+    "replicates": 10000,
+    "confidence": 0.95,
+    "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+  }
+}

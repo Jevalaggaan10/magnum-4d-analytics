@@ -1,0 +1,23 @@
+..E.....
+======================================================================
+ERROR: test_explicit_special_accepts_same_day_prior_announcement (test_probability_tracker.ProbabilityTrackerTests.test_explicit_special_accepts_same_day_prior_announcement)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/tests/test_probability_tracker.py", line 83, in test_explicit_special_accepts_same_day_prior_announcement
+    self.t.advance_forecasts(state,history(),now=datetime.fromisoformat('2026-11-03T16:00:00+08:00'),
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        artifact_dir=Path(d),dry_run=True,settings={'champion':{'model':'uniform'},'requested_date':'20261103',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        'specials':{'20261103':{'url':'https://www.damacai.com.my/news/a','announced_at':'2026-11-03T14:00:00+08:00'}}})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/probability_tracker.py", line 118, in advance_forecasts
+    target=choose_target(requested_day,blocked_dates=blocked,specials=settings.get('specials'),start_date=requested)
+  File "/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/probability_tracker.py", line 27, in choose_target
+    if announced>=draw-pd.Timedelta(hours=1) or announced>now:raise ValueError('special announcement is late or in future')
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: special announcement is late or in future
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.074s
+
+FAILED (errors=1)

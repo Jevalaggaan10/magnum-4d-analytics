@@ -1,0 +1,55 @@
+..............ss
+=== Backtest year 2025: train=1 test=1 ===
+magnum: 1 unique draws
+Date range: 2026-01-01 00:00:00 to 2026-01-01 00:00:00
+tiny: timeout, 0.00s
+..........s.............s......................----- rendered log -----
+dry-run
+## Probability forecasts — damacai-v3
+
+Ten picks maximize expected matched slots. Single-slot probabilities are categorical; any-hit independence approximation is not a verified joint model.
+
+| Target | Publication/result status | Picks | Training cutoff |
+|---|---|---|---|
+| 20261107 | awaiting-publication | 0000, 0001, 0002, 0003, 0004, 0005, 0006, 0007, 0008, 0009 | 2026-10-28 |
+
+Confirmation: **pending**, 1/1000 scheduled targets. Aggregate comparisons withheld before fixed checkpoint.
+Published legacy records above retain their original experiment identities.
+
+.synced: []
+----- rendered log -----
+dry-run
+## Probability forecasts — damacai-v3
+
+Ten picks maximize expected matched slots. Single-slot probabilities are categorical; any-hit independence approximation is not a verified joint model.
+
+| Target | Publication/result status | Picks | Training cutoff |
+|---|---|---|---|
+| 20261107 | awaiting-publication | 0000, 0001, 0002, 0003, 0004, 0005, 0006, 0007, 0008, 0009 | 2026-10-28 |
+
+Confirmation: **pending**, 1/1000 scheduled targets. Aggregate comparisons withheld before fixed checkpoint.
+Published legacy records above retain their original experiment identities.
+
+...
+----------------------------------------------------------------------
+Ran 67 tests in 7.421s
+
+OK (skipped=4)
+synced: ['20261028']
+----- rendered log -----
+dry-run
+## Probability forecasts — damacai-v3
+
+Ten picks maximize expected matched slots. Single-slot probabilities are categorical; any-hit independence approximation is not a verified joint model.
+
+| Target | Publication/result status | Picks | Training cutoff |
+|---|---|---|---|
+| 20261107 | awaiting-publication | 0000, 0001, 0002, 0003, 0004, 0005, 0006, 0007, 0008, 0009 | 2026-10-27 |
+
+Confirmation: **pending**, 1/1000 scheduled targets. Aggregate comparisons withheld before fixed checkpoint.
+Published legacy records above retain their original experiment identities.
+
+  20261001: model 0 hit(s), random 0 hit(s) (1 methods, trained until 2026-09-30)
+  20261002: model 0 hit(s), random 0 hit(s) (1 methods, trained until 2026-10-01)
+  20261003: model 0 hit(s), random 0 hit(s) (1 methods, trained until 2026-10-02)
+updated prediction state/log

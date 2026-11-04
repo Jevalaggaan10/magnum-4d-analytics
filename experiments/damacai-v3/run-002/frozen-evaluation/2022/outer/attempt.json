@@ -1,0 +1,28 @@
+{
+  "label": "outer",
+  "config": {
+    "model": "uniform"
+  },
+  "config_sha256": "3d102bae3dcf0604151eb02b117eb365f5fe49cbb4f8c25e4da3f9704c772380",
+  "start": "2022-01-01",
+  "end": "2022-12-31",
+  "started_at": "2026-11-03T13:47:03.878669+00:00",
+  "allocated_seconds": 1162.60991125,
+  "status": "complete",
+  "summary": {
+    "scheduled_or_eligible_draws": 179,
+    "scored_draws": 179,
+    "coverage": 1.0,
+    "fallback_draws": 0,
+    "degraded_draws": 0,
+    "mean_log_loss": 9.210340371976178,
+    "mean_brier": 0.9999,
+    "hit_draws": 4,
+    "slot_hits": 4,
+    "top3_hit_draws": 0,
+    "first_hit_draws": 0,
+    "forecast_seconds": 0.1591689160009082
+  },
+  "seconds": 2.319145832999993,
+  "peak_process_rss_bytes": 558153728
+}

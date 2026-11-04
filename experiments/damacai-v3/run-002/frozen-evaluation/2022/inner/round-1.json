@@ -1,0 +1,26 @@
+{
+  "hypothesis": "Smoothed historical marginals contain stable information beyond uniform.",
+  "falsification": "Reject useful gain if forward log loss fails to improve by .001 nats.",
+  "configs": [
+    {
+      "model": "uniform"
+    },
+    {
+      "model": "full_code",
+      "prior_mass": 10000
+    },
+    {
+      "model": "full_code",
+      "prior_mass": 100000
+    },
+    {
+      "model": "digit",
+      "alpha": 10
+    },
+    {
+      "model": "digit",
+      "alpha": 100
+    }
+  ],
+  "allocated_seconds": 539.173400536
+}

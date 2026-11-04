@@ -1,0 +1,288 @@
+{
+  "r1-00": {
+    "13": {
+      "mean": 0.0,
+      "lower": 0.0,
+      "upper": 0.0,
+      "draws": 345,
+      "block_length": 13,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    },
+    "26": {
+      "mean": 0.0,
+      "lower": 0.0,
+      "upper": 0.0,
+      "draws": 345,
+      "block_length": 26,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    }
+  },
+  "r1-01": {
+    "13": {
+      "mean": 0.06896931112764798,
+      "lower": 0.06060647360480398,
+      "upper": 0.07941306806831006,
+      "draws": 345,
+      "block_length": 13,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    },
+    "26": {
+      "mean": 0.06896931112764798,
+      "lower": 0.061619209099594945,
+      "upper": 0.07901740865816408,
+      "draws": 345,
+      "block_length": 26,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    }
+  },
+  "r1-02": {
+    "13": {
+      "mean": 0.010765705479748863,
+      "lower": 0.0075527062810767705,
+      "upper": 0.014851764358269313,
+      "draws": 345,
+      "block_length": 13,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    },
+    "26": {
+      "mean": 0.010765705479748863,
+      "lower": 0.00788819199389164,
+      "upper": 0.014941188070271406,
+      "draws": 345,
+      "block_length": 26,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    }
+  },
+  "r1-03": {
+    "13": {
+      "mean": -3.2178127495227194e-05,
+      "lower": -0.0006863555530534493,
+      "upper": 0.0006069461126121608,
+      "draws": 345,
+      "block_length": 13,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    },
+    "26": {
+      "mean": -3.2178127495227194e-05,
+      "lower": -0.000662525186710975,
+      "upper": 0.0006004646783503724,
+      "draws": 345,
+      "block_length": 26,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    }
+  },
+  "r1-04": {
+    "13": {
+      "mean": -3.6113935421305246e-05,
+      "lower": -0.0006802571982735445,
+      "upper": 0.000592845971227635,
+      "draws": 345,
+      "block_length": 13,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    },
+    "26": {
+      "mean": -3.6113935421305246e-05,
+      "lower": -0.0006567227488281377,
+      "upper": 0.0005868035400837507,
+      "draws": 345,
+      "block_length": 26,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    }
+  },
+  "r2-00": {
+    "13": {
+      "mean": -8.543529290451583e-05,
+      "lower": -0.0004077132221146173,
+      "upper": 0.00023055622366238368,
+      "draws": 345,
+      "block_length": 13,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    },
+    "26": {
+      "mean": -8.543529290451583e-05,
+      "lower": -0.00039623234588503903,
+      "upper": 0.00022659565998921005,
+      "draws": 345,
+      "block_length": 26,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    }
+  },
+  "r2-01": {
+    "13": {
+      "mean": -2.787877018208174e-05,
+      "lower": -9.267420483564187e-05,
+      "upper": 3.538616819842175e-05,
+      "draws": 345,
+      "block_length": 13,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    },
+    "26": {
+      "mean": -2.787877018208174e-05,
+      "lower": -9.012962262361195e-05,
+      "upper": 3.458293171752066e-05,
+      "draws": 345,
+      "block_length": 26,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    }
+  },
+  "r2-02": {
+    "13": {
+      "mean": -3.0309151251455505e-06,
+      "lower": -9.514496762729084e-06,
+      "upper": 3.298268242448692e-06,
+      "draws": 345,
+      "block_length": 13,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    },
+    "26": {
+      "mean": -3.0309151251455505e-06,
+      "lower": -9.25822409324635e-06,
+      "upper": 3.21941224463068e-06,
+      "draws": 345,
+      "block_length": 26,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    }
+  },
+  "r2-03": {
+    "13": {
+      "mean": 2.4934324444834734e-06,
+      "lower": -0.00012651698509294083,
+      "upper": 0.00013478717715698318,
+      "draws": 345,
+      "block_length": 13,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    },
+    "26": {
+      "mean": 2.4934324444834734e-06,
+      "lower": -0.0001441196506242874,
+      "upper": 0.00014857478233137037,
+      "draws": 345,
+      "block_length": 26,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    }
+  },
+  "r2-04": {
+    "13": {
+      "mean": -4.408153512052696e-06,
+      "lower": -9.28681258003027e-05,
+      "upper": 8.325607731073755e-05,
+      "draws": 345,
+      "block_length": 13,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    },
+    "26": {
+      "mean": -4.408153512052696e-06,
+      "lower": -9.81741311030172e-05,
+      "upper": 8.567078527316107e-05,
+      "draws": 345,
+      "block_length": 26,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    }
+  },
+  "r2-05": {
+    "13": {
+      "mean": -2.7538681318107627e-05,
+      "lower": -0.0001445976137112812,
+      "upper": 0.0001040907327884906,
+      "draws": 345,
+      "block_length": 13,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    },
+    "26": {
+      "mean": -2.7538681318107627e-05,
+      "lower": -0.00014345921295241866,
+      "upper": 0.00012058141324395226,
+      "draws": 345,
+      "block_length": 26,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    }
+  },
+  "r2-06": {
+    "13": {
+      "mean": -2.153622627428009e-05,
+      "lower": -0.0001050683066347633,
+      "upper": 6.0146712909838154e-05,
+      "draws": 345,
+      "block_length": 13,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    },
+    "26": {
+      "mean": -2.153622627428009e-05,
+      "lower": -0.00010508526203682753,
+      "upper": 6.609139980057466e-05,
+      "draws": 345,
+      "block_length": 26,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    }
+  },
+  "r3-00": {
+    "13": {
+      "mean": 0.24974327196394475,
+      "lower": 0.20258339803407693,
+      "upper": 0.3063130405517034,
+      "draws": 345,
+      "block_length": 13,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    },
+    "26": {
+      "mean": 0.24974327196394475,
+      "lower": 0.20701551595089596,
+      "upper": 0.30687408197074445,
+      "draws": 345,
+      "block_length": 26,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    }
+  }
+}

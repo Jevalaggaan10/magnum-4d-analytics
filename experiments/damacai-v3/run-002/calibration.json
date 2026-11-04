@@ -1,0 +1,212 @@
+{
+  "bin_edges": [
+    0.0,
+    5e-05,
+    0.0001,
+    0.0002,
+    0.0005,
+    0.001,
+    0.01,
+    1.00000001
+  ],
+  "expected_events": [
+    0.0,
+    4006.31895158364,
+    3928.681048416359,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "observed_events": [
+    0.0,
+    4016.0,
+    3919.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "code_events": [
+    0.0,
+    40434138.0,
+    38915862.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "draw_level_observed_minus_expected_intervals": [
+    {
+      "mean": 0.0,
+      "lower": 0.0,
+      "upper": 0.0,
+      "draws": 345,
+      "block_length": 13,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    },
+    {
+      "mean": 0.02806100990249132,
+      "lower": -0.2520482814092227,
+      "upper": 0.29978983179479163,
+      "draws": 345,
+      "block_length": 13,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    },
+    {
+      "mean": -0.028061009902488058,
+      "lower": -0.29978983179478674,
+      "upper": 0.25204828140922675,
+      "draws": 345,
+      "block_length": 13,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    },
+    {
+      "mean": 0.0,
+      "lower": 0.0,
+      "upper": 0.0,
+      "draws": 345,
+      "block_length": 13,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    },
+    {
+      "mean": 0.0,
+      "lower": 0.0,
+      "upper": 0.0,
+      "draws": 345,
+      "block_length": 13,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    },
+    {
+      "mean": 0.0,
+      "lower": 0.0,
+      "upper": 0.0,
+      "draws": 345,
+      "block_length": 13,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    },
+    {
+      "mean": 0.0,
+      "lower": 0.0,
+      "upper": 0.0,
+      "draws": 345,
+      "block_length": 13,
+      "replicates": 10000,
+      "confidence": 0.9875,
+      "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+    }
+  ],
+  "digit_expected": [
+    [
+      791.2379603489594,
+      791.0565864534856,
+      796.1424106194302,
+      789.2215318493783,
+      799.6305952810857,
+      785.279982420402,
+      798.5549886534311,
+      793.232517256538,
+      794.3514808722537,
+      796.2919462450346
+    ],
+    [
+      800.2808728781044,
+      786.1043632473766,
+      789.4891287139321,
+      795.9975179695803,
+      790.8742958467102,
+      789.85000206467,
+      795.1530394848827,
+      792.6229437010592,
+      797.1176854922902,
+      797.510150601393
+    ],
+    [
+      788.8234911515133,
+      786.2213875024366,
+      790.0923164280122,
+      792.9636037857913,
+      792.4622533832509,
+      798.7507302985395,
+      793.697253537226,
+      788.8952529913767,
+      799.1345846212774,
+      803.9591263005758
+    ],
+    [
+      802.2924096001589,
+      796.4599891167668,
+      785.0957065094489,
+      791.5488489634599,
+      794.9739878534183,
+      796.388833385454,
+      790.7268054980686,
+      796.5431354441768,
+      790.6037887041925,
+      790.366494924856
+    ]
+  ],
+  "digit_observed": [
+    [
+      770.0,
+      778.0,
+      823.0,
+      782.0,
+      810.0,
+      775.0,
+      759.0,
+      818.0,
+      813.0,
+      807.0
+    ],
+    [
+      820.0,
+      778.0,
+      770.0,
+      796.0,
+      822.0,
+      813.0,
+      787.0,
+      738.0,
+      826.0,
+      785.0
+    ],
+    [
+      761.0,
+      808.0,
+      817.0,
+      769.0,
+      822.0,
+      776.0,
+      736.0,
+      766.0,
+      840.0,
+      840.0
+    ],
+    [
+      797.0,
+      822.0,
+      770.0,
+      800.0,
+      817.0,
+      837.0,
+      776.0,
+      759.0,
+      812.0,
+      745.0
+    ]
+  ],
+  "limitation": "pooled calibration does not validate individual rare-code probabilities or predictive information"
+}

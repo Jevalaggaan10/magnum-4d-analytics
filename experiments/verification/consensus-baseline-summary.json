@@ -1,0 +1,8 @@
+{
+  "draws": 345,
+  "seconds": 176.32302775000005,
+  "purpose": "frozen current-consensus baseline reproduction; outside model search budget; same 2018-2019 dates",
+  "hit_draws": 4,
+  "slot_hits": 4,
+  "degraded_arima_draws": 38
+}

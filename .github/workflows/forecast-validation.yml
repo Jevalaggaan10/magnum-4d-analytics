@@ -1,0 +1,42 @@
+name: forecast validation
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        environment: [tracker, full]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install tested dependencies
+        run: |
+          if [ '${{ matrix.environment }}' = tracker ]; then
+            python -m pip install -r requirements-tracker.txt
+          else
+            python -m pip install -r requirements.txt
+          fi
+      - name: Regression suite
+        run: python -m unittest discover -s tests -p 'test_*.py'
+      - name: Offline tracker and replay
+        run: |
+          python scripts/track_predictions.py --no-sync --dry-run
+          python scripts/track_predictions.py --replay 3 --no-sync --dry-run
+      - name: Offline probability benchmark
+        run: python scripts/evaluate_forecasts.py --protocol docs/FORECAST_PROTOCOL.yaml --phase smoke --offline --output experiments/ci-smoke
+      - name: Check preserved publication files
+        run: |
+          git diff --exit-code -- predictions.json PREDICTION_LOG.md
+          git diff --check

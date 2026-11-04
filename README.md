@@ -24,15 +24,14 @@ What this tool is good for:
 
 ## 🎯 Live prediction tracker
 
-Since no method beats random on i.i.d. draws, the repo does the only honest
-next-best thing: **it logs its predictions publicly and verifies them against
+The repository has no demonstrated predictive edge. It **it logs its predictions publicly and verifies them against
 the real results.**
 
 A scheduled GitHub Action checks daily after normal Malaysian draw hours:
 
 1. syncs the latest published Da Ma Cai result,
 2. verifies any pending prediction against the real 23 prize numbers,
-3. logs a fresh 10-number consensus prediction for the next draw — commit-timestamped **before** the draw happens,
+3. logs a versioned 10-number categorical probability forecast for the next draw — commit-timestamped **before** the draw happens,
 4. pairs each prediction with a seeded **random control** of 10 numbers. Under independent uniform four-digit slots, `1 − (1 − 10/10000)^23 ≈ 2.27%` (about one hit per 44 draws). This is a suffix-draw approximation: Da Ma Cai derives four-digit winners from six-digit draws, so the earlier assumption of 23 distinct four-digit winners was not justified.
 
 The tracker trains on **Da Ma Cai only**: the tracked `data/damacai.csv`
@@ -218,3 +217,33 @@ Run the regression checks with:
 ```powershell
 python -m unittest discover -s tests -p "test_*.py"
 ```
+
+
+## Probability experiment v3
+
+The selected champion is uniform. Development tried 18 configurations across three
+rounds and stopped under the declared no-gain rule; no practical improvement was
+established. v3 targets Da Ma Cai's 23 slots with ten distinct codes, keeping
+legacy rankings and annual top-three backtests separate. Chronos-2, TabPFN and LSTM
+remain deferred, not trained or validated challengers.
+
+See [protocol](docs/FORECAST_PROTOCOL.md), [research register](docs/FORECAST_RESEARCH.md)
+and [results](docs/FORECAST_RESULTS.md). Complete probability vectors use hashed
+compressed NumPy artifacts; displayed ranks never become absolute probabilities.
+
+```bash
+python scripts/evaluate_forecasts.py --protocol docs/FORECAST_PROTOCOL.yaml --phase full --offline --output experiments/damacai-v3/new-run
+python predict.py  # legacy descriptive CLI; optional legacy training requires --ml
+```
+
+Use Python 3.12 with `requirements-tracker.txt` for the lightweight scheduled path;
+`constraints-py312.txt` pins the tested resolution. UI uses `requirements.txt`.
+Replay now writes separate experiment artifacts, never replaces prospective ledger.
+`--dry-run` writes nothing; isolated integration runs support `--state-file`.
+
+Regular Da Ma Cai draws start 19:00 MYT. Publication deadline is 18:00 MYT,
+with a 16:00 catch-up job. Same-day forecasts before deadline are allowed. Specials
+require an official announcement URL and timestamp. CI confirms publication only
+after successful push; late or unconfirmed publication is a coverage failure.
+Existing pending v2 picks remain unchanged. Initial v3 confirmation starts no earlier
+than 2026-11-07, after that pending target, and requires 1000 scheduled targets.

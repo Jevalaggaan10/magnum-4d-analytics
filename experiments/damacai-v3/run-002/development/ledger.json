@@ -1,0 +1,547 @@
+[
+  {
+    "label": "r1-00",
+    "config": {
+      "model": "uniform"
+    },
+    "config_sha256": "3d102bae3dcf0604151eb02b117eb365f5fe49cbb4f8c25e4da3f9704c772380",
+    "start": "2018-01-01",
+    "end": "2019-12-31",
+    "started_at": "2026-11-03T13:17:17.382196+00:00",
+    "allocated_seconds": 599.9998642920109,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 345,
+      "scored_draws": 345,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.210340371976178,
+      "mean_brier": 0.9999,
+      "hit_draws": 8,
+      "slot_hits": 8,
+      "top3_hit_draws": 0,
+      "first_hit_draws": 0,
+      "forecast_seconds": 0.24105190884438343
+    },
+    "seconds": 4.501942167000379,
+    "peak_process_rss_bytes": 118636544,
+    "reused_from": "experiments/damacai-v3/run-001/development/r1-00"
+  },
+  {
+    "label": "r1-01",
+    "config": {
+      "model": "full_code",
+      "prior_mass": 10000
+    },
+    "config_sha256": "c2bd4cc9513b2aade22803d55b17a34660e22376b819440ad594e394d0b6a9f9",
+    "start": "2018-01-01",
+    "end": "2019-12-31",
+    "started_at": "2026-11-03T13:17:21.884755+00:00",
+    "allocated_seconds": 595.4973820000014,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 345,
+      "scored_draws": 345,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.279309683103827,
+      "mean_brier": 0.9999125300759418,
+      "hit_draws": 7,
+      "slot_hits": 7,
+      "top3_hit_draws": 0,
+      "first_hit_draws": 0,
+      "forecast_seconds": 0.3800139706581831
+    },
+    "seconds": 5.302722166001331,
+    "peak_process_rss_bytes": 118636544,
+    "reused_from": "experiments/damacai-v3/run-001/development/r1-01"
+  },
+  {
+    "label": "r1-02",
+    "config": {
+      "model": "full_code",
+      "prior_mass": 100000
+    },
+    "config_sha256": "7dc56396033a613ff5a7c41d2239468e2d97e582c5173c6c567e5693f782c8b5",
+    "start": "2018-01-01",
+    "end": "2019-12-31",
+    "started_at": "2026-11-03T13:17:27.188070+00:00",
+    "allocated_seconds": 590.1940872920095,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 345,
+      "scored_draws": 345,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.221106077455927,
+      "mean_brier": 0.9999021877561843,
+      "hit_draws": 7,
+      "slot_hits": 7,
+      "top3_hit_draws": 0,
+      "first_hit_draws": 0,
+      "forecast_seconds": 0.32702699064975604
+    },
+    "seconds": 4.860023499990348,
+    "peak_process_rss_bytes": 118636544,
+    "reused_from": "experiments/damacai-v3/run-001/development/r1-02"
+  },
+  {
+    "label": "r1-03",
+    "config": {
+      "model": "digit",
+      "alpha": 10
+    },
+    "config_sha256": "6162cba73b2912204f09088000d515018ed863faaee7de81e4beabbde455df3e",
+    "start": "2018-01-01",
+    "end": "2019-12-31",
+    "started_at": "2026-11-03T13:17:32.048654+00:00",
+    "allocated_seconds": 585.3335482080001,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 345,
+      "scored_draws": 345,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.210308193848684,
+      "mean_brier": 0.9998999938094983,
+      "hit_draws": 4,
+      "slot_hits": 4,
+      "top3_hit_draws": 1,
+      "first_hit_draws": 1,
+      "forecast_seconds": 0.8215212070790585
+    },
+    "seconds": 5.722583499999018,
+    "peak_process_rss_bytes": 125157376,
+    "reused_from": "experiments/damacai-v3/run-001/development/r1-03"
+  },
+  {
+    "label": "r1-04",
+    "config": {
+      "model": "digit",
+      "alpha": 100
+    },
+    "config_sha256": "893e7205e21ac7a1ba4cfef67152f7f9692259ba6b5613bcfd1972d8f3821b92",
+    "start": "2018-01-01",
+    "end": "2019-12-31",
+    "started_at": "2026-11-03T13:17:37.771869+00:00",
+    "allocated_seconds": 579.6103921670001,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 345,
+      "scored_draws": 345,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.21030425804076,
+      "mean_brier": 0.9998999930154927,
+      "hit_draws": 4,
+      "slot_hits": 4,
+      "top3_hit_draws": 1,
+      "first_hit_draws": 1,
+      "forecast_seconds": 0.8362216500972863
+    },
+    "seconds": 5.818514791986672,
+    "peak_process_rss_bytes": 128761856,
+    "reused_from": "experiments/damacai-v3/run-001/development/r1-04"
+  },
+  {
+    "label": "r2-00",
+    "config": {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.5
+    },
+    "config_sha256": "faa3c75d7e790af5cf5c68c0aa127d0ffe1e439425db679cef0f456db53309c7",
+    "start": "2018-01-01",
+    "end": "2019-12-31",
+    "started_at": "2026-11-03T13:19:52.656922+00:00",
+    "allocated_seconds": 899.9998301660235,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 345,
+      "scored_draws": 345,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.210254936683276,
+      "mean_brier": 0.9998999829642459,
+      "hit_draws": 4,
+      "slot_hits": 4,
+      "top3_hit_draws": 1,
+      "first_hit_draws": 1,
+      "forecast_seconds": 0.8203858312626835
+    },
+    "seconds": 5.854289958981099,
+    "peak_process_rss_bytes": 148062208
+  },
+  {
+    "label": "r2-01",
+    "config": {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.9
+    },
+    "config_sha256": "357e9a7cf9f4e9641f5803299213fcb8956ab799248fbb480ff79dc26aa754ee",
+    "start": "2018-01-01",
+    "end": "2019-12-31",
+    "started_at": "2026-11-03T13:19:58.511961+00:00",
+    "allocated_seconds": 894.1448678750021,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 345,
+      "scored_draws": 345,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.210312493205997,
+      "mean_brier": 0.9998999944258891,
+      "hit_draws": 4,
+      "slot_hits": 4,
+      "top3_hit_draws": 1,
+      "first_hit_draws": 1,
+      "forecast_seconds": 0.8464476589870173
+    },
+    "seconds": 6.131059541978175,
+    "peak_process_rss_bytes": 151437312
+  },
+  {
+    "label": "r2-02",
+    "config": {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.99
+    },
+    "config_sha256": "de7657752db26c36bbed21f6a24a416dc8738d36afc505c9181e00915f9181af",
+    "start": "2018-01-01",
+    "end": "2019-12-31",
+    "started_at": "2026-11-03T13:20:04.643692+00:00",
+    "allocated_seconds": 888.0131505410245,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 345,
+      "scored_draws": 345,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.210337341061054,
+      "mean_brier": 0.9998999993938323,
+      "hit_draws": 4,
+      "slot_hits": 4,
+      "top3_hit_draws": 1,
+      "first_hit_draws": 1,
+      "forecast_seconds": 0.7886714588094037
+    },
+    "seconds": 5.985110874986276,
+    "peak_process_rss_bytes": 151437312
+  },
+  {
+    "label": "r2-03",
+    "config": {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.9,
+      "half_life_days": 365
+    },
+    "config_sha256": "80661b2484ffe24a5731d658ba364659fd28ff7c7cdb63d6b47fdbeabfde2463",
+    "start": "2018-01-01",
+    "end": "2019-12-31",
+    "started_at": "2026-11-03T13:20:10.629471+00:00",
+    "allocated_seconds": 882.0274308750231,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 345,
+      "scored_draws": 345,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.210342865408624,
+      "mean_brier": 0.999900000485489,
+      "hit_draws": 3,
+      "slot_hits": 3,
+      "top3_hit_draws": 1,
+      "first_hit_draws": 1,
+      "forecast_seconds": 0.8288105381943751
+    },
+    "seconds": 5.969415250001475,
+    "peak_process_rss_bytes": 154025984
+  },
+  {
+    "label": "r2-04",
+    "config": {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.9,
+      "half_life_days": 1095
+    },
+    "config_sha256": "56a753b0c9a991e78845248565441c07fe3c573658b5d9eafefd994d3fef8f35",
+    "start": "2018-01-01",
+    "end": "2019-12-31",
+    "started_at": "2026-11-03T13:20:16.599584+00:00",
+    "allocated_seconds": 876.057375208009,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 345,
+      "scored_draws": 345,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.210335963822669,
+      "mean_brier": 0.9998999991094176,
+      "hit_draws": 7,
+      "slot_hits": 7,
+      "top3_hit_draws": 1,
+      "first_hit_draws": 1,
+      "forecast_seconds": 0.8615971729159355
+    },
+    "seconds": 6.174100709002232,
+    "peak_process_rss_bytes": 157646848
+  },
+  {
+    "label": "r2-05",
+    "config": {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.9,
+      "pooling": "tier",
+      "tier_strength": 1000
+    },
+    "config_sha256": "f4bfcf6022ef84c9e8ce37ccfd0a5b02bfb62c7aa358249da55de68e63cea34a",
+    "start": "2018-01-01",
+    "end": "2019-12-31",
+    "started_at": "2026-11-03T13:20:22.774386+00:00",
+    "allocated_seconds": 869.8826342910179,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 345,
+      "scored_draws": 345,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.210312833294863,
+      "mean_brier": 0.9998999944834707,
+      "hit_draws": 5,
+      "slot_hits": 5,
+      "top3_hit_draws": 2,
+      "first_hit_draws": 2,
+      "forecast_seconds": 1.2847078428603709
+    },
+    "seconds": 12.168165417009732,
+    "peak_process_rss_bytes": 163053568
+  },
+  {
+    "label": "r2-06",
+    "config": {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.9,
+      "pooling": "tier",
+      "tier_strength": 10000
+    },
+    "config_sha256": "08f9bfc861e23cb5d49bbbe3bbec714cd6cd9c23aa0a006c118a13067fdbd946",
+    "start": "2018-01-01",
+    "end": "2019-12-31",
+    "started_at": "2026-11-03T13:20:34.943352+00:00",
+    "allocated_seconds": 857.7137923749979,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 345,
+      "scored_draws": 345,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.210318835749904,
+      "mean_brier": 0.9998999957112413,
+      "hit_draws": 6,
+      "slot_hits": 6,
+      "top3_hit_draws": 2,
+      "first_hit_draws": 2,
+      "forecast_seconds": 1.345113619667245
+    },
+    "seconds": 13.356430875021033,
+    "peak_process_rss_bytes": 166477824
+  },
+  {
+    "label": "r3-00",
+    "config": {
+      "model": "logistic",
+      "C": 0.01,
+      "calendar": false
+    },
+    "config_sha256": "59fd2fdf15f64019ba6c6c9698863a0d75c202e9ecfeab56bd1851983a651310",
+    "start": "2018-01-01",
+    "end": "2019-12-31",
+    "started_at": "2026-11-03T13:20:48.300935+00:00",
+    "allocated_seconds": 1499.9998886660032,
+    "status": "complete",
+    "summary": {
+      "scheduled_or_eligible_draws": 345,
+      "scored_draws": 345,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 0,
+      "mean_log_loss": 9.460083643940127,
+      "mean_brier": 0.9999626784131733,
+      "hit_draws": 10,
+      "slot_hits": 10,
+      "top3_hit_draws": 1,
+      "first_hit_draws": 0,
+      "forecast_seconds": 27.439161466696532
+    },
+    "seconds": 35.493776374991285,
+    "peak_process_rss_bytes": 487096320
+  },
+  {
+    "label": "r3-01",
+    "config": {
+      "model": "logistic",
+      "C": 0.01,
+      "calendar": true
+    },
+    "config_sha256": "4ecff6092d8ee122709ee85aceee4780271256efa2558c23b05eb6fd78460bb9",
+    "start": "2018-01-01",
+    "end": "2019-12-31",
+    "started_at": "2026-11-03T13:21:23.795935+00:00",
+    "allocated_seconds": 1464.5052464999899,
+    "status": "unhealthy",
+    "summary": {
+      "scheduled_or_eligible_draws": 345,
+      "scored_draws": 345,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 345,
+      "mean_log_loss": 9.470155893686472,
+      "mean_brier": 0.9999668583571916,
+      "hit_draws": 10,
+      "slot_hits": 10,
+      "top3_hit_draws": 1,
+      "first_hit_draws": 0,
+      "forecast_seconds": 25.769061832863372
+    },
+    "seconds": 33.75873720899108,
+    "peak_process_rss_bytes": 527597568
+  },
+  {
+    "label": "r3-02",
+    "config": {
+      "model": "logistic",
+      "C": 0.1,
+      "calendar": false
+    },
+    "config_sha256": "ce1878b155e34aa780138edf4a121ad1a3e270600c32bf35842d3e96b240a1e9",
+    "start": "2018-01-01",
+    "end": "2019-12-31",
+    "started_at": "2026-11-03T13:21:57.556677+00:00",
+    "allocated_seconds": 1430.7448162910005,
+    "status": "unhealthy",
+    "summary": {
+      "scheduled_or_eligible_draws": 345,
+      "scored_draws": 345,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 12,
+      "mean_log_loss": 9.857114854249348,
+      "mean_brier": 1.0001544661417971,
+      "hit_draws": 11,
+      "slot_hits": 11,
+      "top3_hit_draws": 1,
+      "first_hit_draws": 1,
+      "forecast_seconds": 40.56191949988715
+    },
+    "seconds": 48.500801834015874,
+    "peak_process_rss_bytes": 527597568
+  },
+  {
+    "label": "r3-03",
+    "config": {
+      "model": "logistic",
+      "C": 0.1,
+      "calendar": true
+    },
+    "config_sha256": "38ee42262a890eb0a4d299ffdce782265f66166395a30e6d23afa1b3ad563d92",
+    "start": "2018-01-01",
+    "end": "2019-12-31",
+    "started_at": "2026-11-03T13:22:46.059666+00:00",
+    "allocated_seconds": 1382.2422994579829,
+    "status": "unhealthy",
+    "summary": {
+      "scheduled_or_eligible_draws": 345,
+      "scored_draws": 345,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 345,
+      "mean_log_loss": 9.902143359261174,
+      "mean_brier": 1.0001950823754169,
+      "hit_draws": 9,
+      "slot_hits": 9,
+      "top3_hit_draws": 1,
+      "first_hit_draws": 1,
+      "forecast_seconds": 41.383503496908816
+    },
+    "seconds": 49.33797233298537,
+    "peak_process_rss_bytes": 527597568
+  },
+  {
+    "label": "r3-04",
+    "config": {
+      "model": "logistic",
+      "C": 1.0,
+      "calendar": false
+    },
+    "config_sha256": "cb900730c632067774e43a24695382d24e0b5f4f6dce1b27327188545fbc6b78",
+    "start": "2018-01-01",
+    "end": "2019-12-31",
+    "started_at": "2026-11-03T13:23:35.399954+00:00",
+    "allocated_seconds": 1332.9024821249768,
+    "status": "unhealthy",
+    "summary": {
+      "scheduled_or_eligible_draws": 345,
+      "scored_draws": 345,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 12,
+      "mean_log_loss": 10.166238744709515,
+      "mean_brier": 1.0004188198935218,
+      "hit_draws": 9,
+      "slot_hits": 9,
+      "top3_hit_draws": 1,
+      "first_hit_draws": 1,
+      "forecast_seconds": 41.46035749433213
+    },
+    "seconds": 49.62423154199496,
+    "peak_process_rss_bytes": 527597568
+  },
+  {
+    "label": "r3-05",
+    "config": {
+      "model": "logistic",
+      "C": 1.0,
+      "calendar": true
+    },
+    "config_sha256": "e7a4e5dafde3a6a9ecd657410227e067db28d1fbf1181c73224452931de51488",
+    "start": "2018-01-01",
+    "end": "2019-12-31",
+    "started_at": "2026-11-03T13:24:25.027160+00:00",
+    "allocated_seconds": 1283.2757608329994,
+    "status": "unhealthy",
+    "summary": {
+      "scheduled_or_eligible_draws": 345,
+      "scored_draws": 345,
+      "coverage": 1.0,
+      "fallback_draws": 0,
+      "degraded_draws": 345,
+      "mean_log_loss": 10.236179588165779,
+      "mean_brier": 1.0005287057091592,
+      "hit_draws": 11,
+      "slot_hits": 11,
+      "top3_hit_draws": 0,
+      "first_hit_draws": 0,
+      "forecast_seconds": 41.77351499197539
+    },
+    "seconds": 49.792890624987194,
+    "peak_process_rss_bytes": 540803072
+  }
+]

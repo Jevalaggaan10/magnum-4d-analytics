@@ -1,0 +1,53 @@
+version: damacai-probability-v3.0
+operator: damacai
+slots: all23
+picks: 10
+selection_objective: expected_matched_slots
+probability_floor_uniform_weight: 0.000001
+normalization_tolerance: 0.0000000001
+partitions:
+  initial: [2005-01-01, 2017-12-31]
+  development: [2018-01-01, 2019-12-31]
+  outer: [2020-01-01, 2023-12-31]
+  inspected: [2024-01-01, 2026-11-01]
+  future_scheduled_targets: 1000
+all_history_exploratory: true
+primary_metric: mean_draw_marginal_categorical_log_loss
+brier_convention: sum_over_classes_then_mean_slots_then_mean_draws
+practical_gain_nats: 0.001
+bootstrap:
+  replicates: 10000
+  block_lengths: [13, 26]
+  seed: 17029
+  simultaneous_contrasts: 4
+  family_alpha: 0.05
+controls: 1000
+seeds: [17, 29, 43]
+compute:
+  total_seconds: 7200
+  evaluation_reserve_seconds: 2100
+  round_seconds: [600, 900, 1500, 1500, 600]
+  max_configurations: 30
+  max_rounds: 5
+  stop_no_gain_rounds: 3
+  threads: 2
+learner:
+  history_draws: 1024
+  refit_every_draws: 32
+  rolling_draw_windows: [30, 90]
+  logistic_C: [0.01, 0.1, 1.0]
+  boosting_depths: [1, 2, 3]
+  boosting_rounds: [25, 75]
+  boosting_learning_rate: 0.05
+  boosting_reg_lambda: 10.0
+  boosting_reg_alpha: 1.0
+ensemble:
+  regularization: 0.001
+  minimum_oof_draws: 100
+publication:
+  timezone: Asia/Kuala_Lumpur
+  draw_hour: 19
+  deadline_hour: 18
+  regular_weekdays: [2, 5, 6]
+  source: https://www.damacai.com.my/general-information/
+  checked_on: 2026-11-03

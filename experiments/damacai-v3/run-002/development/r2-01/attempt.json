@@ -1,0 +1,30 @@
+{
+  "label": "r2-01",
+  "config": {
+    "model": "digit",
+    "alpha": 100,
+    "uniform_weight": 0.9
+  },
+  "config_sha256": "357e9a7cf9f4e9641f5803299213fcb8956ab799248fbb480ff79dc26aa754ee",
+  "start": "2018-01-01",
+  "end": "2019-12-31",
+  "started_at": "2026-11-03T13:19:58.511961+00:00",
+  "allocated_seconds": 894.1448678750021,
+  "status": "complete",
+  "summary": {
+    "scheduled_or_eligible_draws": 345,
+    "scored_draws": 345,
+    "coverage": 1.0,
+    "fallback_draws": 0,
+    "degraded_draws": 0,
+    "mean_log_loss": 9.210312493205997,
+    "mean_brier": 0.9998999944258891,
+    "hit_draws": 4,
+    "slot_hits": 4,
+    "top3_hit_draws": 1,
+    "first_hit_draws": 1,
+    "forecast_seconds": 0.8464476589870173
+  },
+  "seconds": 6.131059541978175,
+  "peak_process_rss_bytes": 151437312
+}

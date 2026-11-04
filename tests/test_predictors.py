@@ -51,3 +51,19 @@ class PredictorRegressionTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+class MethodHealthTests(unittest.TestCase):
+    def test_arima_nonconverged_fit_is_not_healthy(self):
+        from unittest.mock import patch,Mock
+        fake=Mock();fake.fit.return_value.mle_retvals={'converged':False};fake.fit.return_value.forecast.return_value=[10.]
+        with patch('statsmodels.tsa.arima.model.ARIMA',return_value=fake):
+            result=method_arima_digit_sum(pd.DataFrame({'1stPrizeNo':['1234','5678']}))
+        self.assertTrue(result.top)
+        self.assertEqual(getattr(result,'health',{}).get('status'),'degraded')
+
+    def test_arima_fallback_carries_error(self):
+        from unittest.mock import patch
+        with patch('statsmodels.tsa.arima.model.ARIMA',side_effect=ValueError('fit broke')):
+            result=method_arima_digit_sum(pd.DataFrame({'1stPrizeNo':['1234']}))
+        self.assertEqual(getattr(result,'health',{}).get('status'),'fallback')
+        self.assertIn('fit broke',result.health['error'])

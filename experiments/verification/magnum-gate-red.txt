@@ -1,0 +1,13 @@
+E......
+======================================================================
+ERROR: test_confirmation_gate_cannot_promote_on_loss_alone (test_forecast_evaluation.EvaluationTests.test_confirmation_gate_cannot_promote_on_loss_alone)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/tests/test_forecast_evaluation.py", line 70, in test_confirmation_gate_cannot_promote_on_loss_alone
+    from forecast_evaluation import promotion_decision
+ImportError: cannot import name 'promotion_decision' from 'forecast_evaluation' (/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/forecast_evaluation.py)
+
+----------------------------------------------------------------------
+Ran 7 tests in 2.554s
+
+FAILED (errors=1)

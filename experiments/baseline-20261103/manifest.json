@@ -1,0 +1,64 @@
+{
+  "head": "6b33cff7c8af9640bdfdb4e18ea9b6964475f45d",
+  "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 11:23:37) [Clang 14.0.6 ]",
+  "executable": "/opt/anaconda3/bin/python",
+  "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+  "hashes": {
+    "predictions.json": "06e9c77051775475dc5fbf993f0c681de2bb822723d6e2723168314799475973",
+    "PREDICTION_LOG.md": "6ef22b9b97acaa2bab4c8e5249c29f756cd5b97068583e13db0b40c4e39c45a1",
+    "data/damacai.csv": "a5c89d1ee1beaa3dfda99bb735ac2de86323edd945b5c93bbba70aeebb323dd4",
+    "data/provenance.json": "23b38ff40f5f04adfddef0046fe47f8ab127336bfca4594443a499cd8d6c057b",
+    "4D.txt": "dafcb4bfccda6c4a03ce257f0bdeef1e482de71dc267535185598e4164bdf7a6",
+    "MDTdec28.xlsx": "bb670adc0c308031164a9601e7c11db2caf71c61de47d2413e06839cfd40a3c6"
+  },
+  "runs": [
+    {
+      "name": "tests",
+      "argv": [
+        "/opt/anaconda3/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_*.py"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 3.744110958999954
+    },
+    {
+      "name": "tracker",
+      "argv": [
+        "/opt/anaconda3/bin/python",
+        "scripts/track_predictions.py",
+        "--no-sync",
+        "--dry-run"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.663724457990611
+    },
+    {
+      "name": "replay3",
+      "argv": [
+        "/opt/anaconda3/bin/python",
+        "scripts/track_predictions.py",
+        "--replay",
+        "3",
+        "--no-sync",
+        "--dry-run"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 9.473969292012043
+    },
+    {
+      "name": "legacy_cli",
+      "argv": [
+        "/opt/anaconda3/bin/python",
+        "predict.py"
+      ],
+      "exit_code": 1,
+      "wall_seconds": 0.024376916990149766
+    }
+  ]
+}

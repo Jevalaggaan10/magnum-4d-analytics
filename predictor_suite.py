@@ -11,7 +11,8 @@ They are scored for ranking only, not for predictive edge.
 from __future__ import annotations
 
 from collections import Counter
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+import warnings
 from typing import Callable
 
 import numpy as np
@@ -30,6 +31,12 @@ class MethodResult:
     top: list[tuple[str, float]]
     explanation: str
     family: str = "statistical"
+    health: dict = field(default_factory=dict)
+
+    def __post_init__(self):
+        if not self.health:
+            self.health = {'status': 'error' if self.family == 'error' else
+                           'ok' if self.top else 'unavailable', 'warnings': []}
 
     def top_n(self, n: int = 20) -> list[tuple[str, float]]:
         return self.top[:n]
@@ -239,11 +246,21 @@ def method_arima_digit_sum(df: pd.DataFrame, top_n: int = 100) -> MethodResult:
     if numbers.empty:
         return MethodResult("arima_digit_sum", [], "no valid first-prize numbers", family="error")
     s = numbers.apply(lambda n: sum(int(c) for c in n)).values
+    health = {'status': 'ok', 'warnings': []}
     try:
-        fit = ARIMA(s, order=(2, 0, 2)).fit()
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter('always')
+            fit = ARIMA(s, order=(2, 0, 2)).fit()
+        health['warnings'] = [str(w.message) for w in caught]
+        health['converged'] = bool(fit.mle_retvals.get('converged', False))
+        if caught or not health['converged']:
+            health['status'] = 'degraded'
+        for warning in caught:
+            warnings.warn(str(warning.message), warning.category, stacklevel=2)
         forecast = float(fit.forecast(1)[0])
-    except Exception:
+    except Exception as error:
         forecast = float(np.mean(s))
+        health.update(status='fallback', error=f'{type(error).__name__}: {error}')
     # Score every number by inverse abs distance of its digit-sum to forecast
     scores = []
     for i in range(10000):
@@ -256,6 +273,7 @@ def method_arima_digit_sum(df: pd.DataFrame, top_n: int = 100) -> MethodResult:
         name="arima_digit_sum",
         family="ts",
         top=scores[:top_n],
+        health=health,
         explanation=f"ARIMA(2,0,2) next-step digit-sum forecast = {forecast:.2f}. Score = 1/(1+|digit_sum - forecast|).",
     )
 
