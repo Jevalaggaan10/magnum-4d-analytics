@@ -463,6 +463,8 @@ def main(argv: list | None = None) -> int:
         raise ValueError('a published prediction already exists for this target; refusing to replace it')
     if pending:
         target = str(pending["for_date"]).zfill(8)
+        draw_start = pd.Timestamp(datetime.strptime(target, '%Y%m%d')).tz_localize(
+            'Asia/Kuala_Lumpur') + pd.Timedelta(hours=19)
         actual = recent.get(target, incomplete.get(target))
         if actual is None:
             actual = draw_from_local_cache(damacai_cache, target)
@@ -472,7 +474,7 @@ def main(argv: list | None = None) -> int:
                 pub = datetime.strptime(target, "%Y%m%d").date()
             except ValueError:
                 pub = None
-            if pub and pub > today:
+            if pub and pd.Timestamp(now) < draw_start:
                 pass  # Never ask a result endpoint to resolve a future draw.
             elif pub and (today - pub).days > PENDING_TTL_DAYS:
                 print(f"pending for {target} exceeded {PENDING_TTL_DAYS}d TTL; expiring unverified")
@@ -494,7 +496,7 @@ def main(argv: list | None = None) -> int:
                     actual = fetch_single_draw(target)
                 except Exception as e:
                     print(f"targeted fetch for {target} failed: {e}")
-        if actual and complete_draw(actual):
+        if actual and complete_draw(actual) and pd.Timestamp(now) >= draw_start:
             recent[target] = actual
             state["history"].append({
                 "for_date": target,
