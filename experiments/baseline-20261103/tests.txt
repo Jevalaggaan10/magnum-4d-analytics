@@ -1,0 +1,42 @@
+
+=== Backtest year 2025: train=1 test=1 ===
+magnum: 1 unique draws
+Date range: 2026-01-01 00:00:00 to 2026-01-01 00:00:00
+----- rendered log -----
+dry-run
+synced: []
+----- rendered log -----
+dry-run
+synced: ['20261028']
+----- rendered log -----
+dry-run
+  20261001: model 0 hit(s), random 0 hit(s) (1 methods, trained until 2026-09-30)
+  20261002: model 0 hit(s), random 0 hit(s) (1 methods, trained until 2026-10-01)
+  20261003: model 0 hit(s), random 0 hit(s) (1 methods, trained until 2026-10-02)
+updated prediction state/log
+
+STDERR:
+..............2026-11-03 14:09:02.515 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-11-03 14:09:02.516 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-11-03 14:09:02.516 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+.2026-11-03 14:09:02.521 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-11-03 14:09:02.522 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-03 14:09:02.584 
+  [33m[1mWarning:[0m to view this Streamlit app on a browser, run it with the following
+  command:
+
+    streamlit run python -m unittest [ARGUMENTS]
+2026-11-03 14:09:02.584 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-03 14:09:02.584 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-03 14:09:02.585 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-03 14:09:02.585 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-03 14:09:02.586 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-03 14:09:02.586 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-03 14:09:02.586 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-03 14:09:02.586 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-03 14:09:02.586 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+..................
+----------------------------------------------------------------------
+Ran 33 tests in 1.405s
+
+OK

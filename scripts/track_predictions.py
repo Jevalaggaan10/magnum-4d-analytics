@@ -55,6 +55,8 @@ from consensus import build_consensus  # noqa: E402
 
 STATE_FILE = REPO_ROOT / "predictions.json"
 LOG_FILE = REPO_ROOT / "PREDICTION_LOG.md"
+ARTIFACT_DIR = REPO_ROOT / 'probability_artifacts'
+SETTINGS_FILE = REPO_ROOT / 'forecast_config.json'
 
 TOP3_COLS = ["1stPrizeNo", "2ndPrizeNo", "3rdPrizeNo"]
 SLOT_COLS = (
@@ -390,6 +392,7 @@ def save_state_and_log(state: dict, log: str) -> None:
 # ---------------------------------------------------------------------------
 
 def main(argv: list | None = None) -> int:
+    global STATE_FILE, LOG_FILE, ARTIFACT_DIR
     # Windows consoles default to cp1252 and would crash on emoji in stdout
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -400,20 +403,43 @@ def main(argv: list | None = None) -> int:
     ap.add_argument("--dry-run", action="store_true",
                     help="render the log to stdout, write nothing")
     ap.add_argument('--for-date', help='explicit future YYYYMMDD target, e.g. an announced Tuesday special draw')
+    ap.add_argument('--announcement-url', help='official announcement URL for a special target')
+    ap.add_argument('--announced-at', help='timezone-aware announcement timestamp for a special target')
+    ap.add_argument('--state-file', type=Path, help='isolated ledger path for integration/research')
+    ap.add_argument('--log-file', type=Path, help='isolated rendered log path')
+    ap.add_argument('--artifact-dir', type=Path, help='probability artifact store for isolated runs')
+    ap.add_argument('--confirm-publication', action='store_true', help='CI only: record completion AFTER successful first push')
+    ap.add_argument('--publication-evidence', help='CI run URL proving push completed')
     ap.add_argument("--replay", type=int, default=0, metavar="N",
                     help="walk-forward replay over the N most recent published "
                          "draws (backtests this tracker's own pipeline; writes "
                          "state + log, leaves the live pending untouched)")
     args = ap.parse_args(argv)
+    if args.state_file:
+        STATE_FILE = args.state_file
+        LOG_FILE = args.log_file or args.state_file.with_suffix('.md')
+        ARTIFACT_DIR = args.artifact_dir or args.state_file.parent / 'probability_artifacts'
+    elif args.log_file or args.artifact_dir:
+        ap.error('--log-file/--artifact-dir require --state-file')
     if args.replay < 0:
         ap.error('--replay must be nonnegative')
 
     state = load_state()
+    from probability_tracker import (advance_forecasts, confirm_publication,
+                                     accept_observations, render_probability_log)
+    now = datetime.now(timezone.utc)
+    if args.confirm_publication:
+        if not args.publication_evidence:
+            ap.error('--confirm-publication requires --publication-evidence')
+        confirm_publication(state, now, evidence=args.publication_evidence)
+        if not args.dry_run:
+            save_state_and_log(state, render_log(state) + render_probability_log(state))
+        return 0
 
     # replay mode is a standalone backtest: it shares the prediction logic
     # but skips the sync/verify/generate pipeline entirely
     if args.replay > 0:
-        return run_replay_mode(args.replay, state, dry_run=args.dry_run, no_sync=args.no_sync)
+        return run_probability_replay(args.replay, state, dry_run=args.dry_run, no_sync=args.no_sync)
 
     corpus = load_corpus(state)
     damacai_cache = corpus
@@ -428,14 +454,18 @@ def main(argv: list | None = None) -> int:
         except Exception as e:
             network_ok = False
             print(f"WARNING: sync failed ({type(e).__name__}: {e})")
+    incomplete = {date: actual for date, actual in recent.items() if not complete_draw(actual)}
+    recent = accept_observations(state, recent, corpus, now=now)
 
     # ---- 2) resolve the pending prediction (if any) ----------------------
     pending = state.get("pending")
-    if args.for_date and pending and args.for_date != pending['for_date']:
-        raise ValueError('a published prediction is already pending; refusing to replace it')
+    if args.for_date and pending and args.for_date == pending['for_date']:
+        raise ValueError('a published prediction already exists for this target; refusing to replace it')
     if pending:
         target = str(pending["for_date"]).zfill(8)
-        actual = recent.get(target)
+        draw_start = pd.Timestamp(datetime.strptime(target, '%Y%m%d')).tz_localize(
+            'Asia/Kuala_Lumpur') + pd.Timedelta(hours=19)
+        actual = recent.get(target, incomplete.get(target))
         if actual is None:
             actual = draw_from_local_cache(damacai_cache, target)
         if actual is None and network_ok and not args.no_sync:
@@ -444,7 +474,7 @@ def main(argv: list | None = None) -> int:
                 pub = datetime.strptime(target, "%Y%m%d").date()
             except ValueError:
                 pub = None
-            if pub and pub > today:
+            if pub and pd.Timestamp(now) < draw_start:
                 pass  # Never ask a result endpoint to resolve a future draw.
             elif pub and (today - pub).days > PENDING_TTL_DAYS:
                 print(f"pending for {target} exceeded {PENDING_TTL_DAYS}d TTL; expiring unverified")
@@ -466,7 +496,7 @@ def main(argv: list | None = None) -> int:
                     actual = fetch_single_draw(target)
                 except Exception as e:
                     print(f"targeted fetch for {target} failed: {e}")
-        if actual and complete_draw(actual):
+        if actual and complete_draw(actual) and pd.Timestamp(now) >= draw_start:
             recent[target] = actual
             state["history"].append({
                 "for_date": target,
@@ -489,32 +519,21 @@ def main(argv: list | None = None) -> int:
     state['observed_draws'] = {**observed_draws(state), **recent}
     corpus = load_corpus(state)
 
-    # ---- 3) generate a new prediction if none pending --------------------
-    if state.get("pending") is None:
-        if not network_ok:
-            print('sync failed; declining to create a new prediction')
-            return 1
-        newest = corpus['DrawDate'].max()
-        today_myt = datetime.now(timezone(timedelta(hours=8))).strftime('%Y%m%d')
-        target = args.for_date or next_draw_date(max(newest.strftime('%Y%m%d'), today_myt))
-        target_date = datetime.strptime(target, '%Y%m%d')
-        if target <= today_myt:
-            raise ValueError('target must be a future Malaysian calendar date; cannot backdate predictions')
-        top3 = extract_top3_prizes(corpus[corpus['DrawDate'] < target_date])
-        picks, methods_ok = generate_picks(top3)
-        state["pending"] = {
-            "for_date": target,
-            "picks": picks,
-            "random_control": random_control(target),
-            "generated_at": datetime.now(timezone.utc).isoformat(),
-            **training_metadata(top3),
-            "methods_count": len(methods_ok),
-            "methods_names": methods_ok,
-        }
-        print(f"generated prediction for {target} ({len(methods_ok)} methods)")
+    # v3 records coexist with the immutable legacy pending record. No research
+    # operation retrains or fills probabilities for a published legacy forecast.
+    settings = json.loads(SETTINGS_FILE.read_text()) if SETTINGS_FILE.exists() else {'champion': {'model': 'uniform'}}
+    if args.for_date:
+        settings = {**settings, 'requested_date': args.for_date}
+        if datetime.strptime(args.for_date, '%Y%m%d').weekday() not in DRAW_WEEKDAYS:
+            if not args.announcement_url or not args.announced_at:
+                ap.error('special targets require --announcement-url and --announced-at')
+            settings['specials'] = {**settings.get('specials', {}), args.for_date: {
+                'url': args.announcement_url, 'announced_at': args.announced_at}}
+    advance_forecasts(state, corpus, now=now, artifact_dir=ARTIFACT_DIR,
+                     settings=settings, dry_run=args.dry_run, network_ok=network_ok)
 
     # ---- 4) render --------------------------------------------------------
-    log = render_log(state, network_ok=network_ok)
+    log = render_log(state, network_ok=network_ok) + render_probability_log(state)
     if args.dry_run:
         print("----- rendered log -----")
         print(log)
@@ -522,6 +541,25 @@ def main(argv: list | None = None) -> int:
 
     save_state_and_log(state, log)
     return 0
+
+
+def run_probability_replay(n, state, *, dry_run=False, no_sync=False):
+    """Current probability champion, same forecast function; separate artifacts."""
+    from forecast_evaluation import evaluate, summarize
+    corpus = load_corpus(state)
+    if not no_sync:
+        draws = collect_recent_draws(n)
+        extra = pd.DataFrame([dict(d['slots'], DrawDate=pd.to_datetime(d['for_date'])) for d in draws])
+        corpus = pd.concat([corpus, extra], ignore_index=True).drop_duplicates('DrawDate', keep='last').sort_values('DrawDate')
+    targets = corpus.tail(n)
+    settings = json.loads(SETTINGS_FILE.read_text()) if SETTINGS_FILE.exists() else {'champion': {'model': 'uniform'}}
+    output = None if dry_run else REPO_ROOT / 'experiments' / 'replays' / datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%f')
+    rows = evaluate(corpus, settings['champion'], start=targets.DrawDate.min(), end=targets.DrawDate.max(), output=output)
+    for row in rows:
+        print(f"{row['for_date']}: {row['training_rows']} prior draws; log loss {row['log_loss']:.9f}; {row['health']['status']}")
+    print(json.dumps(summarize(rows), sort_keys=True))
+    print('probability replay: dry-run; no files written' if dry_run else f'probability replay artifacts: {output}')
+    return 0 if len(rows) == len(targets) else 1
 
 
 # ---------------------------------------------------------------------------

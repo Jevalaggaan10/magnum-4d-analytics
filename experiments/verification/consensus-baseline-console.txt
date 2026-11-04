@@ -1,0 +1,427 @@
+Markov Chain model trained on 2271 draws
+Markov Chain model trained on 2272 draws
+Markov Chain model trained on 2273 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2274 draws
+Markov Chain model trained on 2275 draws
+Markov Chain model trained on 2276 draws
+Markov Chain model trained on 2277 draws
+Markov Chain model trained on 2278 draws
+Markov Chain model trained on 2279 draws
+Markov Chain model trained on 2280 draws
+Markov Chain model trained on 2281 draws
+Markov Chain model trained on 2282 draws
+Markov Chain model trained on 2283 draws
+Markov Chain model trained on 2284 draws
+Markov Chain model trained on 2285 draws
+Markov Chain model trained on 2286 draws
+Markov Chain model trained on 2287 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: EstimationWarning: Non-invertible starting MA parameters found. Using zeros as starting parameters.
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2288 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: EstimationWarning: Non-invertible starting MA parameters found. Using zeros as starting parameters.
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2289 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: EstimationWarning: Non-invertible starting MA parameters found. Using zeros as starting parameters.
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2290 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2291 draws
+Markov Chain model trained on 2292 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2293 draws
+Markov Chain model trained on 2294 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2295 draws
+Markov Chain model trained on 2296 draws
+Markov Chain model trained on 2297 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: EstimationWarning: Non-invertible starting MA parameters found. Using zeros as starting parameters.
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2298 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: EstimationWarning: Non-invertible starting MA parameters found. Using zeros as starting parameters.
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2299 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: EstimationWarning: Non-invertible starting MA parameters found. Using zeros as starting parameters.
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2300 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2301 draws
+Markov Chain model trained on 2302 draws
+Markov Chain model trained on 2303 draws
+Markov Chain model trained on 2304 draws
+Markov Chain model trained on 2305 draws
+Markov Chain model trained on 2306 draws
+Markov Chain model trained on 2307 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: EstimationWarning: Non-invertible starting MA parameters found. Using zeros as starting parameters.
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2308 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2309 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: EstimationWarning: Non-invertible starting MA parameters found. Using zeros as starting parameters.
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2310 draws
+Markov Chain model trained on 2311 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: EstimationWarning: Non-invertible starting MA parameters found. Using zeros as starting parameters.
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2312 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2313 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2314 draws
+Markov Chain model trained on 2315 draws
+Markov Chain model trained on 2316 draws
+Markov Chain model trained on 2317 draws
+Markov Chain model trained on 2318 draws
+Markov Chain model trained on 2319 draws
+Markov Chain model trained on 2320 draws
+completed 50
+Markov Chain model trained on 2321 draws
+Markov Chain model trained on 2322 draws
+Markov Chain model trained on 2323 draws
+Markov Chain model trained on 2324 draws
+Markov Chain model trained on 2325 draws
+Markov Chain model trained on 2326 draws
+Markov Chain model trained on 2327 draws
+Markov Chain model trained on 2328 draws
+Markov Chain model trained on 2329 draws
+Markov Chain model trained on 2330 draws
+Markov Chain model trained on 2331 draws
+Markov Chain model trained on 2332 draws
+Markov Chain model trained on 2333 draws
+Markov Chain model trained on 2334 draws
+Markov Chain model trained on 2335 draws
+Markov Chain model trained on 2336 draws
+Markov Chain model trained on 2337 draws
+Markov Chain model trained on 2338 draws
+Markov Chain model trained on 2339 draws
+Markov Chain model trained on 2340 draws
+Markov Chain model trained on 2341 draws
+Markov Chain model trained on 2342 draws
+Markov Chain model trained on 2343 draws
+Markov Chain model trained on 2344 draws
+Markov Chain model trained on 2345 draws
+Markov Chain model trained on 2346 draws
+Markov Chain model trained on 2347 draws
+Markov Chain model trained on 2348 draws
+Markov Chain model trained on 2349 draws
+Markov Chain model trained on 2350 draws
+Markov Chain model trained on 2351 draws
+Markov Chain model trained on 2352 draws
+Markov Chain model trained on 2353 draws
+Markov Chain model trained on 2354 draws
+Markov Chain model trained on 2355 draws
+Markov Chain model trained on 2356 draws
+Markov Chain model trained on 2357 draws
+Markov Chain model trained on 2358 draws
+Markov Chain model trained on 2359 draws
+Markov Chain model trained on 2360 draws
+Markov Chain model trained on 2361 draws
+Markov Chain model trained on 2362 draws
+Markov Chain model trained on 2363 draws
+Markov Chain model trained on 2364 draws
+Markov Chain model trained on 2365 draws
+Markov Chain model trained on 2366 draws
+Markov Chain model trained on 2367 draws
+Markov Chain model trained on 2368 draws
+Markov Chain model trained on 2369 draws
+Markov Chain model trained on 2370 draws
+completed 100
+Markov Chain model trained on 2371 draws
+Markov Chain model trained on 2372 draws
+Markov Chain model trained on 2373 draws
+Markov Chain model trained on 2374 draws
+Markov Chain model trained on 2375 draws
+Markov Chain model trained on 2376 draws
+Markov Chain model trained on 2377 draws
+Markov Chain model trained on 2378 draws
+Markov Chain model trained on 2379 draws
+Markov Chain model trained on 2380 draws
+Markov Chain model trained on 2381 draws
+Markov Chain model trained on 2382 draws
+Markov Chain model trained on 2383 draws
+Markov Chain model trained on 2384 draws
+Markov Chain model trained on 2385 draws
+Markov Chain model trained on 2386 draws
+Markov Chain model trained on 2387 draws
+Markov Chain model trained on 2388 draws
+Markov Chain model trained on 2389 draws
+Markov Chain model trained on 2390 draws
+Markov Chain model trained on 2391 draws
+Markov Chain model trained on 2392 draws
+Markov Chain model trained on 2393 draws
+Markov Chain model trained on 2394 draws
+Markov Chain model trained on 2395 draws
+Markov Chain model trained on 2396 draws
+Markov Chain model trained on 2397 draws
+Markov Chain model trained on 2398 draws
+Markov Chain model trained on 2399 draws
+Markov Chain model trained on 2400 draws
+Markov Chain model trained on 2401 draws
+Markov Chain model trained on 2402 draws
+Markov Chain model trained on 2403 draws
+Markov Chain model trained on 2404 draws
+Markov Chain model trained on 2405 draws
+Markov Chain model trained on 2406 draws
+Markov Chain model trained on 2407 draws
+Markov Chain model trained on 2408 draws
+Markov Chain model trained on 2409 draws
+Markov Chain model trained on 2410 draws
+Markov Chain model trained on 2411 draws
+Markov Chain model trained on 2412 draws
+Markov Chain model trained on 2413 draws
+Markov Chain model trained on 2414 draws
+Markov Chain model trained on 2415 draws
+Markov Chain model trained on 2416 draws
+Markov Chain model trained on 2417 draws
+Markov Chain model trained on 2418 draws
+Markov Chain model trained on 2419 draws
+Markov Chain model trained on 2420 draws
+completed 150
+Markov Chain model trained on 2421 draws
+Markov Chain model trained on 2422 draws
+Markov Chain model trained on 2423 draws
+Markov Chain model trained on 2424 draws
+Markov Chain model trained on 2425 draws
+Markov Chain model trained on 2426 draws
+Markov Chain model trained on 2427 draws
+Markov Chain model trained on 2428 draws
+Markov Chain model trained on 2429 draws
+Markov Chain model trained on 2430 draws
+Markov Chain model trained on 2431 draws
+Markov Chain model trained on 2432 draws
+Markov Chain model trained on 2433 draws
+Markov Chain model trained on 2434 draws
+Markov Chain model trained on 2435 draws
+Markov Chain model trained on 2436 draws
+Markov Chain model trained on 2437 draws
+Markov Chain model trained on 2438 draws
+Markov Chain model trained on 2439 draws
+Markov Chain model trained on 2440 draws
+Markov Chain model trained on 2441 draws
+Markov Chain model trained on 2442 draws
+Markov Chain model trained on 2443 draws
+Markov Chain model trained on 2444 draws
+Markov Chain model trained on 2445 draws
+Markov Chain model trained on 2446 draws
+Markov Chain model trained on 2447 draws
+Markov Chain model trained on 2448 draws
+Markov Chain model trained on 2449 draws
+Markov Chain model trained on 2450 draws
+Markov Chain model trained on 2451 draws
+Markov Chain model trained on 2452 draws
+Markov Chain model trained on 2453 draws
+Markov Chain model trained on 2454 draws
+Markov Chain model trained on 2455 draws
+Markov Chain model trained on 2456 draws
+Markov Chain model trained on 2457 draws
+Markov Chain model trained on 2458 draws
+Markov Chain model trained on 2459 draws
+Markov Chain model trained on 2460 draws
+Markov Chain model trained on 2461 draws
+Markov Chain model trained on 2462 draws
+Markov Chain model trained on 2463 draws
+Markov Chain model trained on 2464 draws
+Markov Chain model trained on 2465 draws
+Markov Chain model trained on 2466 draws
+Markov Chain model trained on 2467 draws
+Markov Chain model trained on 2468 draws
+Markov Chain model trained on 2469 draws
+Markov Chain model trained on 2470 draws
+completed 200
+Markov Chain model trained on 2471 draws
+Markov Chain model trained on 2472 draws
+Markov Chain model trained on 2473 draws
+Markov Chain model trained on 2474 draws
+Markov Chain model trained on 2475 draws
+Markov Chain model trained on 2476 draws
+Markov Chain model trained on 2477 draws
+Markov Chain model trained on 2478 draws
+Markov Chain model trained on 2479 draws
+Markov Chain model trained on 2480 draws
+Markov Chain model trained on 2481 draws
+Markov Chain model trained on 2482 draws
+Markov Chain model trained on 2483 draws
+Markov Chain model trained on 2484 draws
+Markov Chain model trained on 2485 draws
+Markov Chain model trained on 2486 draws
+Markov Chain model trained on 2487 draws
+Markov Chain model trained on 2488 draws
+Markov Chain model trained on 2489 draws
+Markov Chain model trained on 2490 draws
+Markov Chain model trained on 2491 draws
+Markov Chain model trained on 2492 draws
+Markov Chain model trained on 2493 draws
+Markov Chain model trained on 2494 draws
+Markov Chain model trained on 2495 draws
+Markov Chain model trained on 2496 draws
+Markov Chain model trained on 2497 draws
+Markov Chain model trained on 2498 draws
+Markov Chain model trained on 2499 draws
+Markov Chain model trained on 2500 draws
+Markov Chain model trained on 2501 draws
+Markov Chain model trained on 2502 draws
+Markov Chain model trained on 2503 draws
+Markov Chain model trained on 2504 draws
+Markov Chain model trained on 2505 draws
+Markov Chain model trained on 2506 draws
+Markov Chain model trained on 2507 draws
+Markov Chain model trained on 2508 draws
+Markov Chain model trained on 2509 draws
+Markov Chain model trained on 2510 draws
+Markov Chain model trained on 2511 draws
+Markov Chain model trained on 2512 draws
+Markov Chain model trained on 2513 draws
+Markov Chain model trained on 2514 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2515 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2516 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2517 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2518 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2519 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2520 draws
+completed 250
+Markov Chain model trained on 2521 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2522 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2523 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2524 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2525 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2526 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2527 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2528 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2529 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2530 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2531 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2532 draws
+Markov Chain model trained on 2533 draws
+Markov Chain model trained on 2534 draws
+Markov Chain model trained on 2535 draws
+Markov Chain model trained on 2536 draws
+Markov Chain model trained on 2537 draws
+Markov Chain model trained on 2538 draws
+Markov Chain model trained on 2539 draws
+Markov Chain model trained on 2540 draws
+Markov Chain model trained on 2541 draws
+Markov Chain model trained on 2542 draws
+Markov Chain model trained on 2543 draws
+Markov Chain model trained on 2544 draws
+Markov Chain model trained on 2545 draws
+Markov Chain model trained on 2546 draws
+Markov Chain model trained on 2547 draws
+Markov Chain model trained on 2548 draws
+Markov Chain model trained on 2549 draws
+Markov Chain model trained on 2550 draws
+Markov Chain model trained on 2551 draws
+Markov Chain model trained on 2552 draws
+Markov Chain model trained on 2553 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2554 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2555 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2556 draws
+/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/predictor_suite.py:345: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  out[key] = fn(df, top_n=top_n)
+Markov Chain model trained on 2557 draws
+Markov Chain model trained on 2558 draws
+Markov Chain model trained on 2559 draws
+Markov Chain model trained on 2560 draws
+Markov Chain model trained on 2561 draws
+Markov Chain model trained on 2562 draws
+Markov Chain model trained on 2563 draws
+Markov Chain model trained on 2564 draws
+Markov Chain model trained on 2565 draws
+Markov Chain model trained on 2566 draws
+Markov Chain model trained on 2567 draws
+Markov Chain model trained on 2568 draws
+Markov Chain model trained on 2569 draws
+Markov Chain model trained on 2570 draws
+completed 300
+Markov Chain model trained on 2571 draws
+Markov Chain model trained on 2572 draws
+Markov Chain model trained on 2573 draws
+Markov Chain model trained on 2574 draws
+Markov Chain model trained on 2575 draws
+Markov Chain model trained on 2576 draws
+Markov Chain model trained on 2577 draws
+Markov Chain model trained on 2578 draws
+Markov Chain model trained on 2579 draws
+Markov Chain model trained on 2580 draws
+Markov Chain model trained on 2581 draws
+Markov Chain model trained on 2582 draws
+Markov Chain model trained on 2583 draws
+Markov Chain model trained on 2584 draws
+Markov Chain model trained on 2585 draws
+Markov Chain model trained on 2586 draws
+Markov Chain model trained on 2587 draws
+Markov Chain model trained on 2588 draws
+Markov Chain model trained on 2589 draws
+Markov Chain model trained on 2590 draws
+Markov Chain model trained on 2591 draws
+Markov Chain model trained on 2592 draws
+Markov Chain model trained on 2593 draws
+Markov Chain model trained on 2594 draws
+Markov Chain model trained on 2595 draws
+Markov Chain model trained on 2596 draws
+Markov Chain model trained on 2597 draws
+Markov Chain model trained on 2598 draws
+Markov Chain model trained on 2599 draws
+Markov Chain model trained on 2600 draws
+Markov Chain model trained on 2601 draws
+Markov Chain model trained on 2602 draws
+Markov Chain model trained on 2603 draws
+Markov Chain model trained on 2604 draws
+Markov Chain model trained on 2605 draws
+Markov Chain model trained on 2606 draws
+Markov Chain model trained on 2607 draws
+Markov Chain model trained on 2608 draws
+Markov Chain model trained on 2609 draws
+Markov Chain model trained on 2610 draws
+Markov Chain model trained on 2611 draws
+Markov Chain model trained on 2612 draws
+Markov Chain model trained on 2613 draws
+Markov Chain model trained on 2614 draws
+Markov Chain model trained on 2615 draws

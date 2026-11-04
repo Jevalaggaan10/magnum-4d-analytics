@@ -147,7 +147,11 @@ def create_time_features(date: pd.Timestamp) -> dict:
 
 
 def create_rolling_features(df: pd.DataFrame, windows: list = [7, 30, 90]) -> pd.DataFrame:
-    """Create rolling window features for digit frequencies (vectorized)."""
+    """Prior-draw rolling means; windows count draws, not calendar days.
+
+    Row t's features predict row t; its observed outcome never enters its own
+    feature. The first row has no context and retains missing feature values.
+    """
     df = df.sort_values('DrawDate').reset_index(drop=True).copy()
 
     prize_cols = [c for c in ['1stPrizeNo', '2ndPrizeNo', '3rdPrizeNo'] if c in df.columns]
@@ -156,11 +160,11 @@ def create_rolling_features(df: pd.DataFrame, windows: list = [7, 30, 90]) -> pd
     for digit in range(10):
         digit_str = str(digit)
         total = sum(padded[c].str.count(digit_str) for c in prize_cols)
-        df[f'digit_{digit}_count'] = total
+        df[f'digit_{digit}_count'] = total.shift(1)
 
         for window in windows:
             df[f'digit_{digit}_roll_{window}'] = (
-                total.rolling(window=window, min_periods=1).mean()
+                total.shift(1).rolling(window=window, min_periods=1).mean()
             )
 
     return df

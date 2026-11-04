@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *.egg-info/
 .venv/
+.venv*/
 venv/
 env/
 
@@ -21,3 +22,6 @@ Thumbs.db
 
 # --- Local secrets ---
 .env
+
+# Complete probability experiments retained locally; regenerate with frozen protocol.
+experiments/**/*.npz

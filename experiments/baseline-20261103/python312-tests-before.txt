@@ -1,0 +1,37 @@
+
+=== Backtest year 2025: train=1 test=1 ===
+magnum: 1 unique draws
+Date range: 2026-01-01 00:00:00 to 2026-01-01 00:00:00
+----- rendered log -----
+dry-run
+synced: []
+----- rendered log -----
+dry-run
+synced: ['20261028']
+----- rendered log -----
+dry-run
+  20261001: model 0 hit(s), random 0 hit(s) (1 methods, trained until 2026-09-30)
+  20261002: model 0 hit(s), random 0 hit(s) (1 methods, trained until 2026-10-01)
+  20261003: model 0 hit(s), random 0 hit(s) (1 methods, trained until 2026-10-02)
+updated prediction state/log
+
+STDERR:
+..F...........2026-11-03 14:10:24.033 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-11-03 14:10:24.033 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-11-03 14:10:24.034 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+.2026-11-03 14:10:24.035 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-11-03 14:10:24.037 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-03 14:10:24.037 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+..................
+======================================================================
+FAIL: test_all_23_cache_slots_keep_leading_zeros_and_missing_values (test_data_and_features.DataAndFeatureRegressionTests.test_all_23_cache_slots_keep_leading_zeros_and_missing_values)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/tests/test_data_and_features.py", line 37, in test_all_23_cache_slots_keep_leading_zeros_and_missing_values
+    self.assertIsNone(loaded.iloc[0]['SpecialNo1'])
+AssertionError: <NA> is not None
+
+----------------------------------------------------------------------
+Ran 33 tests in 4.680s
+
+FAILED (failures=1)

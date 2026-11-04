@@ -1,0 +1,17 @@
+............F..
+======================================================================
+FAIL: test_cached_estimator_retains_fit_warning_health (test_forecasting.TrainedCategoricalTests.test_cached_estimator_retains_fit_warning_health)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/tests/test_forecasting.py", line 166, in test_cached_estimator_retains_fit_warning_health
+    self.assertEqual(b.metadata['health']['status'],'degraded')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'ok' != 'degraded'
+- ok
++ degraded
+
+
+----------------------------------------------------------------------
+Ran 15 tests in 2.395s
+
+FAILED (failures=1)

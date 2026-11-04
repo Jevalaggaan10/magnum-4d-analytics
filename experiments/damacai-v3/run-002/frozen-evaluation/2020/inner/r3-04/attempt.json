@@ -1,0 +1,16 @@
+{
+  "label": "r3-04",
+  "config": {
+    "model": "logistic",
+    "C": 1.0,
+    "calendar": false
+  },
+  "config_sha256": "cb900730c632067774e43a24695382d24e0b5f4f6dce1b27327188545fbc6b78",
+  "start": "2018-01-01",
+  "end": "2019-12-31",
+  "started_at": "2026-11-03T13:29:30.814135+00:00",
+  "allocated_seconds": 138.0539318564388,
+  "status": "interrupted",
+  "error": "execution interrupted; partial target set ineligible",
+  "seconds": 0
+}

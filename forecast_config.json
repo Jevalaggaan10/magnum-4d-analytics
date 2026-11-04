@@ -1,0 +1,29 @@
+{
+  "champion": {
+    "model": "uniform"
+  },
+  "shadow": {
+    "model": "digit",
+    "alpha": 100,
+    "uniform_weight": 0.5
+  },
+  "simplest_nonuniform": {
+    "model": "digit",
+    "alpha": 100
+  },
+  "start_date": "20261107",
+  "confirmation_version": "v3-fixed-1000",
+  "checkpoint_scheduled_targets": 1000,
+  "development_qualified": false,
+  "selection_evidence": "experiments/damacai-v3/run-002/frozen-selection.json",
+  "specials": {},
+  "correctness_verified": false,
+  "correctness_limit": "Local suites verified; hosted runtime/publication and future inference unverified",
+  "frozen_at": "2026-11-03T13:53:20.903631+00:00",
+  "source_hashes": {
+    "forecasting.py": "146ac43a098a04ae0073e16dc1b8ce392ac20d3d76f597c681e98c70eb17aa74",
+    "forecast_evaluation.py": "2dddea13a106b0e61572c35fd73a58a4ccec4ead0bf6b729f5d06ca5c34cbbd7",
+    "probability_tracker.py": "a428ae5c288342b933d4e4e5303f56bd5eecfefd8e02f58feead8f9db10dea97"
+  },
+  "protocol_sha256": "8d50573ddb65a1a0d216266b6c5ef422479cd0bc273e40c5be621800b27c74a0"
+}

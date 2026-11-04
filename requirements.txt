@@ -1,4 +1,5 @@
 pandas>=2.0
+-c constraints-py312.txt
 numpy>=1.24
 scipy>=1.11
 statsmodels>=0.14

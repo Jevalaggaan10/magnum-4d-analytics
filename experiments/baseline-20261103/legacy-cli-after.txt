@@ -1,0 +1,102 @@
+============================================================
+LEGACY 4D DESCRIPTIVE RANKINGS
+============================================================
+Target Date: Next Draw
+
+Loading historical data...
+magnum: 5568 unique draws
+Date range: 1992-05-06 00:00:00 to 2025-12-28 00:00:00
+
+Training prediction models...
+
+=== Training Statistical Model ===
+Statistical model trained on 5568 draws
+  Unique numbers seen: 8103
+
+=== Training Markov Chain Model ===
+Markov Chain model trained on 5568 draws
+
+------------------------------------------------------------
+INDIVIDUAL MODEL PREDICTIONS
+------------------------------------------------------------
+
+### Statistical Model ###
+Predictions: ['8132', '9535', '1715', '3237', '6966', '9818', '5914', '4267', '4089', '2444']
+
+### MarkovChain Model ###
+Predictions: ['5975', '4108', '9609', '3211', '5542', '9123', '6725', '1061', '0998', '5064']
+
+============================================================
+ENSEMBLE PREDICTIONS (Combined from all models)
+============================================================
+
+🎯 TOP 10 PREDICTED NUMBERS FOR NEXT DRAW:
+----------------------------------------
+   1. 8132  (ensemble score: 1.000)
+   2. 5975  (ensemble score: 1.000)
+   3. 9535  (ensemble score: 0.500)
+   4. 4108  (ensemble score: 0.500)
+   5. 1715  (ensemble score: 0.333)
+   6. 9609  (ensemble score: 0.333)
+   7. 3237  (ensemble score: 0.250)
+   8. 3211  (ensemble score: 0.250)
+   9. 6966  (ensemble score: 0.200)
+  10. 5542  (ensemble score: 0.200)
+
+📊 Extended Predictions (11-30):
+  11. 9818  (score: 0.167)
+  12. 9123  (score: 0.167)
+  13. 5914  (score: 0.143)
+  14. 6725  (score: 0.143)
+  15. 4267  (score: 0.125)
+  16. 1061  (score: 0.125)
+  17. 4089  (score: 0.111)
+  18. 0998  (score: 0.111)
+  19. 2444  (score: 0.100)
+  20. 5064  (score: 0.100)
+  21. 1552  (score: 0.091)
+  22. 4409  (score: 0.091)
+  23. 5538  (score: 0.083)
+  24. 8635  (score: 0.083)
+  25. 6734  (score: 0.077)
+  26. 1197  (score: 0.077)
+  27. 7871  (score: 0.071)
+  28. 7859  (score: 0.071)
+  29. 7100  (score: 0.067)
+  30. 0103  (score: 0.067)
+
+============================================================
+STATISTICAL ANALYSIS
+============================================================
+
+🔥 Historically Hottest Numbers (appeared most often):
+     8132: appeared 9 times
+     9535: appeared 8 times
+     1715: appeared 7 times
+     3237: appeared 7 times
+     6966: appeared 7 times
+     9818: appeared 7 times
+     5914: appeared 7 times
+     4267: appeared 7 times
+     4089: appeared 7 times
+     2444: appeared 7 times
+
+❄️ Cold Numbers (potential 'due' numbers):
+     8132: 1737 days since last appearance (appeared 9x total)
+     9535: 1701 days since last appearance (appeared 8x total)
+     1552: 4582 days since last appearance (appeared 7x total)
+     3595: 4162 days since last appearance (appeared 7x total)
+     3237: 3966 days since last appearance (appeared 7x total)
+     4267: 3640 days since last appearance (appeared 7x total)
+     6966: 2983 days since last appearance (appeared 7x total)
+     7100: 1309 days since last appearance (appeared 7x total)
+     2444: 1250 days since last appearance (appeared 7x total)
+     2403: 1078 days since last appearance (appeared 7x total)
+
+============================================================
+⚠️  DISCLAIMER
+============================================================
+Lottery numbers are RANDOM. These predictions are based on
+statistical patterns in historical data and do NOT guarantee
+any wins. Please gamble responsibly.
+============================================================

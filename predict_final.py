@@ -175,7 +175,7 @@ def calculate_ensemble_score(all_predictions: dict) -> list:
 def main():
     """Main prediction function."""
     print("=" * 60)
-    print("MAGNUM 4D PREDICTION - IMPROVED ENSEMBLE MODEL")
+    print("MAGNUM 4D DESCRIPTIVE ENSEMBLE RANKINGS")
     print("Target: next draw (descriptive rankings only)")
     print("=" * 60)
     
@@ -214,7 +214,7 @@ def main():
     
     # Results
     print("\n" + "=" * 60)
-    print("🎯 TOP 15 PREDICTED NUMBERS FOR TODAY'S DRAW")
+    print("🎯 TOP 15 DESCRIPTIVE RANKINGS FOR SELECTED HISTORY")
     print("=" * 60)
     
     for i, (num, score) in enumerate(ensemble[:15], 1):
@@ -226,25 +226,6 @@ def main():
     print("-" * 60)
     for i, (num, score) in enumerate(ensemble[15:30], 16):
         print(f"  {i:2d}. {num}   Score: {score:.3f}")
-    
-    # Prize category suggestions
-    print("\n" + "=" * 60)
-    print("🏆 SUGGESTED NUMBERS BY PRIZE CATEGORY")
-    print("=" * 60)
-    
-    top_15 = [num for num, _ in ensemble[:15]]
-    
-    print("\n🥇 1st Prize Candidates (Top 5):")
-    for num in top_15[:5]:
-        print(f"     {num}")
-    
-    print("\n🥈 2nd Prize Candidates (6-10):")
-    for num in top_15[5:10]:
-        print(f"     {num}")
-    
-    print("\n🥉 3rd Prize Candidates (11-15):")
-    for num in top_15[10:15]:
-        print(f"     {num}")
     
     # Method breakdown
     print("\n" + "=" * 60)

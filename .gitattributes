@@ -1,2 +1,6 @@
 data/*.csv text eol=lf
 data/*.json text eol=lf
+# Preserve raw captured evidence bytes and collapse generated experiment records.
+experiments/** linguist-generated=true
+experiments/**/*.txt -text -whitespace
+experiments/README.md -linguist-generated

@@ -1,0 +1,21 @@
+{
+  "selected": {
+    "model": "uniform"
+  },
+  "development_loss": 9.210340371976184,
+  "simplest_nonuniform": {
+    "model": "digit",
+    "alpha": 100
+  },
+  "best_observed_nonuniform": {
+    "model": "digit",
+    "alpha": 100,
+    "uniform_weight": 0.5
+  },
+  "best_observed_nonuniform_loss": 9.210254936683276,
+  "attempted": 18,
+  "seconds": 322.22120045902557,
+  "rounds_completed": 3,
+  "stop_reason": "three_no_gain_rounds",
+  "historical_evidence": "exploratory; no prospective confirmation"
+}

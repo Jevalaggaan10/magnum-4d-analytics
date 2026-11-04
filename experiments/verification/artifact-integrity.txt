@@ -1,0 +1,6 @@
+{
+  "verified_prediction_rows": 26265,
+  "unique_artifact_paths": 24342,
+  "seconds": 54.235543833000065,
+  "status": "passed"
+}

@@ -121,3 +121,22 @@ class TrackerRegressionTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+class SameDayResolutionTests(unittest.TestCase):
+    def test_same_day_pending_is_not_queried_before_draw_start(self):
+        from datetime import datetime
+        now=datetime.fromisoformat('2026-11-04T17:30:00+08:00')
+        pending={'for_date':'20261104','picks':['1234'],'random_control':['5678']}
+        state={'pending':pending.copy(),'history':[]}
+        corpus=pd.DataFrame([dict(slots(),DrawDate=pd.Timestamp('2026-11-01'),Source='damacai')])
+        with patch.object(tracker,'datetime',wraps=datetime) as clock, \
+             patch.object(tracker,'load_state',return_value=state), \
+             patch.object(tracker,'load_corpus',return_value=corpus), \
+             patch.object(tracker,'fetch_recent_draws',return_value={}), \
+             patch.object(tracker,'fetch_single_draw',return_value=slots()) as fetch, \
+             patch.object(tracker,'render_log',return_value='dry-run'):
+            clock.now.return_value=now
+            tracker.main(['--dry-run'])
+        self.assertEqual(state['pending'],pending)
+        self.assertEqual(state['history'],[])
+        fetch.assert_not_called()

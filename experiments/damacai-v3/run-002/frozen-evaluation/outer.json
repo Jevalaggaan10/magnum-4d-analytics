@@ -1,0 +1,212 @@
+[
+  {
+    "year": 2020,
+    "selection": {
+      "selected": {
+        "model": "uniform"
+      },
+      "development_loss": 9.210340371976184,
+      "simplest_nonuniform": {
+        "model": "digit",
+        "alpha": 100
+      },
+      "best_observed_nonuniform": {
+        "model": "digit",
+        "alpha": 100,
+        "uniform_weight": 0.5
+      },
+      "best_observed_nonuniform_loss": 9.210254936683276,
+      "attempted": 18,
+      "seconds": 55.76369575000001,
+      "rounds_completed": 3,
+      "stop_reason": "three_no_gain_rounds",
+      "historical_evidence": "exploratory; no prospective confirmation"
+    },
+    "evaluation": {
+      "label": "outer",
+      "config": {
+        "model": "uniform"
+      },
+      "config_sha256": "3d102bae3dcf0604151eb02b117eb365f5fe49cbb4f8c25e4da3f9704c772380",
+      "start": "2020-01-01",
+      "end": "2020-12-31",
+      "started_at": "2026-11-03T13:37:22.261776+00:00",
+      "allocated_seconds": 1744.235650458,
+      "status": "complete",
+      "summary": {
+        "scheduled_or_eligible_draws": 126,
+        "scored_draws": 126,
+        "coverage": 1.0,
+        "fallback_draws": 0,
+        "degraded_draws": 0,
+        "mean_log_loss": 9.210340371976175,
+        "mean_brier": 0.9998999999999999,
+        "hit_draws": 4,
+        "slot_hits": 4,
+        "top3_hit_draws": 0,
+        "first_hit_draws": 0,
+        "forecast_seconds": 0.1527969190000249
+      },
+      "seconds": 1.8067010000000323,
+      "peak_process_rss_bytes": 526843904
+    }
+  },
+  {
+    "year": 2021,
+    "selection": {
+      "selected": {
+        "model": "uniform"
+      },
+      "development_loss": 9.210340371976184,
+      "simplest_nonuniform": {
+        "model": "digit",
+        "alpha": 100
+      },
+      "best_observed_nonuniform": {
+        "model": "digit",
+        "alpha": 100,
+        "uniform_weight": 0.5
+      },
+      "best_observed_nonuniform_loss": 9.210211077295293,
+      "attempted": 18,
+      "seconds": 303.207954792,
+      "rounds_completed": 3,
+      "stop_reason": "three_no_gain_rounds",
+      "historical_evidence": "exploratory; no prospective confirmation"
+    },
+    "evaluation": {
+      "label": "outer",
+      "config": {
+        "model": "uniform"
+      },
+      "config_sha256": "3d102bae3dcf0604151eb02b117eb365f5fe49cbb4f8c25e4da3f9704c772380",
+      "start": "2021-01-01",
+      "end": "2021-12-31",
+      "started_at": "2026-11-03T13:42:27.283228+00:00",
+      "allocated_seconds": 1439.209588083,
+      "status": "complete",
+      "summary": {
+        "scheduled_or_eligible_draws": 112,
+        "scored_draws": 112,
+        "coverage": 1.0,
+        "fallback_draws": 0,
+        "degraded_draws": 0,
+        "mean_log_loss": 9.210340371976176,
+        "mean_brier": 0.9999000000000001,
+        "hit_draws": 2,
+        "slot_hits": 2,
+        "top3_hit_draws": 0,
+        "first_hit_draws": 0,
+        "forecast_seconds": 0.06069924800078752
+      },
+      "seconds": 1.4126834159999362,
+      "peak_process_rss_bytes": 558153728
+    }
+  },
+  {
+    "year": 2022,
+    "selection": {
+      "selected": {
+        "model": "uniform"
+      },
+      "development_loss": 9.210340371976184,
+      "simplest_nonuniform": {
+        "model": "digit",
+        "alpha": 100
+      },
+      "best_observed_nonuniform": {
+        "model": "digit",
+        "alpha": 100,
+        "uniform_weight": 0.9,
+        "pooling": "tier",
+        "tier_strength": 1000
+      },
+      "best_observed_nonuniform_loss": 9.210329283434655,
+      "attempted": 18,
+      "seconds": 275.173584042,
+      "rounds_completed": 3,
+      "stop_reason": "three_no_gain_rounds",
+      "historical_evidence": "exploratory; no prospective confirmation"
+    },
+    "evaluation": {
+      "label": "outer",
+      "config": {
+        "model": "uniform"
+      },
+      "config_sha256": "3d102bae3dcf0604151eb02b117eb365f5fe49cbb4f8c25e4da3f9704c772380",
+      "start": "2022-01-01",
+      "end": "2022-12-31",
+      "started_at": "2026-11-03T13:47:03.878669+00:00",
+      "allocated_seconds": 1162.60991125,
+      "status": "complete",
+      "summary": {
+        "scheduled_or_eligible_draws": 179,
+        "scored_draws": 179,
+        "coverage": 1.0,
+        "fallback_draws": 0,
+        "degraded_draws": 0,
+        "mean_log_loss": 9.210340371976178,
+        "mean_brier": 0.9999,
+        "hit_draws": 4,
+        "slot_hits": 4,
+        "top3_hit_draws": 0,
+        "first_hit_draws": 0,
+        "forecast_seconds": 0.1591689160009082
+      },
+      "seconds": 2.319145832999993,
+      "peak_process_rss_bytes": 558153728
+    }
+  },
+  {
+    "year": 2023,
+    "selection": {
+      "selected": {
+        "model": "uniform"
+      },
+      "development_loss": 9.210340371976184,
+      "simplest_nonuniform": {
+        "model": "digit",
+        "alpha": 100
+      },
+      "best_observed_nonuniform": {
+        "model": "digit",
+        "alpha": 100,
+        "uniform_weight": 0.99
+      },
+      "best_observed_nonuniform_loss": 9.210341421589808,
+      "attempted": 18,
+      "seconds": 296.74157754199996,
+      "rounds_completed": 3,
+      "stop_reason": "three_no_gain_rounds",
+      "historical_evidence": "exploratory; no prospective confirmation"
+    },
+    "evaluation": {
+      "label": "outer",
+      "config": {
+        "model": "uniform"
+      },
+      "config_sha256": "3d102bae3dcf0604151eb02b117eb365f5fe49cbb4f8c25e4da3f9704c772380",
+      "start": "2023-01-01",
+      "end": "2023-12-31",
+      "started_at": "2026-11-03T13:52:02.946645+00:00",
+      "allocated_seconds": 863.5375115000002,
+      "status": "complete",
+      "summary": {
+        "scheduled_or_eligible_draws": 165,
+        "scored_draws": 165,
+        "coverage": 1.0,
+        "fallback_draws": 0,
+        "degraded_draws": 0,
+        "mean_log_loss": 9.210340371976178,
+        "mean_brier": 0.9998999999999999,
+        "hit_draws": 5,
+        "slot_hits": 5,
+        "top3_hit_draws": 0,
+        "first_hit_draws": 0,
+        "forecast_seconds": 0.15310367199845132
+      },
+      "seconds": 2.4454486249999263,
+      "peak_process_rss_bytes": 627589120
+    }
+  }
+]

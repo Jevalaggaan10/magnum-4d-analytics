@@ -1,0 +1,25 @@
+{
+  "purpose": "correctness training smoke, separate from model search; no predictive claim",
+  "health": {
+    "status": "ok",
+    "warnings": []
+  },
+  "fit_rows": 64,
+  "probability_shape": [
+    5,
+    10000
+  ],
+  "picks": [
+    "4536",
+    "4537",
+    "4534",
+    "4530",
+    "4535",
+    "4531",
+    "8536",
+    "3536",
+    "8537",
+    "4539"
+  ],
+  "seconds": 1.5187819170000125
+}

@@ -1,0 +1,10 @@
+{
+  "completed": true,
+  "qualifying_gain": false,
+  "gain_nats": 0.0,
+  "consecutive_no_gain": 2,
+  "champion": {
+    "model": "uniform"
+  },
+  "critique": "Historical development selection is exploratory; fit warnings/failures disqualify candidates. No edge inferred from ranks."
+}

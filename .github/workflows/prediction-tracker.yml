@@ -7,6 +7,8 @@ on:
   schedule:
     # 13:15 UTC = 21:15 MYT (results publish ~20:45-21:05 MYT)
     - cron: "15 13 * * *"
+    # 08:00 UTC = 16:00 MYT, before the 18:00 publication deadline.
+    - cron: "0 8 * * *"
   workflow_dispatch:
 
 permissions:
@@ -48,9 +50,21 @@ jobs:
           git config user.name "prediction-tracker"
           git config user.email "actions@users.noreply.github.com"
           git add PREDICTION_LOG.md predictions.json
+          if [ -d probability_artifacts ]; then git add probability_artifacts; fi
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
             git commit -m "chore(prediction): verify latest draw + log next prediction [skip ci]"
+            git push
+          fi
+
+      - name: Confirm publication after successful push
+        env:
+          PUBLICATION_EVIDENCE: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          python scripts/track_predictions.py --confirm-publication --publication-evidence "$PUBLICATION_EVIDENCE"
+          git add PREDICTION_LOG.md predictions.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(prediction): record publication completion [skip ci]"
             git push
           fi

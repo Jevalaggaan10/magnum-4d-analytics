@@ -1,0 +1,11 @@
+{
+  "python": "3.11.15 (main, Mar  3 2026, 00:52:57) [Clang 17.0.0 (clang-1700.6.3.2)]",
+  "pandas": "3.1.0",
+  "before_value_repr": "<NA>",
+  "before_dtype": "null[pyarrow]",
+  "before_is_none": false,
+  "after_value_repr": "None",
+  "after_dtype": "object",
+  "after_is_none": true,
+  "leading_zero_retained": true
+}

@@ -25,17 +25,7 @@ st.set_page_config(
 )
 
 st.title("🎲 4D Number Explorer")
-st.markdown(
-    """
-    <div style="background:#fff4e5;border-left:6px solid #d97706;padding:14px;border-radius:6px;
-                font-size:15px;margin-bottom:10px;color:#1B1B1F;">
-    <b>Heads up.</b> 4D lottery draws are random. No tool in the world — including this one —
-    can predict the winning number. For every RM10 you bet, the lottery keeps about
-    RM3.60 on average. This app helps you <i>understand</i> the numbers, not beat them.
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
+st.info("No predictive advantage has been demonstrated. Independent uniform draws give each code a 1/10,000 probability per slot. Forecast evidence and data freshness are shown below; the Magnum simulator uses separate synthetic assumptions.")
 
 
 # ---------------------------------------------------------------------------
@@ -127,8 +117,8 @@ if st.sidebar.button("⬇ Sync latest results", use_container_width=True):
     st.cache_data.clear()
 
 st.sidebar.divider()
-include_ml = st.sidebar.checkbox("Use ML models (slower)", value=False,
-                                  help="Adds XGBoost + LSTM. Same conclusion, longer wait.")
+include_ml = st.sidebar.checkbox("Run legacy ML diagnostics (slower)", value=False,
+                                  help="Legacy XGBoost/LSTM diagnostic rankings. Excluded from the selected probability forecast.")
 fouryes3_key = st.sidebar.text_input("4dyes3 API key (optional)", type="password",
                                       help="If 4dyes3 needs auth, paste your key here. Stays in this session only.")
 if fouryes3_key:
@@ -170,32 +160,58 @@ with tab_home:
     c2.metric("Oldest draw", str(top3['DrawDate'].min().date()))
     c3.metric("Latest draw", str(top3['DrawDate'].max().date()))
 
-    st.subheader("🎯 Today's most-agreed-on numbers")
-    st.caption("These are the 10 numbers that the most different methods rank highly. **This is not a prediction** — it's just where the methods agree. The Backtest in Advanced shows that agreement doesn't translate to wins.")
+    st.subheader("Next-draw probability forecast")
+    from datetime import datetime, timedelta
+    from forecasting import forecast, MYT, load_forecast
+    from probability_tracker import choose_target
+    from scripts.track_predictions import load_corpus, load_state, SETTINGS_FILE, ARTIFACT_DIR
+    import json
 
-    with st.spinner("Crunching numbers..."):
-        results = run_predictors(top3, include_ml, 100)
-        cons = build_consensus_table(results, 50)
-
-    if cons.empty:
-        st.warning("Couldn't compute consensus. Try clicking Sync above.")
+    settings = json.loads(SETTINGS_FILE.read_text()) if SETTINGS_FILE.exists() else {'champion': {'model': 'uniform'}}
+    now_myt = datetime.now(MYT)
+    if analysis_operator == 'damacai':
+        state = load_state()
+        forecast_history = load_corpus(state)
+        blocked = [state['pending']['for_date']] if state.get('pending') else []
+        scheduled = choose_target(now_myt, blocked_dates=blocked, start_date=settings.get('start_date'), specials=settings.get('specials'))
+        target_time = scheduled['target_time']
+        saved = state.get('probability_forecasts', {}).get(scheduled['for_date'], {})
+        if saved.get('forecasts', {}).get('champion'):
+            probability_forecast = load_forecast(saved['forecasts']['champion'], ARTIFACT_DIR)
+            st.caption(f"Saved forecast · {saved['status']}. Existing published picks are preserved.")
+        else:
+            probability_forecast = forecast(forecast_history, operator='damacai', target_time=target_time, config=settings['champion'])
+            st.caption("Preview from the live Da Ma Cai corpus. This screen does not publish a prospective forecast.")
+        if state.get('pending'):
+            st.caption(f"Legacy {state['pending'].get('pipeline_version', 'v1')} forecast remains pending for {state['pending']['for_date']}; it has no saved probability distribution.")
     else:
-        top10 = cons.head(10).reset_index(drop=True)
-        max_agree = int(top10['agreement_count'].max())
-        cols = st.columns(5)
-        for i, row in top10.iterrows():
-            col = cols[i % 5]
-            color = f"rgb(46, 134, 171, {0.3 + 0.7 * row['agreement_count'] / max(max_agree, 1)})"
-            col.markdown(
-                f"""
-                <div style="background:{color};padding:18px;border-radius:10px;
-                            text-align:center;color:white;margin-bottom:10px;">
-                    <div style="font-size:30px;font-weight:700;font-family:monospace;">{row['number']}</div>
-                    <div style="font-size:12px;opacity:0.9;">{int(row['agreement_count'])} methods agree</div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
+        forecast_history = df_full
+        target_date = st.date_input("Forecast target date", value=now_myt.date() + timedelta(days=1))
+        target_time = datetime.combine(target_date, datetime.min.time()).replace(tzinfo=MYT)
+        probability_forecast = forecast(forecast_history, operator=analysis_operator, target_time=target_time, config={'model': 'uniform'})
+        st.caption("User-selected date; no operator schedule validation. Uniform reference only; Da Ma Cai model results do not transfer to this series.")
+    metadata = probability_forecast.metadata
+    st.caption(f"Operator: {analysis_operator} · Target: {metadata['target_time']} · Model: {metadata['configuration']['model']} · Training: {metadata['training_rows']:,} complete draws through {metadata['corpus_cutoff'] or 'none'}")
+    latest_observed = forecast_history['DrawDate'].max()
+    if (now_myt.date() - latest_observed.date()).days > 7:
+        st.warning(f"History is stale or incomplete: latest observed draw is {latest_observed.date()}. No missing results were filled.")
+    if metadata['excluded_partial_history_rows']:
+        st.caption(f"{metadata['excluded_partial_history_rows']} partial history rows retained in data, excluded from complete-draw forecast training.")
+    if metadata['health']['status'] != 'ok':
+        st.warning(f"Forecast health: {metadata['health']['status']}. {metadata['health'].get('error', metadata['health'].get('warnings', []))}")
+    p = probability_forecast.probabilities
+    mapping = probability_forecast.slot_distribution
+    forecast_rows = []
+    for code in probability_forecast.picks:
+        forecast_rows.append({'code': code, 'P(1st slot)': p[mapping[0], int(code)],
+                              'P(2nd slot)': p[mapping[1], int(code)], 'P(3rd slot)': p[mapping[2], int(code)],
+                              'expected matched slots': float(p[mapping, int(code)].sum())})
+    st.dataframe(pd.DataFrame(forecast_rows), use_container_width=True, hide_index=True)
+    st.caption("Probabilities are per categorical slot. Picks maximize expected matched slots; this is not the probability that any of ten picks wins. No exact-hit advantage established.")
+    if st.checkbox("Show conditional slot-independence approximation"):
+        approximate = probability_forecast.any_hit_probability(assume_slot_independence=True)
+        st.write(f"Approximate chance any pick hits: {approximate:.4%}. Assumes conditional slot independence; that joint model has not been validated.")
+    st.caption("Historical comparisons remain exploratory. Prospective confirmation uses one fixed checkpoint after 1,000 scheduled targets; no interim promotion.")
 
     st.subheader("Recent draws")
     st.dataframe(
@@ -246,7 +262,7 @@ with tab_check:
                         f"Any arrangement of these digits has come up **{report.permutation_appearances} times** in total."
                     )
 
-                st.markdown("### What this means for tonight's draw")
+                st.markdown("### Historical repeat rate")
                 empirical = report.empirical_next_draw_hit_prob
                 baseline = report.random_baseline
                 st.write(
@@ -298,8 +314,7 @@ with tab_check:
                 st.plotly_chart(fig, use_container_width=True)
 
                 st.warning(
-                    f"**Bottom line:** {guess_clean} carries {report.agreement_count}/{len(report.method_ranks)} methods of historical-pattern "
-                    f"support — but that means nothing for the next draw. Don't bet expecting profit."
+                    f"{report.agreement_count}/{len(report.method_ranks)} methods rank {guess_clean} highly. Agreement is descriptive; it does not establish future performance or profit."
                 )
 
         except Exception as e:
@@ -308,8 +323,8 @@ with tab_check:
 
 # --- Should I Bet? ----------------------------------------------------------
 with tab_bet:
-    st.subheader("How much will I really lose?")
-    st.caption("Run a realistic simulation of betting on 4D over time. Spoiler: the line goes down.")
+    st.subheader("Magnum synthetic bankroll simulation")
+    st.caption("Magnum Big-bet assumptions: 23 distinct uniformly sampled codes, fixed payouts. This synthetic experiment does not validate Da Ma Cai forecasts; individual runs can gain or lose.")
 
     c1, c2 = st.columns(2)
     bet_amount = c1.number_input("RM per draw", min_value=1.0, value=10.0, step=1.0,
@@ -322,7 +337,7 @@ with tab_bet:
         "Randomly chosen 10 numbers",
         "Always the same 10 hot numbers",
         "Always the same 10 'overdue' numbers",
-        "Today's top 10 consensus numbers",
+        "Selected-history top 10 consensus numbers",
     ])
     n_runs = c2.slider("Repeat the experiment N times", 1, 50, 10,
                         help="Each run picks fresh random draws so you see the spread.")
@@ -389,7 +404,7 @@ with tab_bet:
         - Even your *luckiest* simulated run ended with **RM {best:,.0f}** net.
         """)
         if avg_loss < 0:
-            st.error("The chart trends down because the math says it must. There is no strategy here that flips a negative-EV game.")
+            st.error("These runs lost money on average. Under this simulator's uniform sampling and fixed payouts, expected return is negative; individual runs vary.")
 
 
 # --- How It Works -----------------------------------------------------------
@@ -397,11 +412,9 @@ with tab_how:
     st.subheader("How this works, in plain English")
 
     st.markdown("""
-**1. The lottery is random.**
+**1. The independent-uniform null.**
 Every draw, the operator picks numbers from a machine designed to be unpredictable.
-"Random" has a precise mathematical meaning: knowing every past draw tells you
-**nothing** about the next one. We test this on the data — see the randomness
-section in **Advanced**.
+Under independent uniform draws, past outcomes cannot improve next-code probabilities. Diagnostics test specific departures; they do not prove independence or a usable forecasting advantage.
 
 **2. Why we built this anyway.**
 The data is interesting even if it isn't predictive. You can ask things like:
@@ -415,8 +428,7 @@ This app answers all of those — honestly.
 We provide eight statistical methods and two optional machine-learning methods.
 They each rank the 10,000 possible 4-digit numbers using their own logic
 (frequency, gap, neural network, etc.). Some methods agree on "good" numbers.
-That's just what the **methods think look good in the past** — it has nothing
-to do with what the next draw will be.
+These are descriptive rankings. The separate probability forecast is evaluated chronologically with proper scoring rules and fixed-budget exact hits.
 
 **4. The backtest.**
 The most important number in this app is in **Advanced → Backtest**: when we
@@ -433,8 +445,7 @@ A Magnum 4D "Big" bet pays out:
 
 Multiply the payout by the chance of each (1/10,000 per slot) and you get
 **RM 0.64 expected return for every RM 1 bet**. The lottery keeps **36 sen
-of every ringgit** on average. That's the house edge. No strategy beats it
-because nothing in your strategy changes the payout-to-probability ratio.
+of every ringgit** on average under the stated uniform Magnum model. This does not establish the actual distribution or payouts for another selected operator.
 
 **6. Use this app like a museum, not a casino.**
 Click around. Check your favorite number. Watch the simulator slowly drain
@@ -451,7 +462,7 @@ with tab_adv:
         results = run_predictors(top3, include_ml, 100)
         for name, res in results.items():
             with st.container():
-                st.markdown(f"**{name}** _({res.family})_ — {res.explanation}")
+                st.markdown(f"**{name}** _({res.family}; health: {res.health.get('status')})_ — {res.explanation}")
                 if res.top:
                     st.dataframe(pd.DataFrame(res.top[:30], columns=['number', 'score']),
                                   use_container_width=True, hide_index=True, height=200)
@@ -484,9 +495,9 @@ with tab_adv:
                 st.dataframe(s, use_container_width=True, hide_index=True)
                 n_sig = int(bt['significant'].sum()) if 'significant' in bt.columns else 0
                 if n_sig == 0:
-                    st.success("No method beat random after Bonferroni. As predicted by i.i.d. theory.")
+                    st.info("No cells meet this annual backtest's corrected criterion. This is a fixed-pick, top-three retrospective, separate from the all-slot probability experiment.")
                 else:
-                    st.info(f"{n_sig} cells flagged 'significant' — likely multiple-testing artefact.")
+                    st.info(f"{n_sig} cells meet this backtest's criterion. Check full search multiplicity, provenance and independent confirmation before claiming an edge.")
             except Exception as e:
                 st.error(f"Error: {e}")
 

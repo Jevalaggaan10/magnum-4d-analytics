@@ -1,0 +1,41 @@
+..............2026-11-03 14:17:20.308 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-11-03 14:17:20.308 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-11-03 14:17:20.309 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+.2026-11-03 14:17:20.312 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-11-03 14:17:20.313 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-03 14:17:20.363 
+  [33m[1mWarning:[0m to view this Streamlit app on a browser, run it with the following
+  command:
+
+    streamlit run python -m unittest [ARGUMENTS]
+2026-11-03 14:17:20.363 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-03 14:17:20.363 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-03 14:17:20.363 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-03 14:17:20.363 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-03 14:17:20.365 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-03 14:17:20.365 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-03 14:17:20.365 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-03 14:17:20.365 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-03 14:17:20.365 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+.
+=== Backtest year 2025: train=1 test=1 ===
+magnum: 1 unique draws
+Date range: 2026-01-01 00:00:00 to 2026-01-01 00:00:00
+tiny: timeout, 0.00s
+...................................----- rendered log -----
+dry-run
+.synced: []
+----- rendered log -----
+dry-run
+...
+----------------------------------------------------------------------
+Ran 55 tests in 4.699s
+
+OK
+synced: ['20261028']
+----- rendered log -----
+dry-run
+  20261001: model 0 hit(s), random 0 hit(s) (1 methods, trained until 2026-09-30)
+  20261002: model 0 hit(s), random 0 hit(s) (1 methods, trained until 2026-10-01)
+  20261003: model 0 hit(s), random 0 hit(s) (1 methods, trained until 2026-10-02)
+updated prediction state/log

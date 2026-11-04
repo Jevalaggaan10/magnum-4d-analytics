@@ -1,0 +1,5 @@
+20261028: 3632 prior draws; log loss 9.210340372; ok
+20261031: 3633 prior draws; log loss 9.210340372; ok
+20261101: 3634 prior draws; log loss 9.210340372; ok
+{"coverage": 1.0, "degraded_draws": 0, "fallback_draws": 0, "first_hit_draws": 0, "forecast_seconds": 0.002564166000183832, "hit_draws": 0, "mean_brier": 0.9999000000000001, "mean_log_loss": 9.21034037197618, "scheduled_or_eligible_draws": 3, "scored_draws": 3, "slot_hits": 0, "top3_hit_draws": 0}
+probability replay: dry-run; no files written

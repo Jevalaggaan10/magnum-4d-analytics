@@ -1,0 +1,26 @@
+{
+  "selection": {
+    "selected": {
+      "model": "uniform"
+    },
+    "development_loss": 9.210340371976184,
+    "simplest_nonuniform": {
+      "model": "digit",
+      "alpha": 100
+    },
+    "best_observed_nonuniform": {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.5
+    },
+    "best_observed_nonuniform_loss": 9.210254936683276,
+    "attempted": 18,
+    "seconds": 322.22120045902557,
+    "rounds_completed": 3,
+    "stop_reason": "three_no_gain_rounds",
+    "historical_evidence": "exploratory; no prospective confirmation"
+  },
+  "frozen_at": "2026-11-03T13:36:26.498213+00:00",
+  "selection_sha256": "c589e67650a1751c28e37739b57db2d781ad52a8197d52e50ec5f1b25301f2c9",
+  "no_outer_feedback": true
+}

@@ -1,0 +1,48 @@
+{
+  "hypothesis": "Stronger shrinkage, limited calendar decay or tier sharing improves sparse estimates.",
+  "falsification": "Reject added assumption without .001 paired development gain.",
+  "configs": [
+    {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.5
+    },
+    {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.9
+    },
+    {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.99
+    },
+    {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.9,
+      "half_life_days": 365
+    },
+    {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.9,
+      "half_life_days": 1095
+    },
+    {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.9,
+      "pooling": "tier",
+      "tier_strength": 1000
+    },
+    {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.9,
+      "pooling": "tier",
+      "tier_strength": 10000
+    }
+  ],
+  "allocated_seconds": 847.242268042
+}

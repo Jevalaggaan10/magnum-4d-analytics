@@ -1,0 +1,16 @@
+{
+  "platform": "macOS-26.5-arm64-arm-64bit",
+  "python_environment": "Python 3.12 constrained tracker",
+  "timings": {
+    "cold_load_and_three_forecasts_seconds": 0.09180404199992154,
+    "warm_load_and_three_forecasts_seconds": 0.086135583999976
+  },
+  "integration_seconds": 1.077436749999947,
+  "integration_exit": 0,
+  "legacy_records_preserved": true,
+  "peak_rss_bytes": 87474176,
+  "published_hashes": {
+    "predictions.json": "06e9c77051775475dc5fbf993f0c681de2bb822723d6e2723168314799475973",
+    "PREDICTION_LOG.md": "6ef22b9b97acaa2bab4c8e5249c29f756cd5b97068583e13db0b40c4e39c45a1"
+  }
+}

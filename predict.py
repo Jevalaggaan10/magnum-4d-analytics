@@ -4,6 +4,7 @@ Generates predictions for the next draw using all trained models
 """
 
 from collections import Counter
+import sys
 
 
 def ensemble_predictions(all_predictions: dict, top_n: int = 20) -> list:
@@ -29,19 +30,19 @@ def ensemble_predictions(all_predictions: dict, top_n: int = 20) -> list:
     return [(num, score) for num, score in sorted_nums[:top_n]]
 
 
-def generate_predictions(data_dir: str = None, target_date: str = None):
+def generate_predictions(data_dir: str = None, target_date: str = None, include_ml: bool = False):
     """Main prediction function."""
     from data_loader import load_combined_data, extract_top3_prizes
     from train_model import train_all_models
     
     print("="*60)
-    print("4D LOTTERY PREDICTION SYSTEM")
+    print("LEGACY 4D DESCRIPTIVE RANKINGS")
     print("="*60)
     
     if target_date:
-        print(f"Target Date: {target_date}")
+        print(f"Requested label: {target_date} (legacy descriptive analysis; not a prospective forecast)")
     else:
-        print(f"Target Date: Next Draw")
+        print(f"Selected-history diagnostic; use tracker for versioned future forecasts")
     print()
     
     # Load data
@@ -51,7 +52,7 @@ def generate_predictions(data_dir: str = None, target_date: str = None):
     
     # Train models
     print("\nTraining prediction models...")
-    models = train_all_models(top3)
+    models = train_all_models(top3, include_ml=include_ml)
     
     # Generate predictions from each model
     all_predictions = {}
@@ -68,7 +69,7 @@ def generate_predictions(data_dir: str = None, target_date: str = None):
             all_predictions[name] = preds
             print("Top 10 predictions:")
             for i, (num, prob) in enumerate(preds[:10], 1):
-                print(f"  {i:2d}. {num}  (confidence: {prob:.3f})")
+                print(f"  {i:2d}. {num}  (legacy diagnostic score: {prob:.3f})")
         elif name == 'lstm':
             preds = model.predict(df=top3, n=20)
             all_predictions[name] = preds
@@ -85,7 +86,7 @@ def generate_predictions(data_dir: str = None, target_date: str = None):
     
     ensemble = ensemble_predictions(all_predictions, top_n=30)
     
-    print("\n🎯 TOP 10 PREDICTED NUMBERS FOR NEXT DRAW:")
+    print("\n🎯 TOP 10 LEGACY DESCRIPTIVE RANKINGS:")
     print("-"*40)
     for i, (num, score) in enumerate(ensemble[:10], 1):
         print(f"  {i:2d}. {num}  (ensemble score: {score:.3f})")
@@ -93,23 +94,6 @@ def generate_predictions(data_dir: str = None, target_date: str = None):
     print("\n📊 Extended Predictions (11-30):")
     for i, (num, score) in enumerate(ensemble[10:30], 11):
         print(f"  {i:2d}. {num}  (score: {score:.3f})")
-    
-    # Category breakdown
-    print("\n" + "="*60)
-    print("PREDICTIONS BY PRIZE CATEGORY SUGGESTION")
-    print("="*60)
-    
-    print("\n🥇 1st Prize Candidates (highest confidence):")
-    for num, score in ensemble[:5]:
-        print(f"     {num}")
-    
-    print("\n🥈 2nd Prize Candidates:")
-    for num, score in ensemble[5:10]:
-        print(f"     {num}")
-    
-    print("\n🥉 3rd Prize Candidates:")
-    for num, score in ensemble[10:15]:
-        print(f"     {num}")
     
     # Hot numbers analysis
     print("\n" + "="*60)
@@ -147,7 +131,8 @@ if __name__ == "__main__":
     data_dir = None
     target_date = None
     
-    if len(sys.argv) > 1:
-        target_date = sys.argv[1]
+    arguments = [a for a in sys.argv[1:] if a != "--ml"]
+    if arguments:
+        target_date = arguments[0]
     
-    predictions = generate_predictions(data_dir, target_date)
+    predictions = generate_predictions(data_dir, target_date, include_ml="--ml" in sys.argv)

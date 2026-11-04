@@ -31,7 +31,10 @@ def _normalize_prizes(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
     for col in SLOT_COLS:
         if col in df.columns:
-            df[col] = df[col].map(normalize_prize_number)
+            # pandas 3 may infer Arrow null/string dtype and replace None by <NA>.
+            # Public loader contract is consistently a code string or Python None.
+            df[col] = pd.Series([normalize_prize_number(v) for v in df[col]],
+                                index=df.index, dtype=object)
     return df
 
 
