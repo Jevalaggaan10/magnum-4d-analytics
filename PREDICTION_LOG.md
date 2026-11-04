@@ -19,43 +19,26 @@ This uses independent uniform four-digit slots as an approximation. Da Ma Cai de
 
 Under that null, both columns should approach the baseline. If the model column ever drifts meaningfully above the random column on this i.i.d. stream, that would be extraordinary — the log makes that self-checkable.
 
-## 🔮 Upcoming draw — 20261104 _(generated 2026-10-31, corpus cutoff 2026-10-31, 8 methods: frequency, recent_hot_90d, overdue, digit_probability, permutation_family, markov, arima, bayesian)_
-
-| # | Consensus pick |
-|---|----------------|
-| 1 | `2857` |
-| 2 | `2557` |
-| 3 | `5557` |
-| 4 | `2050` |
-| 5 | `5728` |
-| 6 | `2555` |
-| 7 | `2751` |
-| 8 | `6552` |
-| 9 | `2552` |
-| 10 | `2551` |
-
-**Random control:** `3425`, `5291`, `6075`, `8171`, `9688`, `0331`, `3736`, `6346`, `0106`, `8872`
-
-Training: **Da Ma Cai**, 3,634 draws; pipeline `damacai-v2`. Cutoff above is the actual latest training draw.
-
 ## ✅ Verified draws
 
 | Draw | 10 picks | Actual 1st/2nd/3rd | Model hits | Random-control hits |
 |------|----------|--------------------|------------|---------------------|
 | 20261028 | `3845`, `1830`, `3830`, `1840`, `3840`, `1833`, `1834`, `3833`, `1831`, `1835` | `2694/6382/3450` | — | — |
 | 20261031 | `3845`, `1830`, `3830`, `1840`, `3840`, `1833`, `1834`, `3833`, `1831`, `1835` | `5378/9967/5184` | — | — |
+| 20261104 | `2857`, `2557`, `5557`, `2050`, `5728`, `2555`, `2751`, `6552`, `2552`, `2551` | `2734/7119/0579` | — | — |
 
 ## 📊 Lifetime tally
 
 | Set | Draws tracked | Draws with a hit | Slot hits | Hit frequency | Expected |
 |-----|--------------:|-----------------:|----------:|--------------:|---------:|
-| Model picks | 2 | 0 | 0 | 0.00% (draws) · 0 slots | ~2.27% |
-| Random control | 2 | 0 | 0 | 0.00% (draws) · 0 slots | ~2.27% |
+| Model picks | 3 | 0 | 0 | 0.00% (draws) · 0 slots | ~2.27% |
+| Random control | 3 | 0 | 0 | 0.00% (draws) · 0 slots | ~2.27% |
 
 ### Results by pipeline version
 
 | Pipeline | Draws | Model hit draws | Random hit draws |
 |---|---:|---:|---:|
+| `damacai-v2` | 1 | 0 | 0 |
 | `legacy-v1` | 2 | 0 | 0 |
 
 ## 🔁 Legacy fixed-corpus comparison over 40 draws (retrospective)
@@ -119,3 +102,14 @@ _Replay window: 20260801 → 20261027 • run 2026-10-27._
 _Reminder: independent uniform outcomes are the null model. Nothing here is a
 betting strategy — this log is an open experiment whose expected outcome
 is that both columns match the ~2.27% baseline._
+
+## Probability forecasts — damacai-v3
+
+Ten picks maximize expected matched slots. Single-slot probabilities are categorical; any-hit independence approximation is not a verified joint model.
+
+| Target | Publication/result status | Picks | Training cutoff |
+|---|---|---|---|
+| 20261107 | awaiting-publication | 0000, 0001, 0002, 0003, 0004, 0005, 0006, 0007, 0008, 0009 | 2026-11-04 |
+
+Confirmation: **pending**, 1/1000 scheduled targets. Aggregate comparisons withheld before fixed checkpoint.
+Published legacy records above retain their original experiment identities.

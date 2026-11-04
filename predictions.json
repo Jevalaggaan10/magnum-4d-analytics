@@ -1,48 +1,5 @@
 {
-  "pending": {
-    "for_date": "20261104",
-    "picks": [
-      "2857",
-      "2557",
-      "5557",
-      "2050",
-      "5728",
-      "2555",
-      "2751",
-      "6552",
-      "2552",
-      "2551"
-    ],
-    "random_control": [
-      "3425",
-      "5291",
-      "6075",
-      "8171",
-      "9688",
-      "0331",
-      "3736",
-      "6346",
-      "0106",
-      "8872"
-    ],
-    "generated_at": "2026-10-31T17:43:03.683155+00:00",
-    "pipeline_version": "damacai-v2",
-    "training_operator": "damacai",
-    "training_rows": 3634,
-    "corpus_cutoff": "2026-10-31",
-    "corpus_sha256": "7a64886bc40a57cd1a84e1767e28ac8aa1e2467ac4e9574b07215cadca53a0d0",
-    "methods_count": 8,
-    "methods_names": [
-      "frequency",
-      "recent_hot_90d",
-      "overdue",
-      "digit_probability",
-      "permutation_family",
-      "markov",
-      "arima",
-      "bayesian"
-    ]
-  },
+  "pending": null,
   "history": [
     {
       "for_date": "20261028",
@@ -160,6 +117,82 @@
       "prediction_metadata": {
         "generated_at": "2026-10-28T18:51:59.277948+00:00",
         "corpus_cutoff": "2026-10-28",
+        "methods_count": 8,
+        "methods_names": [
+          "frequency",
+          "recent_hot_90d",
+          "overdue",
+          "digit_probability",
+          "permutation_family",
+          "markov",
+          "arima",
+          "bayesian"
+        ]
+      }
+    },
+    {
+      "for_date": "20261104",
+      "predicted": [
+        "2857",
+        "2557",
+        "5557",
+        "2050",
+        "5728",
+        "2555",
+        "2751",
+        "6552",
+        "2552",
+        "2551"
+      ],
+      "random_control": [
+        "3425",
+        "5291",
+        "6075",
+        "8171",
+        "9688",
+        "0331",
+        "3736",
+        "6346",
+        "0106",
+        "8872"
+      ],
+      "actual": {
+        "1stPrizeNo": "2734",
+        "2ndPrizeNo": "7119",
+        "3rdPrizeNo": "0579",
+        "SpecialNo1": "7505",
+        "SpecialNo2": "5422",
+        "SpecialNo3": "8799",
+        "SpecialNo4": "2756",
+        "SpecialNo5": "5584",
+        "SpecialNo6": "6489",
+        "SpecialNo7": "1240",
+        "SpecialNo8": "1423",
+        "SpecialNo9": "2970",
+        "SpecialNo10": "1740",
+        "ConsolationNo1": "5306",
+        "ConsolationNo2": "2349",
+        "ConsolationNo3": "3733",
+        "ConsolationNo4": "4470",
+        "ConsolationNo5": "1756",
+        "ConsolationNo6": "4844",
+        "ConsolationNo7": "7671",
+        "ConsolationNo8": "1460",
+        "ConsolationNo9": "9103",
+        "ConsolationNo10": "5614"
+      },
+      "hits": [],
+      "random_hits": [],
+      "status": "verified",
+      "checked_at": "2026-11-04T20:26:14.658623+00:00",
+      "source": "damacai",
+      "prediction_metadata": {
+        "generated_at": "2026-10-31T17:43:03.683155+00:00",
+        "pipeline_version": "damacai-v2",
+        "training_operator": "damacai",
+        "training_rows": 3634,
+        "corpus_cutoff": "2026-10-31",
+        "corpus_sha256": "7a64886bc40a57cd1a84e1767e28ac8aa1e2467ac4e9574b07215cadca53a0d0",
         "methods_count": 8,
         "methods_names": [
           "frequency",
@@ -3565,6 +3598,31 @@
       "ConsolationNo9": "5958",
       "ConsolationNo10": "7349"
     },
+    "20261104": {
+      "1stPrizeNo": "2734",
+      "2ndPrizeNo": "7119",
+      "3rdPrizeNo": "0579",
+      "SpecialNo1": "7505",
+      "SpecialNo2": "5422",
+      "SpecialNo3": "8799",
+      "SpecialNo4": "2756",
+      "SpecialNo5": "5584",
+      "SpecialNo6": "6489",
+      "SpecialNo7": "1240",
+      "SpecialNo8": "1423",
+      "SpecialNo9": "2970",
+      "SpecialNo10": "1740",
+      "ConsolationNo1": "5306",
+      "ConsolationNo2": "2349",
+      "ConsolationNo3": "3733",
+      "ConsolationNo4": "4470",
+      "ConsolationNo5": "1756",
+      "ConsolationNo6": "4844",
+      "ConsolationNo7": "7671",
+      "ConsolationNo8": "1460",
+      "ConsolationNo9": "9103",
+      "ConsolationNo10": "5614"
+    },
     "20261101": {
       "1stPrizeNo": "4863",
       "2ndPrizeNo": "0700",
@@ -3590,5 +3648,217 @@
       "ConsolationNo9": "0776",
       "ConsolationNo10": "2185"
     }
+  },
+  "observation_provenance": {
+    "20261104": {
+      "source": "damacai",
+      "retrieved_at": "2026-11-05T04:26:00.660007+08:00",
+      "content_sha256": "a81754df38788c4494cd9433f0e44f0772105a0309d6e2538eca0c13a90792c4"
+    },
+    "20261101": {
+      "source": "damacai",
+      "retrieved_at": "2026-11-05T04:26:00.660007+08:00",
+      "content_sha256": "aa2d8b9a4438beb88872800af3ff0dacf0b49a0a99eb1b1fb7d77f7c5febaeba"
+    },
+    "20261031": {
+      "source": "damacai",
+      "retrieved_at": "2026-11-05T04:26:00.660007+08:00",
+      "content_sha256": "1f10d9c2b8fcd985e2c7df92bb3b9d44030c603fb25fb0b41ddc9bcbfc7622d4"
+    },
+    "20261028": {
+      "source": "damacai",
+      "retrieved_at": "2026-11-05T04:26:00.660007+08:00",
+      "content_sha256": "605fdc8565c0a4e5016b8ea6cca87139d510ea55fc1a32f63994b46b7f6cd346"
+    },
+    "20261027": {
+      "source": "damacai",
+      "retrieved_at": "2026-11-05T04:26:00.660007+08:00",
+      "content_sha256": "680785096edff0aa07f9d853b6a3763f7c0809f88c07f3ca6c43821a2ec069f0"
+    }
+  },
+  "probability_forecasts": {
+    "20261107": {
+      "for_date": "20261107",
+      "target_time": "2026-11-07T19:00:00+08:00",
+      "publication_deadline": "2026-11-07T18:00:00+08:00",
+      "schedule_source": "https://www.damacai.com.my/general-information/",
+      "special_announcement": null,
+      "forecast_id": "damacai-v3:20261107",
+      "pipeline_version": "damacai-v3",
+      "generated_at": "2026-11-05T04:26:00.660007+08:00",
+      "status": "awaiting-publication",
+      "coverage": 0,
+      "source": "damacai",
+      "picks": [
+        "0000",
+        "0001",
+        "0002",
+        "0003",
+        "0004",
+        "0005",
+        "0006",
+        "0007",
+        "0008",
+        "0009"
+      ],
+      "forecasts": {
+        "champion": {
+          "artifact": "c899e35263e3bdf698c7d4171b565fc3313adc6c807a300c93176e6b6c96642a.npz",
+          "artifact_sha256": "b5024e24e7cc016f4e5221ba96883f9c0e82beb431f1392efdc4c6a68671c18f",
+          "probability_sha256": "c899e35263e3bdf698c7d4171b565fc3313adc6c807a300c93176e6b6c96642a",
+          "picks": [
+            "0000",
+            "0001",
+            "0002",
+            "0003",
+            "0004",
+            "0005",
+            "0006",
+            "0007",
+            "0008",
+            "0009"
+          ],
+          "metadata": {
+            "pipeline_version": "damacai-v3",
+            "model_version": "categorical-v1",
+            "training_operator": "damacai",
+            "target_time": "2026-11-07T19:00:00+08:00",
+            "generated_at": "2026-11-04T20:26:15.325266+00:00",
+            "training_rows": 3636,
+            "corpus_cutoff": "2026-11-04",
+            "corpus_sha256": "091086e7471c4ea45c1edeae1c3336f0883098a07155a3e15e6357ed4186d956",
+            "feature_version": "lagged-digits-v1",
+            "feature_sha256": "924483e61d8c154873b5b1156ada15804cdf9d7f5aad20d403ef6d5c4ed8554e",
+            "configuration": {
+              "model": "uniform"
+            },
+            "config_sha256": "3d102bae3dcf0604151eb02b117eb365f5fe49cbb4f8c25e4da3f9704c772380",
+            "seeds": [
+              17,
+              29,
+              43
+            ],
+            "calibration_version": "identity-v1",
+            "selection_objective": "expected_matched_slots",
+            "joint_model": null,
+            "excluded_partial_history_rows": 0,
+            "health": {
+              "status": "ok",
+              "warnings": []
+            },
+            "estimator_fit_cutoff": "2026-11-04",
+            "estimator_fit_rows": 3636
+          }
+        },
+        "shadow": {
+          "artifact": "2995e52ab4490206ca347316025e50351c307fd62f4aa22d8866ce6925b2d72a.npz",
+          "artifact_sha256": "3d15fa215bb0219b5912d4fe7f363a68db0146311c7b699a7b2cf9b2d8ac72a8",
+          "probability_sha256": "2995e52ab4490206ca347316025e50351c307fd62f4aa22d8866ce6925b2d72a",
+          "picks": [
+            "6090",
+            "4090",
+            "6050",
+            "9090",
+            "4050",
+            "9050",
+            "6097",
+            "2090",
+            "6890",
+            "6990"
+          ],
+          "metadata": {
+            "pipeline_version": "damacai-v3",
+            "model_version": "categorical-v1",
+            "training_operator": "damacai",
+            "target_time": "2026-11-07T19:00:00+08:00",
+            "generated_at": "2026-11-04T20:26:15.494996+00:00",
+            "training_rows": 3636,
+            "corpus_cutoff": "2026-11-04",
+            "corpus_sha256": "091086e7471c4ea45c1edeae1c3336f0883098a07155a3e15e6357ed4186d956",
+            "feature_version": "lagged-digits-v1",
+            "feature_sha256": "924483e61d8c154873b5b1156ada15804cdf9d7f5aad20d403ef6d5c4ed8554e",
+            "configuration": {
+              "model": "digit",
+              "alpha": 100,
+              "uniform_weight": 0.5
+            },
+            "config_sha256": "faa3c75d7e790af5cf5c68c0aa127d0ffe1e439425db679cef0f456db53309c7",
+            "seeds": [
+              17,
+              29,
+              43
+            ],
+            "calibration_version": "identity-v1",
+            "selection_objective": "expected_matched_slots",
+            "joint_model": null,
+            "excluded_partial_history_rows": 0,
+            "health": {
+              "status": "ok",
+              "warnings": []
+            },
+            "estimator_fit_cutoff": "2026-11-04",
+            "estimator_fit_rows": 3636
+          }
+        },
+        "simplest_nonuniform": {
+          "artifact": "f1d671dbb9c1c202b2d41f910c048a665ee0fa660657470fe820bce42407c296.npz",
+          "artifact_sha256": "173cbe7f5c8b1f384779f6aa7225066f235fa567183079d7a45b82b6cd983777",
+          "probability_sha256": "f1d671dbb9c1c202b2d41f910c048a665ee0fa660657470fe820bce42407c296",
+          "picks": [
+            "6090",
+            "4090",
+            "6050",
+            "9090",
+            "4050",
+            "9050",
+            "6097",
+            "2090",
+            "6890",
+            "6990"
+          ],
+          "metadata": {
+            "pipeline_version": "damacai-v3",
+            "model_version": "categorical-v1",
+            "training_operator": "damacai",
+            "target_time": "2026-11-07T19:00:00+08:00",
+            "generated_at": "2026-11-04T20:26:15.669962+00:00",
+            "training_rows": 3636,
+            "corpus_cutoff": "2026-11-04",
+            "corpus_sha256": "091086e7471c4ea45c1edeae1c3336f0883098a07155a3e15e6357ed4186d956",
+            "feature_version": "lagged-digits-v1",
+            "feature_sha256": "924483e61d8c154873b5b1156ada15804cdf9d7f5aad20d403ef6d5c4ed8554e",
+            "configuration": {
+              "model": "digit",
+              "alpha": 100
+            },
+            "config_sha256": "893e7205e21ac7a1ba4cfef67152f7f9692259ba6b5613bcfd1972d8f3821b92",
+            "seeds": [
+              17,
+              29,
+              43
+            ],
+            "calibration_version": "identity-v1",
+            "selection_objective": "expected_matched_slots",
+            "joint_model": null,
+            "excluded_partial_history_rows": 0,
+            "health": {
+              "status": "ok",
+              "warnings": []
+            },
+            "estimator_fit_cutoff": "2026-11-04",
+            "estimator_fit_rows": 3636
+          }
+        }
+      },
+      "confirmation_version": "v3-fixed-1000",
+      "settings_sha256": "10eb591b64d3a98fcf959f4d2207d1097b5a83b4c8a0ef81e6879ce432f53f40"
+    }
+  },
+  "probability_confirmation": {
+    "status": "pending",
+    "scheduled_targets": 0,
+    "remaining": 1000,
+    "probability_promotion": false,
+    "exact_hit_advantage": false
   }
 }
