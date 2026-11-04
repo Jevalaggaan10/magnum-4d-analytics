@@ -109,7 +109,7 @@ Ten picks maximize expected matched slots. Single-slot probabilities are categor
 
 | Target | Publication/result status | Picks | Training cutoff |
 |---|---|---|---|
-| 20261107 | awaiting-publication | 0000, 0001, 0002, 0003, 0004, 0005, 0006, 0007, 0008, 0009 | 2026-11-04 |
+| 20261107 | published | 0000, 0001, 0002, 0003, 0004, 0005, 0006, 0007, 0008, 0009 | 2026-11-04 |
 
 Confirmation: **pending**, 1/1000 scheduled targets. Aggregate comparisons withheld before fixed checkpoint.
 Published legacy records above retain their original experiment identities.
