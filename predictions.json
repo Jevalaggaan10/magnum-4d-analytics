@@ -4208,8 +4208,8 @@
   },
   "probability_confirmation": {
     "status": "pending",
-    "scheduled_targets": 1,
-    "remaining": 999,
+    "scheduled_targets": 2,
+    "remaining": 998,
     "probability_promotion": false,
     "exact_hit_advantage": false
   }
