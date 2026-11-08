@@ -4386,8 +4386,8 @@
       "forecast_id": "damacai-v3:20261111",
       "pipeline_version": "damacai-v3",
       "generated_at": "2026-11-08T22:39:24.194292+08:00",
-      "status": "awaiting-publication",
-      "coverage": 0,
+      "status": "published",
+      "coverage": 1,
       "source": "damacai",
       "picks": [
         "0000",
@@ -4551,7 +4551,9 @@
         }
       },
       "confirmation_version": "v3-fixed-1000",
-      "settings_sha256": "10eb591b64d3a98fcf959f4d2207d1097b5a83b4c8a0ef81e6879ce432f53f40"
+      "settings_sha256": "10eb591b64d3a98fcf959f4d2207d1097b5a83b4c8a0ef81e6879ce432f53f40",
+      "published_at": "2026-11-08T22:39:41.681502+08:00",
+      "publication_evidence": "https://github.com/Jevalaggaan10/magnum-4d-analytics/actions/runs/42490822822"
     }
   },
   "probability_confirmation": {
