@@ -52,6 +52,18 @@ November 7/4 responses confirmed date evidence is available; they did not modify
 the prospective ledger. No new model-search grid or prospective publication was
 run for this repair.
 
+Local full regression suite: **100 tests passed**. Offline tracker/replay and the
+probability smoke benchmark passed. Thirteen published/frozen files retained
+their baseline byte hashes, including ledger, log, all seven live probability
+artifacts, original protocol and frozen selection evidence.
+
+Hosted Python 3.12 tracker and full environments both passed regression, offline
+tracker/replay, probability smoke and publication preservation checks on code commit
+`e90a39ca7a6661152cb2d2886c3bad7f837f643c`:
+[forecast validation run](https://github.com/Jevalaggaan10/magnum-4d-analytics/actions/runs/42612674111).
+The release evidence update changes documentation/results only; executable files
+and approved source hashes remain identical to that tested commit.
+
 ## Limits and rollback
 
 Hashes establish exact reviewed file bytes, not independent proof of every past

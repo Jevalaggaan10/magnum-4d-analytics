@@ -1,6 +1,6 @@
 # Forecasting reliability: review and repair plan
 
-Status: phases 1–5 implemented; phase 6 release validation in progress. See
+Status: all six phases implemented and validated. See
 `FORECAST_REPAIR_IMPACT.md` and `experiments/repairs/20261109` for evidence.
 
 Baseline: `eed96e731f96b55bcec3306cf770ad4853798714`, reviewed 2026-11-09. Scope covers three issue groups from the recent review. Experiment identity enforcement is split into two implementation tasks because record compatibility and runtime source validation fail at different boundaries.
@@ -208,9 +208,9 @@ Rollback: revert defective code through a normal commit while retaining observat
 - [x] Compatibility of current published records is documented without rewriting their original evidence.
 - [x] Overdue v3 targets recover outside the recent-results window, with validated date/provenance and bounded retries.
 - [x] Selection decisions implement a documented, versioned uncertainty/simplicity rule.
-- [ ] Full regression suite, dry-runs, artifact checks, offline smoke and hosted validation pass.
+- [x] Full regression suite, dry-runs, artifact checks, offline smoke and hosted validation pass.
 - [x] Production ledger changes, if any, are explicitly explained; no prospective forecast was reconstructed.
 - [x] Uniform remains champion unless a separately qualified procedure satisfies all existing evidence gates.
-- [ ] Final handoff names commit(s), checks run, identity/compatibility decision and outstanding limitations.
+- [x] Final handoff names commit(s), checks run, identity/compatibility decision and outstanding limitations.
 
-Implementation limits: no new model-search grid or forecast/ledger migration was performed. Read-only official archive checks verified response dates against two retained outcomes. The uncertainty rule is now declared in `FORECAST_SELECTION_POLICY.json` for new searches; original protocol/selection artifacts remain unchanged. Hosted release evidence is tracked separately in phase 6.
+Implementation limits: no new model-search grid or forecast/ledger migration was performed. Read-only official archive checks verified response dates against two retained outcomes. The uncertainty rule is now declared in `FORECAST_SELECTION_POLICY.json` for new searches; original protocol/selection artifacts remain unchanged. Hosted release evidence is saved in `experiments/repairs/20261109/hosted-validation.json`.
