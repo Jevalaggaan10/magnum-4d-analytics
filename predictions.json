@@ -4562,5 +4562,8 @@
     "remaining": 997,
     "probability_promotion": false,
     "exact_hit_advantage": false
+  },
+  "forecast_integrity": {
+    "status": "ok"
   }
 }
