@@ -1,0 +1,23 @@
+{
+  "preserved_file_hashes": {
+    "PREDICTION_LOG.md": "56e6095df4ab2125607f44fd37f7e1f836b17f1802afa69a459354adf654de9f",
+    "docs/FORECAST_PROTOCOL.md": "d9e46b5a3249b5cb202c5b9c72e85407af048c07ba59bbf03848ef0eb4dccbc0",
+    "docs/FORECAST_PROTOCOL.yaml": "8d50573ddb65a1a0d216266b6c5ef422479cd0bc273e40c5be621800b27c74a0",
+    "experiments/damacai-v3/run-002/frozen-selection.json": "05aecc5aa049d3063dac2391a00000b205d36b0c0c79ca5495874f56d5f1cb34",
+    "experiments/data-v3/manifest.json": "48d6b728fee32b1c66815e8dc51bd5ec04666855b3914d3ad31a8912300edc83",
+    "predictions.json": "27efc42906bd3a0da472531fff8b5085b834e21e921a0903ac8aa4ea2e8a9027",
+    "probability_artifacts/0ef183c9aa632cd634a87b4ce3e21d91d894e24520ace0d5843ccbc076af33db.npz": "93bfbf37a628687b7107271c8b9304935d30417df1d5d3a9878e1351322f7563",
+    "probability_artifacts/1f50b30a693d8bfb513d1c6912b4bb3a95fda9838001cb0e93870e40be8e7027.npz": "94a622a93d8f0ea1c1bd850b46318b55e04a83ac8177a8992fc2562a6447e122",
+    "probability_artifacts/2995e52ab4490206ca347316025e50351c307fd62f4aa22d8866ce6925b2d72a.npz": "3d15fa215bb0219b5912d4fe7f363a68db0146311c7b699a7b2cf9b2d8ac72a8",
+    "probability_artifacts/6663bebf5b7f80bf4ee168559269517381985d9226012e7a47d9e4c1d806eae6.npz": "012d678995720b538b3a2a1fc0a3dde7823a22b0a51a13225f22d3c23ff7c025",
+    "probability_artifacts/6c82041165d2ff5fa54fc7d805913301b174aa23f0dd2003fd53d78718b952bf.npz": "1d7a5771323a3701fbdd64a1b2b623a7f9284a84779917a73b03cd6fcd9bc747",
+    "probability_artifacts/c899e35263e3bdf698c7d4171b565fc3313adc6c807a300c93176e6b6c96642a.npz": "b5024e24e7cc016f4e5221ba96883f9c0e82beb431f1392efdc4c6a68671c18f",
+    "probability_artifacts/f1d671dbb9c1c202b2d41f910c048a665ee0fa660657470fe820bce42407c296.npz": "173cbe7f5c8b1f384779f6aa7225066f235fa567183079d7a45b82b6cd983777"
+  },
+  "execution_revision": "3a78cb78ec0b0609402d8e1a22a952b1b3d795f0234a2ec9e6c59f02aaaf24a6",
+  "ledger_and_log_changed": false,
+  "promotion_gates": {
+    "development_qualified": false,
+    "correctness_verified": false
+  }
+}

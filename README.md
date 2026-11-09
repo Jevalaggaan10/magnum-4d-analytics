@@ -247,3 +247,25 @@ require an official announcement URL and timestamp. CI confirms publication only
 after successful push; late or unconfirmed publication is a coverage failure.
 Existing pending v2 picks remain unchanged. Initial v3 confirmation starts no earlier
 than 2026-11-07, after that pending target, and requires 1000 scheduled targets.
+
+### Reliability repairs — 2026-11-09
+
+Confirmation now validates one scientific series, its scheduled targets and approved
+execution revisions. `forecast_compatibility.json` pins the original published
+records and equivalence evidence; their vectors and publication history remain
+unchanged. Source/protocol mismatches block new generation and publication while
+retaining accepted results and audit diagnostics. The scheduled workflow reports
+the block as a failure after saving audit updates.
+
+Published v3 targets outside the latest-five result window are recovered explicitly,
+at most five attempts per run, with fair retries and official response-date checks.
+Offline mode performs no recovery requests. Announced specials remain scheduled
+even when a forecast cannot be generated.
+
+New development runs use [a versioned selection policy](docs/FORECAST_SELECTION_POLICY.json):
+at least .001 nats mean improvement and paired interval upper bounds below zero at
+both 13/26-draw block lengths. Uncertain candidates retain the simpler incumbent.
+Run identity checks prevent resuming across changed data, code, dependencies,
+protocol, policy or folds. Historical run-002 selections are not reinterpreted.
+See [repair plan](docs/FORECAST_REPAIR_PLAN.md) and
+[impact record](docs/FORECAST_REPAIR_IMPACT.md) for regression and compatibility evidence.

@@ -1,0 +1,42 @@
+FFFF
+======================================================================
+FAIL: test_cli_recovers_published_target_outside_recent_five_results (test_forecast_repairs.RepairRegressionTests.test_cli_recovers_published_target_outside_recent_five_results)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/tests/test_forecast_repairs.py", line 72, in test_cli_recovers_published_target_outside_recent_five_results
+    self.assertEqual(recovered['status'], 'verified')
+AssertionError: 'published' != 'verified'
+- published
++ verified
+
+
+======================================================================
+FAIL: test_incompatible_series_cannot_pool_into_successful_promotion (test_forecast_repairs.RepairRegressionTests.test_incompatible_series_cannot_pool_into_successful_promotion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/tests/test_forecast_repairs.py", line 35, in test_incompatible_series_cannot_pool_into_successful_promotion
+    self.assertFalse(result['probability_promotion'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_invalid_frozen_source_blocks_generation_without_writing_artifacts (test_forecast_repairs.RepairRegressionTests.test_invalid_frozen_source_blocks_generation_without_writing_artifacts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/tests/test_forecast_repairs.py", line 47, in test_invalid_frozen_source_blocks_generation_without_writing_artifacts
+    self.assertFalse('20261114' in state['probability_forecasts'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_noisy_development_gain_keeps_uniform_champion (test_forecast_repairs.RepairRegressionTests.test_noisy_development_gain_keeps_uniform_champion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/tests/test_forecast_repairs.py", line 99, in test_noisy_development_gain_keeps_uniform_champion
+    self.assertEqual(selected['selected'], {'model': 'uniform'})
+AssertionError: {'model': 'full_code', 'prior_mass': 10000} != {'model': 'uniform'}
+- {'model': 'full_code', 'prior_mass': 10000}
++ {'model': 'uniform'}
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.209s
+
+FAILED (failures=4)

@@ -43,6 +43,8 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_*.py'
 
       - name: Run tracker (sync latest result, verify, log next prediction)
+        id: tracker
+        continue-on-error: true
         run: python scripts/track_predictions.py
 
       - name: Commit log + state (only when changed)
@@ -59,6 +61,7 @@ jobs:
           fi
 
       - name: Confirm publication after successful push
+        if: steps.tracker.outcome == 'success'
         env:
           PUBLICATION_EVIDENCE: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
@@ -68,3 +71,9 @@ jobs:
             git commit -m "chore(prediction): record publication completion [skip ci]"
             git push
           fi
+
+      - name: Report blocked generation or tracker failure
+        if: steps.tracker.outcome == 'failure'
+        run: |
+          echo "Tracker failed or frozen generation was blocked. Audit updates were retained; publication was not confirmed."
+          exit 1

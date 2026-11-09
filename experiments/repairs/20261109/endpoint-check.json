@@ -1,0 +1,16 @@
+[
+  {
+    "for_date": "20261107",
+    "date_evidence": "official drawDate matched request",
+    "retrieved_at": "2026-11-09T11:52:09.770501+00:00",
+    "content_sha256": "18da90ee599117bee8a16d2aa5503fd12109ce36988bd1a833dc6b48a25f4c6b",
+    "matches_existing_observation": true
+  },
+  {
+    "for_date": "20261104",
+    "date_evidence": "official drawDate matched request",
+    "retrieved_at": "2026-11-09T11:52:12.364714+00:00",
+    "content_sha256": "a81754df38788c4494cd9433f0e44f0772105a0309d6e2538eca0c13a90792c4",
+    "matches_existing_observation": true
+  }
+]

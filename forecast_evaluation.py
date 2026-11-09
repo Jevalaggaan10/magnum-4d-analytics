@@ -12,6 +12,7 @@ import pandas as pd
 from data_loader import SLOT_COLS
 from forecasting import (ForecastEngine, DIGITS, canonical_json, save_forecast,
                          score_forecast, target_timestamp)
+from forecast_identity import confirmation_rows, validate_execution
 
 BINS = np.array([0,.00005,.0001,.0002,.0005,.001,.01,1.00000001])
 
@@ -121,8 +122,37 @@ def block_interval(values,*,block_length=13,replicates=10000,alpha=.0125,seed=17
 
 def paired_interval(rows,baseline,*,metric='log_loss',block_length=13,replicates=10000):
     a={r['for_date']:r for r in rows};b={r['for_date']:r for r in baseline}
+    if len(a)!=len(rows) or len(b)!=len(baseline):raise ValueError('duplicate paired target dates')
     if a.keys()!=b.keys():raise ValueError('paired comparisons require identical eligible draw dates')
     return block_interval([a[d][metric]-b[d][metric] for d in sorted(a)],block_length=block_length,replicates=replicates)
+
+
+def development_decision(rows,baseline,policy,*,deadline=None):
+    """Exploratory selection, distinct from future confirmation promotion."""
+    result={'accepted':False,'policy_version':policy['version'],'paired_draws':len(rows)}
+    if not baseline or not rows:
+        return {**result,'reason':'missing-incumbent-forecasts'}
+    for group in (rows,baseline):
+        if any(not r.get('coverage') or r.get('health',{}).get('status')!='ok' for r in group):
+            return {**result,'reason':'incomplete-or-unhealthy'}
+    a={r['for_date']:r for r in rows};b={r['for_date']:r for r in baseline}
+    if a.keys()!=b.keys() or len(a)!=len(rows) or len(b)!=len(baseline):
+        return {**result,'reason':'unaligned-targets'}
+    differences=np.array([a[d]['log_loss']-b[d]['log_loss'] for d in sorted(a)])
+    if not np.isfinite(differences).all():
+        return {**result,'reason':'nonfinite-loss'}
+    gain=float(-differences.mean());result['gain_nats']=gain
+    if gain<policy['practical_gain_nats']:
+        return {**result,'reason':'below-practical-threshold'}
+    intervals={}
+    for length in policy['block_lengths']:
+        if deadline is not None and time.monotonic()>=deadline:raise TimeoutError('selection budget exhausted')
+        intervals[str(length)]=block_interval(differences,block_length=length,
+            replicates=policy['replicates'],alpha=policy['alpha'],seed=policy['seed'])
+    if deadline is not None and time.monotonic()>=deadline:raise TimeoutError('selection budget exhausted')
+    accepted=all(value['upper']<0 for value in intervals.values())
+    return {**result,'accepted':accepted,'intervals':intervals,
+            'reason':'qualified-paired-gain' if accepted else 'uncertain-gain-retain-incumbent'}
 
 
 def fit_mixture(component_rows,*,cutoff,minimum_draws=100):
@@ -143,8 +173,11 @@ def fit_mixture(component_rows,*,cutoff,minimum_draws=100):
     weights=np.maximum(fit.x,0);return (weights/weights.sum()).tolist()
 
 
-def confirmation_status(records,checkpoint=1000):
-    rows=sorted(records,key=lambda r:r['for_date'])[:checkpoint]
+def confirmation_status(records,checkpoint=1000,*,settings=None):
+    try:
+        rows=confirmation_rows(records,settings)[:checkpoint]
+    except (ValueError,KeyError,TypeError,OSError) as error:
+        return {'status':'invalid-identity','scheduled_targets':0,'reason':str(error)}
     if len(rows)<checkpoint:return {'status':'pending','scheduled_targets':len(rows),'remaining':checkpoint-len(rows)}
     if any(not r.get('coverage') for r in rows):return {'status':'incomplete-coverage','scheduled_targets':checkpoint}
     return {'status':'ready','scheduled_targets':checkpoint}
@@ -166,12 +199,18 @@ def calibration_summary(rows,replicates=10000):
             'limitation':'pooled calibration does not validate individual rare-code probabilities or predictive information'}
 
 
-def promotion_decision(records,*,development_qualified=False,correctness_verified=False,replicates=10000):
+def promotion_decision(records,*,development_qualified=False,correctness_verified=False,replicates=10000,settings=None):
     """Fixed checkpoint only. Never expose interim comparative confirmation scores."""
-    status=confirmation_status(records)
+    checkpoint=settings.get('checkpoint_scheduled_targets',1000) if settings else 1000
+    status=confirmation_status(records,checkpoint,settings=settings)
     result={**status,'probability_promotion':False,'exact_hit_advantage':False}
     if status['status']!='ready':return result
-    rows=sorted(records,key=lambda r:r['for_date'])[:1000]
+    if settings:
+        try:
+            validate_execution(settings)
+        except (ValueError,KeyError,TypeError,OSError) as error:
+            return {**result,'status':'invalid-execution','reason':str(error)}
+    rows=confirmation_rows(records,settings)[:checkpoint]
     if any(r.get('status')!='verified' or not all(k in r.get('metrics',{}) for k in ['champion','shadow','simplest_nonuniform']) for r in rows):
         return {**result,'status':'incomplete-scoring'}
     contrasts={

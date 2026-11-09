@@ -1,0 +1,122 @@
+{
+  "baseline": "eed96e731f96b55bcec3306cf770ad4853798714",
+  "hashes": {
+    ".github/workflows/forecast-validation.yml": "2a1470345535ae972ab3b800ebd7e70dafe2e52e2dd170cacb3ab66aa86221da",
+    ".github/workflows/prediction-tracker.yml": "fe96d65eb0183e436aa98df2657b797caa8ac55b7f00005b2a4248b2884b7dcd",
+    "PREDICTION_LOG.md": "56e6095df4ab2125607f44fd37f7e1f836b17f1802afa69a459354adf654de9f",
+    "app.py": "2a175eea4b292134babec00749ced3efe22337eb6703e7657430abca4d586bcd",
+    "backtest.py": "425d1178df4d1e505d8b2243a3a215ec215c2d72212fa864a04c642eb01b8d2f",
+    "consensus.py": "e5529eb7d09307642617769db8d4b82a749a8d2ccbd57ec393c14e63c6894ddf",
+    "constraints-py312.txt": "10db11f4aaf183f90d011dff523df2e092dc36b10121bcd1f8ba6e27d605db12",
+    "data_loader.py": "b12bebc89abae567480d0a0648967ea46ee917facc2253a9702e1d99e8408635",
+    "data_sources/__init__.py": "e0820adf1637db0b009d55e17ff2ca5cdce95280283fd3f0b35d93194e6d7375",
+    "data_sources/base.py": "317134ee913111607479b90105b431fb0070f1af08796b7b7340158c04f484a1",
+    "data_sources/damacai.py": "ab868e4b74e3c75cfdad1976ac9bfcd898773048c2ecd5a12d9b97b1eea0f603",
+    "data_sources/fouryes3.py": "a988dba1015ffc7107e2ab20e6311cafb7e848f975cf746a69e3f12ff1db0f4c",
+    "data_sources/magnum.py": "2ab6c25383f8eeb1c4f7a1f3d90dacc64d6564d0413cf75f576ce5413887f93c",
+    "data_sources/manager.py": "b44aad868a9b4bbf5dd2735f8b733dd322bdbbea540acbc1880553b7f8e4324d",
+    "docs/FORECAST_PROTOCOL.md": "d9e46b5a3249b5cb202c5b9c72e85407af048c07ba59bbf03848ef0eb4dccbc0",
+    "docs/FORECAST_PROTOCOL.yaml": "8d50573ddb65a1a0d216266b6c5ef422479cd0bc273e40c5be621800b27c74a0",
+    "ev_simulator.py": "6945e6796fc9abd284f21a39323bb30c648dee9322e2054f5b5340c37285aad6",
+    "experiments/damacai-v3/run-002/frozen-selection.json": "05aecc5aa049d3063dac2391a00000b205d36b0c0c79ca5495874f56d5f1cb34",
+    "experiments/data-v3/manifest.json": "48d6b728fee32b1c66815e8dc51bd5ec04666855b3914d3ad31a8912300edc83",
+    "feature_engineer.py": "8a957c3538c101372ef1aba4c1fe416e8400ce3fec0124674ae2e8db0e45ef97",
+    "forecast_config.json": "6670494e3a4ae4a26ed2d14af823d260bf4dfbd54d1a509a23cfe4adf997aeeb",
+    "forecast_evaluation.py": "2dddea13a106b0e61572c35fd73a58a4ccec4ead0bf6b729f5d06ca5c34cbbd7",
+    "forecasting.py": "146ac43a098a04ae0073e16dc1b8ce392ac20d3d76f597c681e98c70eb17aa74",
+    "predict.py": "ec7464cd03ddd41fccddf8f77babde8d9bd479defebbea7bce67a11769c82e4c",
+    "predict_final.py": "548c6d78964f22bcc80d736b40bc625d6ec342597dc91a26e3be8fe8727e0da8",
+    "predictions.json": "27efc42906bd3a0da472531fff8b5085b834e21e921a0903ac8aa4ea2e8a9027",
+    "predictor_suite.py": "bef0941bf3a2c89ffd5475727c50044f1e12d8f59b4e48609e9c63f20cd5f273",
+    "probability_artifacts/0ef183c9aa632cd634a87b4ce3e21d91d894e24520ace0d5843ccbc076af33db.npz": "93bfbf37a628687b7107271c8b9304935d30417df1d5d3a9878e1351322f7563",
+    "probability_artifacts/1f50b30a693d8bfb513d1c6912b4bb3a95fda9838001cb0e93870e40be8e7027.npz": "94a622a93d8f0ea1c1bd850b46318b55e04a83ac8177a8992fc2562a6447e122",
+    "probability_artifacts/2995e52ab4490206ca347316025e50351c307fd62f4aa22d8866ce6925b2d72a.npz": "3d15fa215bb0219b5912d4fe7f363a68db0146311c7b699a7b2cf9b2d8ac72a8",
+    "probability_artifacts/6663bebf5b7f80bf4ee168559269517381985d9226012e7a47d9e4c1d806eae6.npz": "012d678995720b538b3a2a1fc0a3dde7823a22b0a51a13225f22d3c23ff7c025",
+    "probability_artifacts/6c82041165d2ff5fa54fc7d805913301b174aa23f0dd2003fd53d78718b952bf.npz": "1d7a5771323a3701fbdd64a1b2b623a7f9284a84779917a73b03cd6fcd9bc747",
+    "probability_artifacts/c899e35263e3bdf698c7d4171b565fc3313adc6c807a300c93176e6b6c96642a.npz": "b5024e24e7cc016f4e5221ba96883f9c0e82beb431f1392efdc4c6a68671c18f",
+    "probability_artifacts/f1d671dbb9c1c202b2d41f910c048a665ee0fa660657470fe820bce42407c296.npz": "173cbe7f5c8b1f384779f6aa7225066f235fa567183079d7a45b82b6cd983777",
+    "probability_tracker.py": "a428ae5c288342b933d4e4e5303f56bd5eecfefd8e02f58feead8f9db10dea97",
+    "randomness_tests.py": "6dd7ddb94209e1f5e6a260d62fa30f29396f89e444eadb95e2e179052cad314e",
+    "requirements-ml.txt": "e0cb567e8e0340bd6fd92084f538714b2a2e0167305f1b95a04deebf69fe20e3",
+    "requirements-tracker.txt": "0707306f92aabf7bb29836566eda42604ae64f76842b304b84601c1f4c419241",
+    "requirements.txt": "980b56722f17fbe172397002ce2b976ea0eff5bd7ceae47394491ee16c0ce6e2",
+    "scripts/evaluate_forecasts.py": "1d57da39d3414229a919db89479220f8f59f3d187b2587d13bca6bcf5e8c2e99",
+    "scripts/track_predictions.py": "4e0da03e87f94774ddf0b1482fb460dc1396339aedbd32353502e8a329c7481c",
+    "tests/test_backtest.py": "7751ace7d9d580e778f51f60a44de5c656639b1f60cc0fdc2bfbe0189e44a042",
+    "tests/test_data_and_features.py": "1a5d45641f4de45c5f3e636732c42546eb294f1284e7fa2d767b2cc38531939f",
+    "tests/test_experiment_runner.py": "d11c388df9c7bd70afe59d6b911a7f0b25c777a4c7d5144428c6d9bcabb50f2c",
+    "tests/test_forecast_evaluation.py": "272852a7936b56e5f76b178a20baa9d43ddd97f33bf8d3faf2a20198d87faf3c",
+    "tests/test_forecast_ui.py": "c7723e3f373e313b316e3675ec567f69e728f90b3ac9e2bcf5226e2e89b5d398",
+    "tests/test_forecasting.py": "dddbdd57cafbac7934ff474b2b1d1f5db37f4db6f2f3b07648eeceb1d94dd637",
+    "tests/test_predictors.py": "bef62ac7c04d64171e2ba4e8af5c8717032db777039abb9452c6319a0e56a371",
+    "tests/test_probability_tracker.py": "7a463a04c6ed403f9d72d5c2dbf84f865176d364c8c448faab5763f870c82116",
+    "tests/test_tracker.py": "b0b3373c0ba0a8035d8b831e7cb4df1b51113c742ca4005817688bea2970774e",
+    "train_model.py": "993fe9f8e86e61140d71f6d4d68fa197e487fac9a76fade837a498f2b6de2d95",
+    "user_guess_analyzer.py": "0a736406e821813214b3a2a2a41b94a5f6ce62d32a75f3b3fee6f7654c8c844e"
+  },
+  "forecast_audit": [
+    {
+      "for_date": "20261107",
+      "status": "verified",
+      "confirmation_version": "v3-fixed-1000",
+      "settings_sha256": "10eb591b64d3a98fcf959f4d2207d1097b5a83b4c8a0ef81e6879ce432f53f40",
+      "models": {
+        "champion": {
+          "model": "uniform"
+        },
+        "shadow": {
+          "model": "digit",
+          "alpha": 100,
+          "uniform_weight": 0.5
+        },
+        "simplest_nonuniform": {
+          "model": "digit",
+          "alpha": 100
+        }
+      },
+      "artifact_integrity": "valid"
+    },
+    {
+      "for_date": "20261108",
+      "status": "verified",
+      "confirmation_version": "v3-fixed-1000",
+      "settings_sha256": "10eb591b64d3a98fcf959f4d2207d1097b5a83b4c8a0ef81e6879ce432f53f40",
+      "models": {
+        "champion": {
+          "model": "uniform"
+        },
+        "shadow": {
+          "model": "digit",
+          "alpha": 100,
+          "uniform_weight": 0.5
+        },
+        "simplest_nonuniform": {
+          "model": "digit",
+          "alpha": 100
+        }
+      },
+      "artifact_integrity": "valid"
+    },
+    {
+      "for_date": "20261111",
+      "status": "published",
+      "confirmation_version": "v3-fixed-1000",
+      "settings_sha256": "10eb591b64d3a98fcf959f4d2207d1097b5a83b4c8a0ef81e6879ce432f53f40",
+      "models": {
+        "champion": {
+          "model": "uniform"
+        },
+        "shadow": {
+          "model": "digit",
+          "alpha": 100,
+          "uniform_weight": 0.5
+        },
+        "simplest_nonuniform": {
+          "model": "digit",
+          "alpha": 100
+        }
+      },
+      "artifact_integrity": "valid"
+    }
+  ]
+}

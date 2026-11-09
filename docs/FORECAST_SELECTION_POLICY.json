@@ -1,0 +1,13 @@
+{
+  "version": "development-uncertainty-v1",
+  "base_protocol": "damacai-probability-v3.0",
+  "scope": "New exploratory development runs only; historical selections remain unchanged",
+  "practical_gain_nats": 0.001,
+  "block_lengths": [13, 26],
+  "replicates": 10000,
+  "alpha": 0.0125,
+  "seed": 17029,
+  "family_complexity_order": ["uniform", "digit", "full_code", "logistic", "xgboost", "ensemble"],
+  "acceptance": "Mean improvement >= threshold and candidate-minus-incumbent upper interval < 0 at both block lengths; otherwise retain incumbent",
+  "ties": "Evaluate simpler candidates first; keep incumbent unless acceptance gate passes"
+}

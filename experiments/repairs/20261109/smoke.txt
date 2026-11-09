@@ -1,0 +1,2 @@
+uniform: complete, 0.12s
+{"selected":{"model":"uniform"},"smoke_only":true}

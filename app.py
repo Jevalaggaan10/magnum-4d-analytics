@@ -180,6 +180,12 @@ with tab_home:
             probability_forecast = load_forecast(saved['forecasts']['champion'], ARTIFACT_DIR)
             st.caption(f"Saved forecast · {saved['status']}. Existing published picks are preserved.")
         else:
+            from forecast_identity import validate_execution
+            try:
+                validate_execution(settings)
+            except (ValueError, KeyError, TypeError, OSError) as error:
+                st.error(f"Frozen forecast preview blocked: {error}")
+                st.stop()
             probability_forecast = forecast(forecast_history, operator='damacai', target_time=target_time, config=settings['champion'])
             st.caption("Preview from the live Da Ma Cai corpus. This screen does not publish a prospective forecast.")
         if state.get('pending'):

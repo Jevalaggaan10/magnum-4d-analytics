@@ -1,0 +1,28 @@
+{
+  "confirmation_version": "v3-fixed-1000",
+  "procedure_sha256": "380972b635c249f4eb89a88bd73d93b5300849b4c6fc858970e701ab51427177",
+  "baseline_commit": "eed96e731f96b55bcec3306cf770ad4853798714",
+  "classification": "Compatible live correctness repair; forecast generation and scoring unchanged for all existing records",
+  "original_config_sha256": "6670494e3a4ae4a26ed2d14af823d260bf4dfbd54d1a509a23cfe4adf997aeeb",
+  "legacy_settings_sha256": "10eb591b64d3a98fcf959f4d2207d1097b5a83b4c8a0ef81e6879ce432f53f40",
+  "original_source_hashes": {
+    "forecasting.py": "146ac43a098a04ae0073e16dc1b8ce392ac20d3d76f597c681e98c70eb17aa74",
+    "forecast_evaluation.py": "2dddea13a106b0e61572c35fd73a58a4ccec4ead0bf6b729f5d06ca5c34cbbd7",
+    "probability_tracker.py": "a428ae5c288342b933d4e4e5303f56bd5eecfefd8e02f58feead8f9db10dea97"
+  },
+  "protocol_sha256": "8d50573ddb65a1a0d216266b6c5ef422479cd0bc273e40c5be621800b27c74a0",
+  "compatible_revisions": [
+    "3a78cb78ec0b0609402d8e1a22a952b1b3d795f0234a2ec9e6c59f02aaaf24a6"
+  ],
+  "equivalence_evidence": "experiments/repairs/20261109/equivalence.json",
+  "equivalence_sha256": "2ccd17890826c484e3d4fbefad150c8c0339d42d7a5f383cd1d0e0cae3ebbf38",
+  "legacy_records": {
+    "20261107": "37cd3fac9314fabd96be196fdb97a25cd41f979e63acbeb33f87ca5544608191",
+    "20261108": "d6ba761a992251c094ba7eaf611a41957ec4f9afeab24ee3fcd93e072c584a5a",
+    "20261111": "9cc629c2a804ca7ab389ac8ce1471df71ec784dc45204293ae38fc3b615f0fe7"
+  },
+  "limits": [
+    "Existing generation/scoring unchanged; new model selection policy applies only to newly declared offline runs.",
+    "Promotion remains disabled; future model changes require a new series or explicit compatibility review."
+  ]
+}

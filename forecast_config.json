@@ -22,8 +22,20 @@
   "frozen_at": "2026-11-03T13:53:20.903631+00:00",
   "source_hashes": {
     "forecasting.py": "146ac43a098a04ae0073e16dc1b8ce392ac20d3d76f597c681e98c70eb17aa74",
-    "forecast_evaluation.py": "2dddea13a106b0e61572c35fd73a58a4ccec4ead0bf6b729f5d06ca5c34cbbd7",
-    "probability_tracker.py": "a428ae5c288342b933d4e4e5303f56bd5eecfefd8e02f58feead8f9db10dea97"
+    "forecast_evaluation.py": "e8dbe2b5d6f865f2344ebbdbc2bcc7b7f0d177ce04f4d185a53b154a529db9cc",
+    "probability_tracker.py": "ace69553bd5bbc20dd4723fcc5811ae2d7dd4a1be8fb15e06d2e8235dc2e7db3",
+    "forecast_identity.py": "29f6e86946d1611af47a94eca14e858c2eeb86f5660646dc3f8bc3fc749537aa",
+    "data_loader.py": "b12bebc89abae567480d0a0648967ea46ee917facc2253a9702e1d99e8408635",
+    "data_sources/base.py": "317134ee913111607479b90105b431fb0070f1af08796b7b7340158c04f484a1",
+    "data_sources/damacai.py": "bf1998962c3798712fd52133d65a5e9d793d6883c3b0bd10fa53ce36e3abd523",
+    "scripts/track_predictions.py": "44ec48f73f2f9a53d6e1eae8ad3bcd34805c20dc66e1056557fff9ce899fe5aa",
+    "requirements-tracker.txt": "0707306f92aabf7bb29836566eda42604ae64f76842b304b84601c1f4c419241",
+    "constraints-py312.txt": "10db11f4aaf183f90d011dff523df2e092dc36b10121bcd1f8ba6e27d605db12",
+    "data/damacai.csv": "a5c89d1ee1beaa3dfda99bb735ac2de86323edd945b5c93bbba70aeebb323dd4",
+    "data/provenance.json": "23b38ff40f5f04adfddef0046fe47f8ab127336bfca4594443a499cd8d6c057b"
   },
-  "protocol_sha256": "8d50573ddb65a1a0d216266b6c5ef422479cd0bc273e40c5be621800b27c74a0"
+  "protocol_sha256": "8d50573ddb65a1a0d216266b6c5ef422479cd0bc273e40c5be621800b27c74a0",
+  "selection_evidence_sha256": "05aecc5aa049d3063dac2391a00000b205d36b0c0c79ca5495874f56d5f1cb34",
+  "compatibility_manifest": "forecast_compatibility.json",
+  "compatibility_sha256": "ed8e1290ba856f723fc84c1b041f26e101c1cb61323db386d879b7564389426c"
 }

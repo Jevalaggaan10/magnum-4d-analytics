@@ -6,6 +6,7 @@ from datetime import datetime
 from pathlib import Path
 
 from test_forecasting import history
+from forecast_fixtures import settings as approved_settings
 
 
 class ProbabilityTrackerTests(unittest.TestCase):
@@ -32,7 +33,7 @@ class ProbabilityTrackerTests(unittest.TestCase):
         original=copy.deepcopy(state)
         with tempfile.TemporaryDirectory() as d:
             self.t.advance_forecasts(state,history(4),now=datetime.fromisoformat('2026-11-03T12:00:00+08:00'),
-                artifact_dir=Path(d),settings={'champion':{'model':'uniform'},'start_date':'20261107'},dry_run=True)
+                artifact_dir=Path(d),settings=approved_settings(),dry_run=True)
             self.assertEqual(list(Path(d).iterdir()),[])
         self.assertEqual(state['pending'],original['pending'])
         self.assertEqual(state['history'],[])
@@ -41,7 +42,7 @@ class ProbabilityTrackerTests(unittest.TestCase):
     def test_published_forecast_not_retrained_when_more_history_arrives(self):
         state={'pending':None,'history':[]}
         with tempfile.TemporaryDirectory() as d:
-            settings={'champion':{'model':'uniform'},'start_date':'20261107'}
+            settings=approved_settings()
             self.t.advance_forecasts(state,history(4),now=datetime.fromisoformat('2026-11-03T12:00:00+08:00'),artifact_dir=Path(d),settings=settings)
             original=copy.deepcopy(state['probability_forecasts']['20261107'])
             self.t.advance_forecasts(state,history(8),now=datetime.fromisoformat('2026-11-04T12:00:00+08:00'),artifact_dir=Path(d),settings=settings)
@@ -67,9 +68,9 @@ class ProbabilityTrackerTests(unittest.TestCase):
         from data_loader import SLOT_COLS
         state={'pending':None,'history':[]}
         with tempfile.TemporaryDirectory() as d:
-            settings={'champion':{'model':'uniform'},'start_date':'20261107'}
+            settings=approved_settings()
             self.t.advance_forecasts(state,history(4),now=datetime.fromisoformat('2026-11-03T12:00:00+08:00'),artifact_dir=Path(d),settings=settings)
-            self.t.confirm_publication(state,datetime.fromisoformat('2026-11-03T12:01:00+08:00'),evidence='CI-test')
+            self.t.confirm_publication(state,datetime.fromisoformat('2026-11-03T12:01:00+08:00'),evidence='CI-test',settings=settings)
             actual=history(1);actual.loc[0,'DrawDate']=pd.Timestamp('2026-11-07');actual.loc[0,SLOT_COLS]='0000'
             self.t.advance_forecasts(state,actual,now=datetime.fromisoformat('2026-11-07T21:00:00+08:00'),artifact_dir=Path(d),settings=settings)
             record=state['probability_forecasts']['20261107']
@@ -81,6 +82,19 @@ class ProbabilityTrackerTests(unittest.TestCase):
         state={'pending':None,'history':[]}
         with tempfile.TemporaryDirectory() as d:
             self.t.advance_forecasts(state,history(),now=datetime.fromisoformat('2026-11-03T16:00:00+08:00'),
-                artifact_dir=Path(d),dry_run=True,settings={'champion':{'model':'uniform'},'requested_date':'20261103',
-                'specials':{'20261103':{'url':'https://www.damacai.com.my/news/a','announced_at':'2026-11-03T14:00:00+08:00'}}})
+                artifact_dir=Path(d),dry_run=True,settings=approved_settings(start_date='20261101',requested_date='20261103',
+                specials={'20261103':{'url':'https://www.damacai.com.my/news/a','announced_at':'2026-11-03T14:00:00+08:00'}}))
         self.assertIn('20261103',state['probability_forecasts'])
+
+    def test_announced_special_stays_in_schedule_when_network_prevents_forecast(self):
+        state={'pending':None,'history':[]}
+        special={'20261103':{'url':'https://www.damacai.com.my/news/a',
+                            'announced_at':'2026-11-03T14:00:00+08:00'}}
+        with tempfile.TemporaryDirectory() as d:
+            self.t.advance_forecasts(state,history(),now=datetime.fromisoformat('2026-11-03T16:00:00+08:00'),
+                artifact_dir=Path(d),settings=approved_settings(start_date='20261101',specials=special),
+                dry_run=True,network_ok=False)
+            self.t.advance_forecasts(state,history(),now=datetime.fromisoformat('2026-11-04T21:00:00+08:00'),
+                artifact_dir=Path(d),settings=approved_settings(start_date='20261101'),dry_run=True)
+        self.assertIn('20261103',state['probability_forecasts'])
+        self.assertEqual(state['probability_forecasts']['20261103']['status'],'missing-forecast')

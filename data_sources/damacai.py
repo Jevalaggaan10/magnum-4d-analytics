@@ -6,6 +6,7 @@ Reference: https://hongineer.com/scrapping-da-ma-cai-4d-results
 from __future__ import annotations
 
 import time
+from datetime import datetime
 
 import requests
 
@@ -64,7 +65,7 @@ class Damacai(LotterySource):
                     return obj[actual]
         return None
 
-    def fetch_draw(self, draw_date: str) -> NormalizedDraw | None:
+    def fetch_draw(self, draw_date: str, *, require_date_evidence=False) -> NormalizedDraw | None:
         link = self._signed_link(draw_date)
         if not link:
             return None
@@ -74,6 +75,19 @@ class Damacai(LotterySource):
         r.raise_for_status()
         data = r.json()
         if not isinstance(data, dict):
+            return None
+        reported = self._flexget(data, 'drawDate')
+        if reported is not None:
+            parsed = None
+            for pattern in ('%d/%m/%Y', '%Y%m%d', '%Y-%m-%d'):
+                try:
+                    parsed = datetime.strptime(str(reported).strip(), pattern).strftime('%Y%m%d')
+                    break
+                except ValueError:
+                    continue
+            if parsed != draw_date:
+                return None
+        elif require_date_evidence:
             return None
 
         def prize_text(*keys):

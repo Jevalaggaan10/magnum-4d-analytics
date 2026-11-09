@@ -1,0 +1,62 @@
+{
+  "20261107": {
+    "champion": {
+      "probabilities_and_picks_identical": true,
+      "training_lineage_identical": true,
+      "saved_scores_identical": true,
+      "probability_sha256": "c899e35263e3bdf698c7d4171b565fc3313adc6c807a300c93176e6b6c96642a"
+    },
+    "shadow": {
+      "probabilities_and_picks_identical": true,
+      "training_lineage_identical": true,
+      "saved_scores_identical": true,
+      "probability_sha256": "2995e52ab4490206ca347316025e50351c307fd62f4aa22d8866ce6925b2d72a"
+    },
+    "simplest_nonuniform": {
+      "probabilities_and_picks_identical": true,
+      "training_lineage_identical": true,
+      "saved_scores_identical": true,
+      "probability_sha256": "f1d671dbb9c1c202b2d41f910c048a665ee0fa660657470fe820bce42407c296"
+    }
+  },
+  "20261108": {
+    "champion": {
+      "probabilities_and_picks_identical": true,
+      "training_lineage_identical": true,
+      "saved_scores_identical": true,
+      "probability_sha256": "c899e35263e3bdf698c7d4171b565fc3313adc6c807a300c93176e6b6c96642a"
+    },
+    "shadow": {
+      "probabilities_and_picks_identical": true,
+      "training_lineage_identical": true,
+      "saved_scores_identical": true,
+      "probability_sha256": "1f50b30a693d8bfb513d1c6912b4bb3a95fda9838001cb0e93870e40be8e7027"
+    },
+    "simplest_nonuniform": {
+      "probabilities_and_picks_identical": true,
+      "training_lineage_identical": true,
+      "saved_scores_identical": true,
+      "probability_sha256": "0ef183c9aa632cd634a87b4ce3e21d91d894e24520ace0d5843ccbc076af33db"
+    }
+  },
+  "20261111": {
+    "champion": {
+      "probabilities_and_picks_identical": true,
+      "training_lineage_identical": true,
+      "saved_scores_identical": true,
+      "probability_sha256": "c899e35263e3bdf698c7d4171b565fc3313adc6c807a300c93176e6b6c96642a"
+    },
+    "shadow": {
+      "probabilities_and_picks_identical": true,
+      "training_lineage_identical": true,
+      "saved_scores_identical": true,
+      "probability_sha256": "6c82041165d2ff5fa54fc7d805913301b174aa23f0dd2003fd53d78718b952bf"
+    },
+    "simplest_nonuniform": {
+      "probabilities_and_picks_identical": true,
+      "training_lineage_identical": true,
+      "saved_scores_identical": true,
+      "probability_sha256": "6663bebf5b7f80bf4ee168559269517381985d9226012e7a47d9e4c1d806eae6"
+    }
+  }
+}

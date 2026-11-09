@@ -1,0 +1,38 @@
+F.F.F
+======================================================================
+FAIL: test_duplicate_target_does_not_count_twice (test_confirmation_identity.ConfirmationIdentityTests.test_duplicate_target_does_not_count_twice)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/tests/test_confirmation_identity.py", line 23, in test_duplicate_target_does_not_count_twice
+    self.assertEqual(confirmation_status([record(), record()])['status'], 'invalid-identity')
+AssertionError: 'pending' != 'invalid-identity'
+- pending
++ invalid-identity
+
+
+======================================================================
+FAIL: test_identity_cannot_be_omitted_even_before_checkpoint (test_confirmation_identity.ConfirmationIdentityTests.test_identity_cannot_be_omitted_even_before_checkpoint)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/tests/test_confirmation_identity.py", line 19, in test_identity_cannot_be_omitted_even_before_checkpoint
+    self.assertEqual(confirmation_status([{'for_date': '20261107', 'coverage': 1}])['status'],
+AssertionError: 'pending' != 'invalid-identity'
+- pending
++ invalid-identity
+
+
+======================================================================
+FAIL: test_same_label_with_changed_procedure_is_rejected (test_confirmation_identity.ConfirmationIdentityTests.test_same_label_with_changed_procedure_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/tests/test_confirmation_identity.py", line 16, in test_same_label_with_changed_procedure_is_rejected
+    self.assertEqual(confirmation_status(rows)['status'], 'invalid-identity')
+AssertionError: 'pending' != 'invalid-identity'
+- pending
++ invalid-identity
+
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.000s
+
+FAILED (failures=3)

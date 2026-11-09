@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_adapter_rejects_result_for_another_draw_date (test_result_recovery.ResultRecoveryTests.test_adapter_rejects_result_for_another_draw_date)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tamilalagan/.t3/worktrees/magnum-4d-analytics/t3-4e4291c2/tests/test_result_recovery.py", line 19, in test_adapter_rejects_result_for_another_draw_date
+    self.assertIsNone(source.fetch_draw('20261107'))
+AssertionError: NormalizedDraw(draw_date='20261107', first='1234', second='5678', third='9012', special=[], consolation=[], source='damacai') is not None
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

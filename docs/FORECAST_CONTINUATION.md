@@ -29,3 +29,17 @@ Complete *.npz probability artifacts remain locally under experiment directories
 ignored by Git because of size; per-draw manifests provide hashes and paths. Copy
 that store explicitly if moving to another machine, or regenerate offline from the
 frozen data/protocol/environment. Never replace prospective ledger with a replay.
+
+## Reliability revision — 2026-11-09
+
+`forecast_compatibility.json` retains the original series through an explicitly
+compatible correctness revision, with exact evidence for all nine saved model
+forecasts. Identity/source enforcement, bounded overdue-result recovery and special
+schedule persistence are now required. Do not refresh frozen hashes without impact
+review. Configuration flags still leave both promotion gates false.
+
+New offline searches use `FORECAST_SELECTION_POLICY.json`; historical run-002 and
+its selection evidence remain unchanged. Resume requires identical data, code,
+dependency environment, policy and folds. See `FORECAST_REPAIR_IMPACT.md` for release
+evidence and the distinction between current live compatibility and future search
+policy changes.

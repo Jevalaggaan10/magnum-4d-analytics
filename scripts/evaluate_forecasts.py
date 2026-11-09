@@ -26,7 +26,33 @@ import yaml
 from data_loader import load_data_cache, SLOT_COLS
 from forecasting import canonical_json, digest, forecast
 from forecast_evaluation import (evaluate,summarize,paired_interval,block_interval,
-                                 fit_mixture,calibration_summary)
+                                 fit_mixture,calibration_summary,development_decision)
+
+SELECTION_POLICY=ROOT/'docs/FORECAST_SELECTION_POLICY.json'
+
+
+def complexity(config,policy):
+    family=policy['family_complexity_order'].index(config['model'])
+    # Stronger regularization, fewer trees/components and shared pooling come first.
+    detail=(int(config.get('pooling')=='tier'),int(bool(config.get('half_life_days'))),
+            int(bool(config.get('calendar'))),config.get('C',0),config.get('depth',0),
+            config.get('rounds',0),len(config.get('components',[])),
+            -config.get('alpha',0),-config.get('prior_mass',0),-config.get('uniform_weight',0))
+    return family,detail,canonical_json(config)
+
+
+def search_identity(history,protocol,years):
+    packages={}
+    for name in ['numpy','pandas','scipy','scikit-learn','xgboost','threadpoolctl']:
+        try:packages[name]=importlib.metadata.version(name)
+        except importlib.metadata.PackageNotFoundError:packages[name]=None
+    return {'data_sha256':digest(history.to_csv(index=False,date_format='%Y-%m-%d',lineterminator='\n').encode()),
+            'protocol_sha256':digest(json.dumps(protocol,sort_keys=True,default=str).encode()),
+            'selection_policy_sha256':digest(SELECTION_POLICY.read_bytes()),'years':list(years),
+            'source_hashes':{p:digest((ROOT/p).read_bytes()) for p in
+                             ['forecasting.py','forecast_evaluation.py','forecast_identity.py',
+                              'data_loader.py','scripts/evaluate_forecasts.py']},
+            'python':platform.python_version(),'packages':packages}
 
 
 @contextmanager
@@ -111,6 +137,18 @@ def run_search(history,output,protocol,*,years=(2018,2019),max_rounds=5,seconds=
     output=Path(output);output.mkdir(parents=True,exist_ok=True)
     stamp=time.monotonic();records=[];complete={};families={};no_gain=0
     champion={'model':'uniform'};champion_loss=np.log(10000);best_nonuniform=None;best_nonuniform_loss=float('inf')
+    champion_rows=None;policy=json.loads(SELECTION_POLICY.read_text())
+    identity=search_identity(history,protocol,years)
+    identity_path=output/'search-identity.json'
+    if identity_path.exists() and json.loads(identity_path.read_text())!=identity:
+        raise ValueError('search identity changed; use a new output directory')
+    if not identity_path.exists() and (output/'ledger.json').exists():
+        raise ValueError('legacy search has no compatible identity evidence')
+    if resume_from:
+        previous=Path(resume_from)/'development/search-identity.json'
+        if not previous.exists() or json.loads(previous.read_text())!=identity:
+            raise ValueError('resume data, code, protocol, policy or fold identity mismatch')
+    write_json(identity_path,identity)
     prior = {}
     if (output/'ledger.json').exists():
         for record in json.loads((output/'ledger.json').read_text()):
@@ -127,10 +165,10 @@ def run_search(history,output,protocol,*,years=(2018,2019),max_rounds=5,seconds=
         source=Path(resume_from)
         for record in json.loads((source/'development/ledger.json').read_text()):
             prior[canonical_json(record['config'])]=record
-        seconds-=sum(r['seconds'] for r in prior.values())
+    seconds-=sum(r['seconds'] for r in prior.values())
     for round_number in range(1,max_rounds+1):
         round_stamp=time.monotonic();round_seconds=protocol['compute']['round_seconds'][round_number-1]
-        configs=round_configs(round_number,families)
+        configs=sorted(round_configs(round_number,families),key=lambda config:complexity(config,policy))
         hypothesis,falsify=HYPOTHESES[round_number]
         before=champion_loss;round_completed=True;family_best={}
         write_json(output/f'round-{round_number}.json',{'hypothesis':hypothesis,'falsification':falsify,
@@ -175,8 +213,26 @@ def run_search(history,output,protocol,*,years=(2018,2019),max_rounds=5,seconds=
                 best_nonuniform=config;best_nonuniform_loss=loss
             if config['model']!='uniform' and (not family_best or loss<family_best['loss']):
                 family_best={'loss':loss,'config':config}
-            if champion_loss-loss>=.001:
-                champion=config;champion_loss=loss
+            if config['model']=='uniform':
+                champion_rows=rows
+                decision={'accepted':False,'reason':'initial-uniform-reference'}
+            else:
+                remaining=min(round_seconds-(time.monotonic()-round_stamp),seconds-(time.monotonic()-stamp))
+                decision_start=time.monotonic()
+                try:
+                    with time_limit(remaining):
+                        decision=development_decision(rows,champion_rows,policy,deadline=time.monotonic()+remaining)
+                except TimeoutError:
+                    decision={'accepted':False,'reason':'selection-timeout'}
+                    round_completed=False
+                decision.update(candidate=config,incumbent=champion)
+                if decision['accepted']:
+                    champion=config;champion_loss=loss;champion_rows=rows
+                rec['seconds']+=time.monotonic()-decision_start
+            rec['selection_decision']=decision
+            write_json(output/(label+'-decision.json'),decision)
+            write_json(output/'ledger.json',records)
+            if not round_completed:break
         if round_number==1:
             baselines=[v for v in complete.values() if v['config']['model'] in ('digit','full_code')]
             if not baselines:break
@@ -190,6 +246,7 @@ def run_search(history,output,protocol,*,years=(2018,2019),max_rounds=5,seconds=
                    'critique':'Historical development selection is exploratory; fit warnings/failures disqualify candidates. No edge inferred from ranks.'})
         if not round_completed or no_gain>=3 or time.monotonic()-stamp>=seconds:break
     selection={'selected':champion,'development_loss':float(champion_loss),'simplest_nonuniform':families.get('baseline'),
+               'selection_policy_sha256':digest(SELECTION_POLICY.read_bytes()),
                'best_observed_nonuniform':best_nonuniform,'best_observed_nonuniform_loss':best_nonuniform_loss if np.isfinite(best_nonuniform_loss) else None,
                'attempted':len(records),'seconds':time.monotonic()-stamp,'rounds_completed':round_number,
                'stop_reason':'three_no_gain_rounds' if no_gain>=3 else 'budget_or_round_limit',
@@ -201,7 +258,12 @@ def run_search(history,output,protocol,*,years=(2018,2019),max_rounds=5,seconds=
 def frozen_evaluation(history,selection,output,protocol,*,seconds):
     output=Path(output);output.mkdir(exist_ok=True);stamp=time.monotonic();outer=[]
     freeze={'selection':selection,'frozen_at':datetime.now(timezone.utc).isoformat(),
-            'selection_sha256':digest(canonical_json(selection).encode()),'no_outer_feedback':True}
+            'selection_sha256':digest(canonical_json(selection).encode()),'no_outer_feedback':True,
+            'search_identity':search_identity(history,protocol,(2020,2023))}
+    if (output/'freeze.json').exists():
+        previous=json.loads((output/'freeze.json').read_text())
+        if any(previous.get(key)!=freeze[key] for key in ['selection_sha256','search_identity']):
+            raise ValueError('frozen evaluation identity changed')
     if not (output/'freeze.json').exists():
         write_json(output/'freeze.json',freeze)
     for year in range(2020,2024):
@@ -243,6 +305,7 @@ def main(argv=None):
     history=pd.read_csv(args.data,dtype={c:str for c in SLOT_COLS});history.DrawDate=pd.to_datetime(history.DrawDate);history['Operator']='damacai'
     started=time.monotonic()
     manifest={'protocol_sha256':digest(protocol_bytes),'data_sha256':digest(Path(args.data).read_bytes()),
+              'selection_policy_sha256':digest(SELECTION_POLICY.read_bytes()),
               'head':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
               'working_source_hashes':{str(p.relative_to(ROOT)):digest(p.read_bytes()) for p in [ROOT/'forecasting.py',ROOT/'forecast_evaluation.py',Path(__file__).resolve()]},
               'python':sys.version,'executable':sys.executable,'platform':platform.platform(),
@@ -252,6 +315,10 @@ def main(argv=None):
     if args.phase=='smoke':
         rec,rows=attempt(history,{'model':'uniform'},output,'uniform',start='2026-10-28',end='2026-11-01',seconds=60)
         selection={'selected':{'model':'uniform'},'smoke_only':True}
+        if rec['status']!='complete':
+            manifest['smoke_failure']=rec['status']
+            write_json(output/'manifest.json',manifest)
+            return 1
     else:
         selection,complete=run_search(history,output/'development',protocol,seconds=5100,resume_from=args.resume_from)
         write_json(output/'frozen-selection.json',selection)

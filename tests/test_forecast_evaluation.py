@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 
 from test_forecasting import history
+from test_confirmation_identity import record
 
 
 class EvaluationTests(unittest.TestCase):
@@ -60,15 +61,15 @@ class EvaluationTests(unittest.TestCase):
         self.assertLess(self.e.summarize(signal)['mean_log_loss'],5)
 
     def test_publication_clock_and_coverage_checkpoint(self):
-        status=self.e.confirmation_status([{'for_date':str(i),'coverage':1} for i in range(999)])
+        status=self.e.confirmation_status([record(str(i)) for i in range(999)])
         self.assertEqual(status['status'],'pending')
-        rows=[{'for_date':str(i),'coverage':1} for i in range(1000)]
+        rows=[record(str(i)) for i in range(1000)]
         rows[10]['coverage']=0
         self.assertEqual(self.e.confirmation_status(rows)['status'],'incomplete-coverage')
 
     def test_confirmation_gate_cannot_promote_on_loss_alone(self):
         from forecast_evaluation import promotion_decision
-        rows=[{'for_date':str(i),'coverage':1,'status':'verified','metrics':{
+        rows=[{**record(str(i)),'metrics':{
             'champion':{'log_loss':9.21,'hit_draw':0},'shadow':{'log_loss':9.,'hit_draw':0},
             'simplest_nonuniform':{'log_loss':9.1}},'conditional_control':.02} for i in range(1000)]
         result=promotion_decision(rows,development_qualified=True,correctness_verified=True,replicates=100)
@@ -77,7 +78,7 @@ class EvaluationTests(unittest.TestCase):
 
     def test_confirmation_uses_control_from_saved_slot_metrics(self):
         from forecast_evaluation import promotion_decision
-        rows=[{'for_date':str(i),'coverage':1,'status':'verified','metrics':{
+        rows=[{**record(str(i)),'metrics':{
             'champion':{'log_loss':9.21,'hit_draw':0,'conditional_control':.02},
             'shadow':{'log_loss':9.,'hit_draw':0,'conditional_control':.02},
             'simplest_nonuniform':{'log_loss':9.1,'conditional_control':.02}}} for i in range(1000)]

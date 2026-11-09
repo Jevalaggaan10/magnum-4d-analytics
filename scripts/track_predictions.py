@@ -191,11 +191,43 @@ def fetch_single_draw(draw_date: str) -> dict | None:
     from data_sources.damacai import Damacai
 
     src = Damacai()
-    draw = src.fetch_draw(draw_date)
+    draw = src.fetch_draw(draw_date, require_date_evidence=True)
     if draw is None:
         return None
     actual = _draw_to_slots(draw.to_row())
     return actual if complete_draw(actual) else None
+
+
+def recover_probability_results(state, corpus, *, now, budget=5, already_fetched=()):
+    """Bounded, fair recovery for published forecasts absent from recent results."""
+    from probability_tracker import accept_observations
+    from forecasting import target_timestamp
+    attempts = state.get('result_recovery', {})
+    pending = []
+    for date, record in state.get('probability_forecasts', {}).items():
+        if (record.get('status') == 'published' and date not in already_fetched and
+                target_timestamp(now) >= target_timestamp(record['target_time']) and
+                draw_from_local_cache(corpus, date) is None):
+            pending.append(date)
+    pending.sort(key=lambda date: (attempts.get(date, {}).get('attempts', 0), date))
+    recovered = {}
+    for date in pending[:budget]:
+        report = {'attempts': attempts.get(date, {}).get('attempts', 0) + 1,
+                  'last_attempt_at': target_timestamp(now).isoformat()}
+        try:
+            actual = fetch_single_draw(date)
+            if actual is None:
+                report['status'] = 'unavailable'
+            elif not complete_draw(actual):
+                report['status'] = 'incomplete'
+            else:
+                accepted = accept_observations(state, {date: actual}, corpus, now=now)
+                recovered.update(accepted)
+                report['status'] = 'accepted' if accepted else 'quarantined'
+        except Exception as error:
+            report.update(status='failed', error=f'{type(error).__name__}: {error}')
+        state.setdefault('result_recovery', {})[date] = report
+    return recovered
 
 
 def draw_from_local_cache(cache: pd.DataFrame | None, draw_date: str) -> dict | None:
@@ -428,13 +460,14 @@ def main(argv: list | None = None) -> int:
     from probability_tracker import (advance_forecasts, confirm_publication,
                                      accept_observations, render_probability_log)
     now = datetime.now(timezone.utc)
+    settings = json.loads(SETTINGS_FILE.read_text()) if SETTINGS_FILE.exists() else {}
     if args.confirm_publication:
         if not args.publication_evidence:
             ap.error('--confirm-publication requires --publication-evidence')
-        confirm_publication(state, now, evidence=args.publication_evidence)
+        approved = confirm_publication(state, now, evidence=args.publication_evidence, settings=settings)
         if not args.dry_run:
-            save_state_and_log(state, render_log(state) + render_probability_log(state))
-        return 0
+            save_state_and_log(state, render_log(state) + render_probability_log(state, settings))
+        return 0 if approved else 2
 
     # replay mode is a standalone backtest: it shares the prediction logic
     # but skips the sync/verify/generate pipeline entirely
@@ -456,6 +489,10 @@ def main(argv: list | None = None) -> int:
             print(f"WARNING: sync failed ({type(e).__name__}: {e})")
     incomplete = {date: actual for date, actual in recent.items() if not complete_draw(actual)}
     recent = accept_observations(state, recent, corpus, now=now)
+    if not args.no_sync:
+        # A broken recent-date index need not prevent a working historical endpoint.
+        recent.update(recover_probability_results(state, corpus, now=now,
+                                                  already_fetched=set(recent)))
 
     # ---- 2) resolve the pending prediction (if any) ----------------------
     pending = state.get("pending")
@@ -521,7 +558,6 @@ def main(argv: list | None = None) -> int:
 
     # v3 records coexist with the immutable legacy pending record. No research
     # operation retrains or fills probabilities for a published legacy forecast.
-    settings = json.loads(SETTINGS_FILE.read_text()) if SETTINGS_FILE.exists() else {'champion': {'model': 'uniform'}}
     if args.for_date:
         settings = {**settings, 'requested_date': args.for_date}
         if datetime.strptime(args.for_date, '%Y%m%d').weekday() not in DRAW_WEEKDAYS:
@@ -529,18 +565,18 @@ def main(argv: list | None = None) -> int:
                 ap.error('special targets require --announcement-url and --announced-at')
             settings['specials'] = {**settings.get('specials', {}), args.for_date: {
                 'url': args.announcement_url, 'announced_at': args.announced_at}}
-    advance_forecasts(state, corpus, now=now, artifact_dir=ARTIFACT_DIR,
-                     settings=settings, dry_run=args.dry_run, network_ok=network_ok)
+    approved = advance_forecasts(state, corpus, now=now, artifact_dir=ARTIFACT_DIR,
+                                settings=settings, dry_run=args.dry_run, network_ok=network_ok)
 
     # ---- 4) render --------------------------------------------------------
-    log = render_log(state, network_ok=network_ok) + render_probability_log(state)
+    log = render_log(state, network_ok=network_ok) + render_probability_log(state, settings)
     if args.dry_run:
         print("----- rendered log -----")
         print(log)
-        return 0
+        return 0 if approved else 2
 
     save_state_and_log(state, log)
-    return 0
+    return 0 if approved else 2
 
 
 def run_probability_replay(n, state, *, dry_run=False, no_sync=False):
