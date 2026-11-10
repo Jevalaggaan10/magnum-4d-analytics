@@ -1,0 +1,116 @@
+{
+  "window": [
+    "2026-08-15",
+    "2026-11-08"
+  ],
+  "draws": 40,
+  "prize_slots": 920,
+  "published_magnum_forecasts": 0,
+  "models": {
+    "champion": {
+      "hit_draw": 2,
+      "slot_hits": 2,
+      "top3_hit": 0,
+      "first_hit": 0,
+      "mean_log_loss": 9.21034037197618,
+      "mean_brier": 0.9999,
+      "loss_difference_intervals": {
+        "13": {
+          "mean": -3.552713678800501e-15,
+          "lower": -3.552713678800501e-15,
+          "upper": -3.552713678800501e-15,
+          "draws": 40,
+          "block_length": 13,
+          "replicates": 10000,
+          "confidence": 0.9875,
+          "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+        },
+        "26": {
+          "mean": -3.552713678800501e-15,
+          "lower": -3.552713678800501e-15,
+          "upper": -3.552713678800501e-15,
+          "draws": 40,
+          "block_length": 26,
+          "replicates": 10000,
+          "confidence": 0.9875,
+          "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+        }
+      }
+    },
+    "shadow": {
+      "hit_draw": 1,
+      "slot_hits": 1,
+      "top3_hit": 0,
+      "first_hit": 0,
+      "mean_log_loss": 9.210046945672824,
+      "mean_brier": 0.9998999413644372,
+      "loss_difference_intervals": {
+        "13": {
+          "mean": -0.0002934263033605333,
+          "lower": -0.0012753402766640459,
+          "upper": 0.0005259348685918399,
+          "draws": 40,
+          "block_length": 13,
+          "replicates": 10000,
+          "confidence": 0.9875,
+          "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+        },
+        "26": {
+          "mean": -0.0002934263033605333,
+          "lower": -0.0007128966441553253,
+          "upper": 0.00031320090895059494,
+          "draws": 40,
+          "block_length": 26,
+          "replicates": 10000,
+          "confidence": 0.9875,
+          "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+        }
+      }
+    },
+    "simplest_nonuniform": {
+      "hit_draw": 1,
+      "slot_hits": 1,
+      "top3_hit": 0,
+      "first_hit": 0,
+      "mean_log_loss": 9.209828898832162,
+      "mean_brier": 0.9998998979510063,
+      "loss_difference_intervals": {
+        "13": {
+          "mean": -0.0005114731440206022,
+          "lower": -0.002475646904669291,
+          "upper": 0.0011225390078896892,
+          "draws": 40,
+          "block_length": 13,
+          "replicates": 10000,
+          "confidence": 0.9875,
+          "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+        },
+        "26": {
+          "mean": -0.0005114731440206022,
+          "lower": -0.0013520738611006334,
+          "upper": 0.0006959986168103782,
+          "draws": 40,
+          "block_length": 26,
+          "replicates": 10000,
+          "confidence": 0.9875,
+          "assumptions": "short-range dependence and locally stationary paired draw differences; exploratory historical evidence"
+        }
+      }
+    },
+    "legacy_consensus": {
+      "hit_draw": 1,
+      "slot_hits": 1,
+      "top3_hit": 0,
+      "first_hit": 0
+    }
+  },
+  "random_ticket_expected_hit_draws": 0.9080008401508999,
+  "random_ticket_probability_of_no_hits": 0.39913055081701865,
+  "random_control_replicates": 1000,
+  "random_control_mean_hit_draws": 0.963,
+  "random_control_95pct_range": [
+    0.0,
+    3.0
+  ],
+  "evidence_status": "exploratory only; not prospective and not operator-certified"
+}

@@ -1,0 +1,19 @@
+{
+  "checked_at": "2026-11-09T12:45:02.512599+00:00",
+  "repository_head": "cbf189b9fe02e3da279e123223f960b87cf3380b",
+  "primary_archive": "https://lottochaos.com/en/magnum-4d/archive/",
+  "corroborating_archive": "https://starbucks4d.com/4d-result/magnum/",
+  "official_attempt": "https://www.magnum4d.my/ returned HTTP403; official results page text contained empty dynamic values",
+  "corroborated_draws": 40,
+  "corroborated_prize_slots": 920,
+  "source_independence": "not established; shared upstream possible",
+  "files": {
+    "lottochaos.html": "299d50d168ef528571e02f36edb9448ec2dcf8065d6fa8194fdf9f8bd39d2dea",
+    "latest-40-magnum-draws.csv": "4a16370416eba9e62a61a7c4561ead0619d70227b813f39252fdbc982ab17e48",
+    "draw-comparison.csv": "9cdfc774fc8070282f3b075d55a9433f0c9d9f4ecbb414579b9d6e26004ecc3d",
+    "comparisons.jsonl": "133de2eb6932715f37e05ca6ef5659ea05bfb4bb2ba12116ba3723451b481ac9",
+    "secondary-sample.html": "c2d007f716f0083d068f02a0b98512f9e0476514ce1b1999ac5e930fbc7e0852",
+    "starbucks.html": "b58b22be2af6c93490f349fa46caf20f2ffaf269556ca579454882e228f86f71",
+    "magnum-2026-secondary-archive.csv": "93322c5c9ef956bce8fde3e6c5447d04331442f6662f9c95c4b8c84edbe3a147"
+  }
+}

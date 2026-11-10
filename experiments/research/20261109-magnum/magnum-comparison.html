@@ -1,0 +1,54 @@
+<figure id="magnum-audit-chart">
+  <figcaption>Retrospective matches · 40 Magnum draws</figcaption>
+  <div class="audit-note">15 Aug–8 Nov 2026 · 23 prizes per draw · ten picks per method</div>
+  <div id="magnum-bars-stage"></div>
+  <div class="audit-note">Published Magnum forecasts: none. Random-ticket 95% range: 0–3 hit-draws.</div>
+</figure>
+<style>
+  #magnum-audit-chart {margin:0;display:grid;gap:12px;color:var(--foreground);font-family:var(--font-sans)}
+  #magnum-audit-chart figcaption {font-weight:500;padding-right:80px}
+  #magnum-audit-chart .audit-note {color:var(--muted-foreground);font-size:12px;line-height:1.5}
+  #magnum-audit-chart svg {width:100%;display:block;overflow:visible}
+  #magnum-audit-chart svg text {fill:var(--foreground);font-size:12px;font-family:var(--font-sans)}
+</style>
+<script>
+(() => {
+  const root=document.getElementById('magnum-audit-chart');
+  const stage=root.querySelector('#magnum-bars-stage');
+  const values=[
+    {label:'Uniform reference · 0000–0009',value:2,display:'2 / 40'},
+    {label:'Digit shadow · 50% uniform mix',value:1,display:'1 / 40'},
+    {label:'Digit baseline',value:1,display:'1 / 40'},
+    {label:'Legacy consensus',value:1,display:'1 / 40'},
+    {label:'Random tickets · expected',value:0.9080008401508999,display:'0.91 / 40',control:true}
+  ];
+  const range=[0,3], ns='http://www.w3.org/2000/svg';let previousWidth=0;
+  function element(tag,attributes,text) {
+    const node=document.createElementNS(ns,tag);
+    for(const [key,value] of Object.entries(attributes))node.setAttribute(key,String(value));
+    if(text!==undefined)node.textContent=text;
+    return node;
+  }
+  function draw(){
+    const width=Math.floor(stage.getBoundingClientRect().width);
+    if(!width || width===previousWidth)return;previousWidth=width;
+    const height=332,left=2,right=20,usable=width-left-right;
+    const max=Math.max(range[1],...values.map(row=>row.value));
+    const x=value=>left+usable*value/max;
+    const svg=element('svg',{viewBox:`0 0 ${width} ${height}`,height,role:'img','aria-labelledby':'magnum-chart-title magnum-chart-desc'});
+    svg.append(element('title',{id:'magnum-chart-title'},'Exploratory exact-match counts over 40 Magnum draws'));
+    svg.append(element('desc',{id:'magnum-chart-desc'},'Uniform reference matched two draws, digit shadow one, digit baseline one, and legacy consensus one. Random ten-code tickets average 0.91 hit-draws. These were retrospective replays, not published predictions.'));
+    values.forEach((row,index)=>{
+      const y=index*57+12;
+      svg.append(element('text',{x:left,y},row.label));
+      svg.append(element('text',{x:width-1,y,'text-anchor':'end'},row.display));
+      svg.append(element('line',{x1:left,x2:x(max),y1:y+23,y2:y+23,stroke:'var(--border)','stroke-width':1}));
+      svg.append(element('rect',{x:left,y:y+16,width:x(row.value)-left,height:14,fill:row.control?'var(--muted-foreground)':'var(--chart-1)'}));
+    });
+    for(let tick=0;tick<=max;tick++)svg.append(element('text',{x:x(tick),y:height-21,'text-anchor':tick===0?'start':tick===max?'end':'middle'},String(tick)));
+    svg.append(element('text',{x:width/2,y:height-2,'text-anchor':'middle'},'Draws with at least one exact four-digit match'));
+    stage.replaceChildren(svg);
+  }
+  new ResizeObserver(draw).observe(stage);draw();
+})();
+</script>

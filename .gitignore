@@ -6,6 +6,13 @@ __pycache__/
 .venv*/
 venv/
 env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
 
 # --- Streamlit runtime ---
 .streamlit/secrets.toml
@@ -23,5 +30,7 @@ Thumbs.db
 # --- Local secrets ---
 .env
 
-# Complete probability experiments retained locally; regenerate with frozen protocol.
+# Disposable offline vectors; keep live probability_artifacts/ tracked.
 experiments/**/*.npz
+# CI smoke runs are regenerated, not research evidence.
+experiments/ci-smoke/

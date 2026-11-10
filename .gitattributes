@@ -4,3 +4,5 @@ data/*.json text eol=lf
 experiments/** linguist-generated=true
 experiments/**/*.txt -text -whitespace
 experiments/README.md -linguist-generated
+# Preserve research CSV hashes, including valid CRLF record separators.
+experiments/research/**/*.csv -text whitespace=cr-at-eol

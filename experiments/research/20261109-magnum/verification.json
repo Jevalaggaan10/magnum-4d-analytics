@@ -1,0 +1,12 @@
+{
+  "compared_draws": 40,
+  "prize_slots": 920,
+  "corroborated_draws": 40,
+  "training_cutoffs": "all strictly earlier",
+  "pick_count": "ten distinct each draw",
+  "score_totals": "independently recounted",
+  "published_magnum_forecasts": 0,
+  "production_ledger_log": "unchanged",
+  "approved_production_sources": "valid",
+  "note": "No new model promotion; retrospective evidence only"
+}

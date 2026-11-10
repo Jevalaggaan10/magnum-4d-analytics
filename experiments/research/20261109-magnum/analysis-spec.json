@@ -1,0 +1,30 @@
+{
+  "as_of": "2026-11-09T12:40:50.579722+00:00",
+  "draws": 40,
+  "slots": 23,
+  "kind": "retrospective exploratory transfer benchmark; not prospective Magnum forecasts",
+  "models": {
+    "champion": {
+      "model": "uniform"
+    },
+    "shadow": {
+      "model": "digit",
+      "alpha": 100,
+      "uniform_weight": 0.5
+    },
+    "simplest_nonuniform": {
+      "model": "digit",
+      "alpha": 100
+    }
+  },
+  "legacy": "unchanged generate_picks; descriptive consensus, no probability metrics",
+  "model_selection": "none; settings copied before evaluating target outcomes",
+  "sources": [
+    "https://lottochaos.com/en/magnum-4d/archive/",
+    "https://starbucks4d.com/4d-result/magnum/"
+  ],
+  "source_limit": "two secondary archives; official result retrieval unavailable; shared upstream possible",
+  "current_repository": "cbf189b",
+  "random_control_replicates": 1000,
+  "control_seed": 17029
+}

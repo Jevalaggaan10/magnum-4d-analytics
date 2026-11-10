@@ -25,10 +25,12 @@ announcement ingestion. Chronos-2 currently requires real-valued targets, so cod
 rounding is not an acceptable probability model. No paid service or model weights
 were downloaded. Unknown retrieval/correction times in the archive remain unknown.
 
-Complete *.npz probability artifacts remain locally under experiment directories,
-ignored by Git because of size; per-draw manifests provide hashes and paths. Copy
-that store explicitly if moving to another machine, or regenerate offline from the
-frozen data/protocol/environment. Never replace prospective ledger with a replay.
+Offline experiment *.npz vectors were removed during the 10 November 2026 storage
+cleanup; per-draw manifests retain their original hashes and paths. Direct reload
+or resume requires rebuilding with the historical code/data/protocol/environment
+in a new directory. See `experiments/README.md` for storage limits. Live artifacts
+in `probability_artifacts/` remain intact. Never replace prospective ledger with a
+replay.
 
 ## Reliability revision — 2026-11-09
 
