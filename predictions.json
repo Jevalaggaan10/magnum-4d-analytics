@@ -3697,6 +3697,31 @@
       "ConsolationNo8": "3748",
       "ConsolationNo9": "9487",
       "ConsolationNo10": "7400"
+    },
+    "20261111": {
+      "1stPrizeNo": "0938",
+      "2ndPrizeNo": "7244",
+      "3rdPrizeNo": "3962",
+      "SpecialNo1": "1416",
+      "SpecialNo2": "3672",
+      "SpecialNo3": "1573",
+      "SpecialNo4": "3893",
+      "SpecialNo5": "6645",
+      "SpecialNo6": "7881",
+      "SpecialNo7": "0007",
+      "SpecialNo8": "1565",
+      "SpecialNo9": "6569",
+      "SpecialNo10": "2732",
+      "ConsolationNo1": "1795",
+      "ConsolationNo2": "7804",
+      "ConsolationNo3": "6454",
+      "ConsolationNo4": "7633",
+      "ConsolationNo5": "9321",
+      "ConsolationNo6": "1731",
+      "ConsolationNo7": "8072",
+      "ConsolationNo8": "0241",
+      "ConsolationNo9": "7122",
+      "ConsolationNo10": "6978"
     }
   },
   "observation_provenance": {
@@ -3734,6 +3759,11 @@
       "source": "damacai",
       "retrieved_at": "2026-11-08T22:39:24.194292+08:00",
       "content_sha256": "d046692569cd0c793fb694547fde9ba6c60eaae33ede6f7819c28db2bc30c1b1"
+    },
+    "20261111": {
+      "source": "damacai",
+      "retrieved_at": "2026-11-11T23:43:58.295571+08:00",
+      "content_sha256": "34aa65a99a84e97e5dbf37e72848e89fd76472c3a5db036014700c005828ba54"
     }
   },
   "probability_forecasts": {
@@ -4386,7 +4416,7 @@
       "forecast_id": "damacai-v3:20261111",
       "pipeline_version": "damacai-v3",
       "generated_at": "2026-11-08T22:39:24.194292+08:00",
-      "status": "published",
+      "status": "verified",
       "coverage": 1,
       "source": "damacai",
       "picks": [
@@ -4553,13 +4583,333 @@
       "confirmation_version": "v3-fixed-1000",
       "settings_sha256": "10eb591b64d3a98fcf959f4d2207d1097b5a83b4c8a0ef81e6879ce432f53f40",
       "published_at": "2026-11-08T22:39:41.681502+08:00",
-      "publication_evidence": "https://github.com/Jevalaggaan10/magnum-4d-analytics/actions/runs/42490822822"
+      "publication_evidence": "https://github.com/Jevalaggaan10/magnum-4d-analytics/actions/runs/42490822822",
+      "actual": {
+        "1stPrizeNo": "0938",
+        "2ndPrizeNo": "7244",
+        "3rdPrizeNo": "3962",
+        "SpecialNo1": "1416",
+        "SpecialNo2": "3672",
+        "SpecialNo3": "1573",
+        "SpecialNo4": "3893",
+        "SpecialNo5": "6645",
+        "SpecialNo6": "7881",
+        "SpecialNo7": "0007",
+        "SpecialNo8": "1565",
+        "SpecialNo9": "6569",
+        "SpecialNo10": "2732",
+        "ConsolationNo1": "1795",
+        "ConsolationNo2": "7804",
+        "ConsolationNo3": "6454",
+        "ConsolationNo4": "7633",
+        "ConsolationNo5": "9321",
+        "ConsolationNo6": "1731",
+        "ConsolationNo7": "8072",
+        "ConsolationNo8": "0241",
+        "ConsolationNo9": "7122",
+        "ConsolationNo10": "6978"
+      },
+      "metrics": {
+        "champion": {
+          "log_loss": 9.21034037197618,
+          "brier": 0.9999000000000001,
+          "hit_draw": 1,
+          "slot_hits": 1,
+          "top3_hit": 0,
+          "first_hit": 0,
+          "unique_picks": 10,
+          "slots": 23,
+          "conditional_control": 0.02277354827491955,
+          "observed_slot_probabilities": [
+            9.999999999999999e-05,
+            9.999999999999999e-05,
+            9.999999999999999e-05,
+            9.999999999999999e-05,
+            9.999999999999999e-05,
+            9.999999999999999e-05,
+            9.999999999999999e-05,
+            9.999999999999999e-05,
+            9.999999999999999e-05,
+            9.999999999999999e-05,
+            9.999999999999999e-05,
+            9.999999999999999e-05,
+            9.999999999999999e-05,
+            9.999999999999999e-05,
+            9.999999999999999e-05,
+            9.999999999999999e-05,
+            9.999999999999999e-05,
+            9.999999999999999e-05,
+            9.999999999999999e-05,
+            9.999999999999999e-05,
+            9.999999999999999e-05,
+            9.999999999999999e-05,
+            9.999999999999999e-05
+          ]
+        },
+        "shadow": {
+          "log_loss": 9.214209576059874,
+          "brier": 0.9999007709550082,
+          "hit_draw": 0,
+          "slot_hits": 0,
+          "top3_hit": 0,
+          "first_hit": 0,
+          "unique_picks": 10,
+          "slots": 23,
+          "conditional_control": 0.02277354827491955,
+          "observed_slot_probabilities": [
+            9.93823338340458e-05,
+            9.974645193867094e-05,
+            9.843031411333332e-05,
+            9.872039780782683e-05,
+            9.800321988229322e-05,
+            9.878993434077634e-05,
+            0.00010023106822043058,
+            0.00010084098769304347,
+            0.00010032652747404098,
+            0.00010103435987534858,
+            9.947776495003511e-05,
+            0.00010054734447869611,
+            9.823636109364752e-05,
+            0.00010041916897487447,
+            0.00010020746209952128,
+            0.00010196758432286655,
+            9.863941668434205e-05,
+            0.00010000171761140637,
+            9.884105189356491e-05,
+            9.954128334417984e-05,
+            9.954168836769985e-05,
+            9.766751429391896e-05,
+            0.00010065381094105714
+          ]
+        },
+        "simplest_nonuniform": {
+          "log_loss": 9.218208327255372,
+          "brier": 0.9999015616920737,
+          "hit_draw": 0,
+          "slot_hits": 0,
+          "top3_hit": 0,
+          "first_hit": 0,
+          "unique_picks": 10,
+          "slots": 23,
+          "conditional_control": 0.02277354827491955,
+          "observed_slot_probabilities": [
+            9.876466766809157e-05,
+            9.949290387734189e-05,
+            9.686062822666666e-05,
+            9.744079561565366e-05,
+            9.600643976458642e-05,
+            9.757986868155267e-05,
+            0.00010046213644086116,
+            0.00010168197538608695,
+            0.00010065305494808199,
+            0.00010206871975069717,
+            9.895552990007024e-05,
+            0.00010109468895739221,
+            9.647272218729504e-05,
+            0.00010083833794974895,
+            0.00010041492419904256,
+            0.00010393516864573311,
+            9.72788333686841e-05,
+            0.00010000343522281272,
+            9.768210378712984e-05,
+            9.908256668835969e-05,
+            9.908337673539969e-05,
+            9.533502858783793e-05,
+            0.00010130762188211428
+          ]
+        }
+      },
+      "checked_at": "2026-11-11T23:43:58.295571+08:00",
+      "date_control_hit": 0,
+      "date_control_slot_hits": 0,
+      "random_controls": 1000,
+      "random_control_hit_mean": 0.022,
+      "random_control_slot_hits_mean": 0.022,
+      "uniform_pick_hit": 1
+    },
+    "20261114": {
+      "for_date": "20261114",
+      "target_time": "2026-11-14T19:00:00+08:00",
+      "publication_deadline": "2026-11-14T18:00:00+08:00",
+      "schedule_source": "https://www.damacai.com.my/general-information/",
+      "special_announcement": null,
+      "forecast_id": "damacai-v3:20261114",
+      "pipeline_version": "damacai-v3",
+      "generated_at": "2026-11-11T23:43:58.295571+08:00",
+      "status": "awaiting-publication",
+      "coverage": 0,
+      "source": "damacai",
+      "picks": [
+        "0000",
+        "0001",
+        "0002",
+        "0003",
+        "0004",
+        "0005",
+        "0006",
+        "0007",
+        "0008",
+        "0009"
+      ],
+      "forecasts": {
+        "champion": {
+          "artifact": "c899e35263e3bdf698c7d4171b565fc3313adc6c807a300c93176e6b6c96642a.npz",
+          "artifact_sha256": "b5024e24e7cc016f4e5221ba96883f9c0e82beb431f1392efdc4c6a68671c18f",
+          "probability_sha256": "c899e35263e3bdf698c7d4171b565fc3313adc6c807a300c93176e6b6c96642a",
+          "picks": [
+            "0000",
+            "0001",
+            "0002",
+            "0003",
+            "0004",
+            "0005",
+            "0006",
+            "0007",
+            "0008",
+            "0009"
+          ],
+          "metadata": {
+            "pipeline_version": "damacai-v3",
+            "model_version": "categorical-v1",
+            "training_operator": "damacai",
+            "target_time": "2026-11-14T19:00:00+08:00",
+            "generated_at": "2026-11-11T15:44:13.160147+00:00",
+            "training_rows": 3639,
+            "corpus_cutoff": "2026-11-11",
+            "corpus_sha256": "5a81784835e8e69e73aa753d1e2cf87de15a4543f2574e180d08861d89ab7f75",
+            "feature_version": "lagged-digits-v1",
+            "feature_sha256": "d86f21b206351efd1d6932ed0c3855db30d5f14869f0c8a841e5c2267b1d13b3",
+            "configuration": {
+              "model": "uniform"
+            },
+            "config_sha256": "3d102bae3dcf0604151eb02b117eb365f5fe49cbb4f8c25e4da3f9704c772380",
+            "seeds": [
+              17,
+              29,
+              43
+            ],
+            "calibration_version": "identity-v1",
+            "selection_objective": "expected_matched_slots",
+            "joint_model": null,
+            "excluded_partial_history_rows": 0,
+            "health": {
+              "status": "ok",
+              "warnings": []
+            },
+            "estimator_fit_cutoff": "2026-11-11",
+            "estimator_fit_rows": 3639
+          }
+        },
+        "shadow": {
+          "artifact": "5d86c170a515d67256293a20a40e34e1d96b04e3880377b3dc3bb3c7f6e5ae32.npz",
+          "artifact_sha256": "23f59bd05e6d2b23851810e267c4f7ca79bc89ba67952c1e592882acee8d75e0",
+          "probability_sha256": "5d86c170a515d67256293a20a40e34e1d96b04e3880377b3dc3bb3c7f6e5ae32",
+          "picks": [
+            "6090",
+            "4090",
+            "6050",
+            "9090",
+            "4050",
+            "9050",
+            "6097",
+            "2090",
+            "6890",
+            "6990"
+          ],
+          "metadata": {
+            "pipeline_version": "damacai-v3",
+            "model_version": "categorical-v1",
+            "training_operator": "damacai",
+            "target_time": "2026-11-14T19:00:00+08:00",
+            "generated_at": "2026-11-11T15:44:13.301908+00:00",
+            "training_rows": 3639,
+            "corpus_cutoff": "2026-11-11",
+            "corpus_sha256": "5a81784835e8e69e73aa753d1e2cf87de15a4543f2574e180d08861d89ab7f75",
+            "feature_version": "lagged-digits-v1",
+            "feature_sha256": "d86f21b206351efd1d6932ed0c3855db30d5f14869f0c8a841e5c2267b1d13b3",
+            "configuration": {
+              "model": "digit",
+              "alpha": 100,
+              "uniform_weight": 0.5
+            },
+            "config_sha256": "faa3c75d7e790af5cf5c68c0aa127d0ffe1e439425db679cef0f456db53309c7",
+            "seeds": [
+              17,
+              29,
+              43
+            ],
+            "calibration_version": "identity-v1",
+            "selection_objective": "expected_matched_slots",
+            "joint_model": null,
+            "excluded_partial_history_rows": 0,
+            "health": {
+              "status": "ok",
+              "warnings": []
+            },
+            "estimator_fit_cutoff": "2026-11-11",
+            "estimator_fit_rows": 3639
+          }
+        },
+        "simplest_nonuniform": {
+          "artifact": "46799b6cb087b74703802dc8c2f68bec23c61dd6324b9983ac9131dc88ee7df0.npz",
+          "artifact_sha256": "a82ff28cd8febc41c38c5132ccf1ad315332eef424821698a98d76ef8f0dda2d",
+          "probability_sha256": "46799b6cb087b74703802dc8c2f68bec23c61dd6324b9983ac9131dc88ee7df0",
+          "picks": [
+            "6090",
+            "4090",
+            "6050",
+            "9090",
+            "4050",
+            "9050",
+            "6097",
+            "2090",
+            "6890",
+            "6990"
+          ],
+          "metadata": {
+            "pipeline_version": "damacai-v3",
+            "model_version": "categorical-v1",
+            "training_operator": "damacai",
+            "target_time": "2026-11-14T19:00:00+08:00",
+            "generated_at": "2026-11-11T15:44:13.451300+00:00",
+            "training_rows": 3639,
+            "corpus_cutoff": "2026-11-11",
+            "corpus_sha256": "5a81784835e8e69e73aa753d1e2cf87de15a4543f2574e180d08861d89ab7f75",
+            "feature_version": "lagged-digits-v1",
+            "feature_sha256": "d86f21b206351efd1d6932ed0c3855db30d5f14869f0c8a841e5c2267b1d13b3",
+            "configuration": {
+              "model": "digit",
+              "alpha": 100
+            },
+            "config_sha256": "893e7205e21ac7a1ba4cfef67152f7f9692259ba6b5613bcfd1972d8f3821b92",
+            "seeds": [
+              17,
+              29,
+              43
+            ],
+            "calibration_version": "identity-v1",
+            "selection_objective": "expected_matched_slots",
+            "joint_model": null,
+            "excluded_partial_history_rows": 0,
+            "health": {
+              "status": "ok",
+              "warnings": []
+            },
+            "estimator_fit_cutoff": "2026-11-11",
+            "estimator_fit_rows": 3639
+          }
+        }
+      },
+      "confirmation_version": "v3-fixed-1000",
+      "procedure_sha256": "380972b635c249f4eb89a88bd73d93b5300849b4c6fc858970e701ab51427177",
+      "execution_revision_sha256": "3a78cb78ec0b0609402d8e1a22a952b1b3d795f0234a2ec9e6c59f02aaaf24a6",
+      "settings_sha256": "8459587ed8d8794fefbb0f9adf402b2c91c1899a1e116982ac457cc487266375"
     }
   },
   "probability_confirmation": {
     "status": "pending",
-    "scheduled_targets": 3,
-    "remaining": 997,
+    "scheduled_targets": 4,
+    "remaining": 996,
     "probability_promotion": false,
     "exact_hit_advantage": false
   },
